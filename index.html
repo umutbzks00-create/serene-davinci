@@ -861,35 +861,11 @@ footer{background:#040404;padding:52px 28px 22px}
 </div>
 
 <!-- Mobile Menu -->
-<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mm-head">
-    <div class="mm-logo">VANTA</div>
-    <button class="mm-close" onclick="toggleMobileMenu()"><i class="ti ti-x"></i></button>
-  </div>
-  <div class="mm-search-box">
-    <input type="text" class="mm-search-input" id="mmSearchInput" placeholder="Ürün ara..." onkeypress="if(event.key==='Enter') { doMobileSearch(); }">
-  </div>
-  <div class="mm-links">
-    <h4 style="font-weight:700">Üst Giyim</h4>
-    <a onclick="mmSelect('Tişört')">Tişört</a>
-    <a onclick="mmSelect('Gömlek')">Gömlek</a>
-    <a onclick="mmSelect('Hoodie')">Hoodie</a>
-    <a onclick="mmSelect('Atlet')">Atlet</a>
-    <h4 style="font-weight:700;margin-top:12px;">Alt Giyim</h4>
-    <a onclick="mmSelect('Jean')">Jean</a>
-    <a onclick="mmSelect('Şort')">Şort / Jorts</a>
-    <a onclick="mmSelect('Eşofman')">Eşofman Altı</a>
-    <h4 style="font-weight:700;margin-top:12px;">Dış Giyim</h4>
-    <a onclick="mmSelect('Ceket')">Ceket</a>
-    <a onclick="mmSelect('Mont')">Mont</a>
-    <a onclick="mmSelect('Yağmurluk')">Yağmurluk</a>
-  </div>
-</div>
+
 
 <!-- Nav -->
 <nav id="mainNav">
-  <button class="hamburger-btn" onclick="alert('Menu tiklandi!'); toggleMobileMenu()"><i class="ti ti-menu-2"></i></button>
+  <button class="hamburger-btn" onclick="toggleMobileMenu()"><i class="ti ti-menu-2"></i></button>
   <div class="nav-links">
     <a onclick="toggleDropdown(event)" style="cursor:pointer; display:flex; align-items:center; gap:6px; font-weight:600; font-size:14px; text-transform:uppercase; letter-spacing:0.05em;">
       <i class="ti ti-layout-grid" style="font-size:18px"></i> Kategoriler
@@ -2847,6 +2823,31 @@ function appendVbotMsg(text, sender) {
 }
 
   </script>
+</div>
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-head">
+    <div class="mm-logo">VANTA</div>
+    <button class="mm-close" onclick="toggleMobileMenu()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="mm-search-box">
+    <input type="text" class="mm-search-input" id="mmSearchInput" placeholder="Ürün ara..." onkeypress="if(event.key==='Enter') { doMobileSearch(); }">
+  </div>
+  <div class="mm-links">
+    <h4 style="font-weight:700">Üst Giyim</h4>
+    <a onclick="mmSelect('Tişört')">Tişört</a>
+    <a onclick="mmSelect('Gömlek')">Gömlek</a>
+    <a onclick="mmSelect('Hoodie')">Hoodie</a>
+    <a onclick="mmSelect('Atlet')">Atlet</a>
+    <h4 style="font-weight:700;margin-top:12px;">Alt Giyim</h4>
+    <a onclick="mmSelect('Jean')">Jean</a>
+    <a onclick="mmSelect('Şort')">Şort / Jorts</a>
+    <a onclick="mmSelect('Eşofman')">Eşofman Altı</a>
+    <h4 style="font-weight:700;margin-top:12px;">Dış Giyim</h4>
+    <a onclick="mmSelect('Ceket')">Ceket</a>
+    <a onclick="mmSelect('Mont')">Mont</a>
+    <a onclick="mmSelect('Yağmurluk')">Yağmurluk</a>
+  </div>
 </div>
 </body>
 </html>

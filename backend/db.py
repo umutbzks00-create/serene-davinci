@@ -58,8 +58,20 @@ def init_db():
         similar_products TEXT,
         order_num INTEGER,
         barcode TEXT,
-        has_print BOOLEAN DEFAULT FALSE
+        has_print BOOLEAN DEFAULT FALSE,
+        imageurl_hover TEXT,
+        colors TEXT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
     )''')
+    
+    try:
+        c.execute("ALTER TABLE products ADD COLUMN IF NOT EXISTS barcode TEXT")
+        c.execute("ALTER TABLE products ADD COLUMN IF NOT EXISTS imageurl_hover TEXT")
+        c.execute("ALTER TABLE products ADD COLUMN IF NOT EXISTS colors TEXT")
+        c.execute("ALTER TABLE products ADD COLUMN IF NOT EXISTS has_print BOOLEAN DEFAULT FALSE")
+        c.execute("ALTER TABLE products ADD COLUMN IF NOT EXISTS created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+    except Exception:
+        pass
     
     # Orders table
     c.execute('''CREATE TABLE IF NOT EXISTS orders (

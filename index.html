@@ -1417,12 +1417,6 @@ setTimeout(()=>document.getElementById('hero').classList.add('in-view'),100);
 
 /* ── DROPDOWN ── */
 function toggleDropdown(e){e&&e.stopPropagation();ddOpen=!ddOpen;document.getElementById('dropdown').classList.toggle('open',ddOpen);}
-function toggleMobileMenu(){
-  const overlay = document.getElementById('mobileMenuOverlay');
-  const menu = document.getElementById('mobileMenu');
-  overlay.classList.toggle('open');
-  menu.classList.toggle('open');
-}
 function mmSelect(cat) {
   toggleMobileMenu();
   const title = document.getElementById('gridTitle');

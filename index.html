@@ -676,6 +676,47 @@ footer{background:#040404;padding:52px 28px 22px}
 .vbot-dot:nth-child(2) { animation-delay: -0.16s; }
 @keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
 
+
+/* --- MOBILE FIXES OVERRIDE --- */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+.app-wrapper {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Fix PB text (STREETWEAR CULTURE) overflow */
+@media (max-width: 768px) {
+  .pb-text {
+    font-size: 14px !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    text-align: center !important;
+    padding: 0 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  
+  /* Quick Add button slightly smaller on mobile */
+  .pcard-quick {
+    display: flex !important;
+    padding: 6px !important;
+    font-size: 8px !important;
+    letter-spacing: 0.05em !important;
+    transform: translateY(0) !important; /* always visible on mobile */
+  }
+}
+
 </style>
 </head>
 <body>

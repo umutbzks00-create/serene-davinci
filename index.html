@@ -22,13 +22,13 @@ body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--black)
 
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;border-bottom:1px solid rgba(0,0,0,.04);position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);transition:background .4s ease,backdrop-filter .4s ease,box-shadow .4s ease,border-color .4s ease}
 nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);box-shadow:0 4px 30px rgba(0,0,0,.04);border-bottom-color:transparent}
-.logo{font-size:24px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--black);cursor:pointer;transition:letter-spacing .35s ease;user-select:none;position:absolute;left:50%;transform:translateX(-50%)}
-.hamburger-btn{display:none;font-size:24px;cursor:pointer;color:var(--black);align-items:center;justify-content:center;width:40px;height:40px;}
+.logo{font-size:24px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--black);cursor:pointer;transition:letter-spacing .35s ease;user-select:none;position:absolute;left:50%;transform:translateX(-50%);z-index:1}
+.hamburger-btn{display:none;font-size:24px;cursor:pointer;color:var(--black);align-items:center;justify-content:center;width:40px;height:40px;background:transparent;border:none;outline:none;position:relative;z-index:9999;padding:0;}
 .mobile-notif-btn{display:none;}
 .mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);z-index:1100;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .mobile-menu-overlay.open{opacity:1;pointer-events:all}
-.mobile-menu{position:fixed;top:0;left:0;bottom:0;width:300px;background:var(--white);z-index:1101;transform:translateX(-100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;box-shadow:20px 0 40px rgba(0,0,0,0.1)}
-.mobile-menu.open{transform:translateX(0)}
+.mobile-menu{position:fixed;top:0;left:0;bottom:0;width:300px;background:var(--white);z-index:1101;transform:translateX(-100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1), visibility 0s 0.4s;display:flex;flex-direction:column;box-shadow:20px 0 40px rgba(0,0,0,0.1);visibility:hidden}
+.mobile-menu.open{transform:translateX(0);visibility:visible;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
 .mm-head{padding:20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.05)}
 .mm-logo{font-size:20px;font-weight:900;letter-spacing:.08em}
 .mm-close{background:none;border:none;font-size:24px;cursor:pointer}
@@ -84,8 +84,12 @@ nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturat
 .ni-sub{font-size:10px;color:var(--gray);letter-spacing:.02em}
 .ni-time{font-size:9px;color:#bbb;margin-top:4px;letter-spacing:.06em}
 
+/* ── DRAWER BASE ── */
+.drawer-base{position:fixed;top:0;bottom:0;width:400px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px) saturate(160%);z-index:1100;transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0s .4s;display:flex;flex-direction:column;box-shadow:-10px 0 30px rgba(0,0,0,0.05);visibility:hidden}
+.drawer-base.open{visibility:visible;transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1)}
+
 /* ── CART DRAWER ── */
-.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:400px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px) saturate(160%);z-index:1100;transform:translateX(100%);transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1);border-left:1px solid rgba(0,0,0,0.05);display:flex;flex-direction:column;box-shadow:-10px 0 30px rgba(0,0,0,0.05)}
+.cart-drawer{right:0;transform:translateX(100%);border-left:1px solid rgba(0,0,0,0.04)}
 .cart-drawer.open{transform:translateX(0)}
 .cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:1099;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(0.16, 1, 0.3, 1)}
 .cart-overlay.open{opacity:1;pointer-events:all}
@@ -349,8 +353,8 @@ footer{background:#040404;padding:52px 28px 22px}
 .back-top:hover{transform:translateY(-3px)}
 
 /* ── WISHLIST PANEL ── */
-.wish-panel{position:fixed;top:0;right:0;bottom:0;width:360px;background:var(--white);z-index:1100;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);border-left:.5px solid var(--lightgray);display:flex;flex-direction:column}
-.wish-panel.open{transform:translateX(0)}
+.wish-panel{position:fixed;top:0;right:0;bottom:0;width:360px;background:var(--white);z-index:1100;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1), visibility 0s .35s;border-left:.5px solid var(--lightgray);display:flex;flex-direction:column;visibility:hidden}
+.wish-panel.open{transform:translateX(0);visibility:visible;transition:transform .35s cubic-bezier(.4,0,.2,1)}
 .wish-header{display:flex;align-items:center;justify-content:space-between;padding:22px 24px 16px;border-bottom:.5px solid var(--lightgray)}
 .wish-header h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
 .wish-close{background:none;border:none;cursor:pointer;font-size:20px;color:var(--black);display:flex;align-items:center;opacity:.7;transition:transform .2s,opacity .2s}
@@ -676,7 +680,7 @@ footer{background:#040404;padding:52px 28px 22px}
 
 <!-- Wishlist panel -->
 <div class="cart-overlay" id="wishOverlay" onclick="closeWish()"></div>
-<div class="wish-panel" id="wishPanel">
+<div class="drawer-base wish-panel" id="wishPanel">
   <div class="wish-header">
     <h3>Favoriler (<span id="wishCount">0</span>)</h3>
     <button class="wish-close" onclick="closeWish()"><i class="ti ti-x"></i></button>
@@ -691,7 +695,7 @@ footer{background:#040404;padding:52px 28px 22px}
 
 <!-- Cart overlay + drawer -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
-<div class="cart-drawer" id="cartDrawer">
+<div class="drawer-base cart-drawer" id="cartDrawer">
   <div class="cart-header">
     <h3>Sepet (<span id="cartCountLabel">0</span>)</h3>
     <button class="cart-close" onclick="closeCart()"><i class="ti ti-x"></i></button>
@@ -885,7 +889,7 @@ footer{background:#040404;padding:52px 28px 22px}
 
 <!-- Nav -->
 <nav id="mainNav">
-  <div class="hamburger-btn" onclick="toggleMobileMenu()"><i class="ti ti-menu-2"></i></div>
+  <button class="hamburger-btn" onclick="alert('Menu tiklandi!'); toggleMobileMenu()"><i class="ti ti-menu-2"></i></button>
   <div class="nav-links">
     <a onclick="toggleDropdown(event)" style="cursor:pointer; display:flex; align-items:center; gap:6px; font-weight:600; font-size:14px; text-transform:uppercase; letter-spacing:0.05em;">
       <i class="ti ti-layout-grid" style="font-size:18px"></i> Kategoriler
@@ -1392,6 +1396,16 @@ try {
 /* ════════════════════════════════════════════
    LOCAL WRITE HELPERS
 ════════════════════════════════════════════ */
+function toggleMobileMenu(){
+  try {
+    const overlay = document.getElementById('mobileMenuOverlay');
+    const menu = document.getElementById('mobileMenu');
+    overlay.classList.toggle('open');
+    menu.classList.toggle('open');
+  } catch (e) {
+    alert("MENU HATA: " + e.message);
+  }
+}
 function saveCart(){
   localStorage.setItem(`cart_${SESSION_ID}`, JSON.stringify(cart));
 }

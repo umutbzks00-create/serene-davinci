@@ -1373,23 +1373,20 @@ try {
    LOCAL WRITE HELPERS
 ════════════════════════════════════════════ */
 function toggleMobileMenu(){
-  alert("TOGGLE ÇALIŞTI!");
   try {
-    const overlay = document.getElementById('mobileMenuOverlay');
-    const menu = document.getElementById('mobileMenu');
-    if (menu.style.display === 'flex' || menu.classList.contains('open')) {
-      menu.style.display = 'none';
-      overlay.style.display = 'none';
-      menu.classList.remove('open');
-      overlay.classList.remove('open');
-    } else {
+    var menu = document.getElementById('mobileMenu');
+    var overlay = document.getElementById('mobileMenuOverlay');
+    if(!menu) { alert('MENU BULUNAMADI!'); return; }
+    
+    if (menu.style.display === 'none' || menu.style.display === '') {
       menu.style.display = 'flex';
-      overlay.style.display = 'block';
-      menu.classList.add('open');
-      overlay.classList.add('open');
+      if(overlay) overlay.style.display = 'block';
+    } else {
+      menu.style.display = 'none';
+      if(overlay) overlay.style.display = 'none';
     }
-  } catch (e) {
-    alert("MENU HATA: " + e.message);
+  } catch(e) {
+    alert('Hata: ' + e.message);
   }
 }
 function saveCart(){
@@ -2817,8 +2814,8 @@ function appendVbotMsg(text, sender) {
 
   </script>
 </div>
-<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
-<div class="mobile-menu" id="mobileMenu">
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 999998; backdrop-filter: blur(5px);"></div>
+<div class="mobile-menu" id="mobileMenu" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; width: 100%; background: #ffffff; z-index: 999999; flex-direction: column; overflow-y: auto;">
   <div class="mm-head">
     <div class="mm-logo">VANTA</div>
     <button class="mm-close" onclick="toggleMobileMenu()"><i class="ti ti-x"></i></button>

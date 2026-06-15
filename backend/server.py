@@ -642,6 +642,16 @@ def user_orders():
         orders.append(o)
     return jsonify({'success': True, 'orders': orders})
 
+@app.route('/api/debug_db')
+def debug_db():
+    try:
+        from backend.db import init_db
+        init_db()
+        return "SUCCESS"
+    except Exception as e:
+        import traceback
+        return traceback.format_exc()
+
 @app.route('/api/user/wishlist', methods=['GET', 'POST', 'DELETE'])
 def user_wishlist():
     token = request.headers.get('Authorization', '').replace('Bearer ', '')

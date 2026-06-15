@@ -27,8 +27,8 @@ nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturat
 .mobile-notif-btn{display:none;}
 .mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);z-index:1100;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .mobile-menu-overlay.open{opacity:1;pointer-events:all}
-.mobile-menu{position:fixed;top:0;left:-320px;bottom:0;width:300px;background:var(--white);z-index:999999;transition:left 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;box-shadow:20px 0 40px rgba(0,0,0,0.1);visibility:visible !important;transform:none !important;}
-.mobile-menu.open{left:0 !important;}
+.mobile-menu{position:fixed;top:0;left:0;right:0;bottom:0;width:100%;background:var(--white);z-index:999999;display:none;flex-direction:column;box-shadow:20px 0 40px rgba(0,0,0,0.1);overflow-y:auto;}
+.mobile-menu.open{display:flex !important;}
 .mm-head{padding:20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.05)}
 .mm-logo{font-size:20px;font-weight:900;letter-spacing:.08em}
 .mm-close{background:none;border:none;font-size:24px;cursor:pointer}
@@ -1376,14 +1376,16 @@ function toggleMobileMenu(){
   try {
     const overlay = document.getElementById('mobileMenuOverlay');
     const menu = document.getElementById('mobileMenu');
-    if (menu.classList.contains('open')) {
+    if (menu.style.display === 'flex' || menu.classList.contains('open')) {
+      menu.style.display = 'none';
+      overlay.style.display = 'none';
       menu.classList.remove('open');
       overlay.classList.remove('open');
-      menu.style.left = '-320px';
     } else {
+      menu.style.display = 'flex';
+      overlay.style.display = 'block';
       menu.classList.add('open');
       overlay.classList.add('open');
-      menu.style.left = '0';
     }
   } catch (e) {
     alert("MENU HATA: " + e.message);

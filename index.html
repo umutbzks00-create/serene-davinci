@@ -695,14 +695,65 @@ html, body {
   width: 100% !important;
 }
 
-.pb-text { display: flex; flex-direction: column; align-items: center; gap: 8px; justify-content: center; width: 100%; box-sizing: border-box; }
-.pb-top { font-size: 28px; font-weight: 900; letter-spacing: 0.15em; color: var(--black); text-transform: uppercase; line-height: 1.3; }
-.pb-top .dot { color: rgba(0,0,0,0.2); margin: 0 4px; }
-.pb-sub { font-size: 13px; font-weight: 500; letter-spacing: 0.2em; color: #666; text-transform: uppercase; }
-.pb-sub .dot { color: rgba(0,0,0,0.15); margin: 0 4px; }
+/* --- PREMIUM BAND --- */
+.premium-band {
+  background: var(--black);
+  color: var(--white);
+  padding: 100px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.prem-sub-top {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.4em;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+.prem-title {
+  font-size: 48px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  line-height: 1.1;
+  text-transform: uppercase;
+  margin-bottom: 32px;
+}
+.prem-line {
+  width: 1px;
+  height: 60px;
+  background: rgba(255,255,255,0.2);
+  margin-bottom: 32px;
+}
+.prem-sub-bottom {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  color: rgba(255,255,255,0.7);
+  text-transform: uppercase;
+}
 
 /* Quick Add button slightly smaller on mobile */
 @media (max-width: 768px) {
+  .premium-band {
+    padding: 80px 20px;
+  }
+  .prem-title {
+    font-size: 36px;
+  }
+  .prem-sub-top {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+  }
+  .prem-sub-bottom {
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    line-height: 1.6;
+  }
+  
   .pcard-quick {
     display: flex !important;
     padding: 6px !important;
@@ -1058,21 +1109,12 @@ html, body {
   <div class="pagination-container" id="pagination"></div>
 </div>
 
-<!-- Parallax band -->
-<div class="parallax-band" id="parallaxBand">
-  <div class="pb-text" id="pbText">
-    <div class="pb-top">
-      <span style="white-space:nowrap">STREETWEAR <span class="dot">·</span></span>
-      <span style="white-space:nowrap">CULTURE <span class="dot">·</span></span>
-      <span style="white-space:nowrap">VANTA <span class="dot">·</span></span>
-      <span style="white-space:nowrap">OVERSIZE <span class="dot">·</span></span>
-      <span style="white-space:nowrap">DROP</span>
-    </div>
-    <div class="pb-sub">
-      <span style="white-space:nowrap">SS25 <span class="dot">·</span></span>
-      <span style="white-space:nowrap">İstanbul'dan dünyaya</span>
-    </div>
-  </div>
+<!-- Premium Editorial Band -->
+<div class="premium-band">
+  <div class="prem-sub-top">SS25 COLLECTION</div>
+  <div class="prem-title">STREETWEAR<br>CULTURE<br>VANTA</div>
+  <div class="prem-line"></div>
+  <div class="prem-sub-bottom">OVERSIZE &bull; DROP &bull; ISTANBUL</div>
 </div>
 
 <!-- Editorial -->

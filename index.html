@@ -22,7 +22,23 @@ body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--black)
 
 nav{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;border-bottom:1px solid rgba(0,0,0,.04);position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);transition:background .4s ease,backdrop-filter .4s ease,box-shadow .4s ease,border-color .4s ease}
 nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);box-shadow:0 4px 30px rgba(0,0,0,.04);border-bottom-color:transparent}
-.logo{font-size:24px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--black);cursor:pointer;transition:letter-spacing .35s ease;user-select:none}
+.logo{font-size:24px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--black);cursor:pointer;transition:letter-spacing .35s ease;user-select:none;position:absolute;left:50%;transform:translateX(-50%)}
+.hamburger-btn{display:none;font-size:24px;cursor:pointer;color:var(--black);align-items:center;justify-content:center;width:40px;height:40px;}
+.mobile-notif-btn{display:none;}
+.mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);z-index:1100;opacity:0;pointer-events:none;transition:opacity 0.3s}
+.mobile-menu-overlay.open{opacity:1;pointer-events:all}
+.mobile-menu{position:fixed;top:0;left:0;bottom:0;width:300px;background:var(--white);z-index:1101;transform:translateX(-100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;box-shadow:20px 0 40px rgba(0,0,0,0.1)}
+.mobile-menu.open{transform:translateX(0)}
+.mm-head{padding:20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.05)}
+.mm-logo{font-size:20px;font-weight:900;letter-spacing:.08em}
+.mm-close{background:none;border:none;font-size:24px;cursor:pointer}
+.mm-search-box{padding:20px;border-bottom:1px solid rgba(0,0,0,0.05)}
+.mm-search-input{width:100%;background:#f5f5f5;border:1px solid transparent;padding:12px 16px;border-radius:8px;font-family:'Poppins';font-size:13px;outline:none;transition:all .2s}
+.mm-search-input:focus{border-color:var(--black);background:var(--white)}
+.mm-links{padding:20px;display:flex;flex-direction:column;gap:16px;overflow-y:auto}
+.mm-links h4{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+.mm-links a{font-size:16px;font-weight:600;color:var(--black);text-decoration:none;cursor:pointer}
+.mobile-notif-row{display:none;}
 .logo:hover{letter-spacing:.12em}
 .nav-links{display:flex;gap:32px;align-items:center}
 .nav-links a{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--black);text-decoration:none;cursor:pointer;position:relative;padding-bottom:4px;opacity:.7;transition:opacity .2s}
@@ -543,12 +559,16 @@ footer{background:#040404;padding:52px 28px 22px}
 /* ── MOBIL (RESPONSIVE) ── */
 @media(max-width:768px){
   body{padding-top:80px}
-  nav{padding:0 16px; height: 54px;}
+  nav{padding:0 16px; height: 54px; justify-content: space-between;}
   .topbar{font-size:8px;padding:6px 14px}
   .navbar{padding:14px;flex-wrap:wrap;gap:12px}
-  .nav-links{display:flex; overflow-x:auto;width:100%;padding-top:8px;justify-content:flex-start;gap:16px;border-top:.5px solid var(--lightgray)}
-  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links{display:none;}
+  #navSearchWrap{display:none;}
+  #notifBtn{display:none;}
+  .hamburger-btn{display:flex;}
+  .mobile-notif-btn{display:block;}
   .logo{font-size:20px}
+  .notif-panel{width:100%; right:0; top:54px; position:fixed; z-index: 1200; box-shadow: 0 20px 40px rgba(0,0,0,0.2);}
   .hero-panel{height:45vh; padding: 20px;}
   .hp-title{font-size:28px}
   .lookbook-track{gap:10px}
@@ -835,8 +855,36 @@ footer{background:#040404;padding:52px 28px 22px}
   </div>
 </div>
 
+<!-- Mobile Menu -->
+<div class="mobile-menu-overlay" id="mobileMenuOverlay" onclick="toggleMobileMenu()"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mm-head">
+    <div class="mm-logo">VANTA</div>
+    <button class="mm-close" onclick="toggleMobileMenu()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="mm-search-box">
+    <input type="text" class="mm-search-input" id="mmSearchInput" placeholder="Ürün ara..." onkeypress="if(event.key==='Enter') { doMobileSearch(); }">
+  </div>
+  <div class="mm-links">
+    <h4 style="font-weight:700">Üst Giyim</h4>
+    <a onclick="mmSelect('Tişört')">Tişört</a>
+    <a onclick="mmSelect('Gömlek')">Gömlek</a>
+    <a onclick="mmSelect('Hoodie')">Hoodie</a>
+    <a onclick="mmSelect('Atlet')">Atlet</a>
+    <h4 style="font-weight:700;margin-top:12px;">Alt Giyim</h4>
+    <a onclick="mmSelect('Jean')">Jean</a>
+    <a onclick="mmSelect('Şort')">Şort / Jorts</a>
+    <a onclick="mmSelect('Eşofman')">Eşofman Altı</a>
+    <h4 style="font-weight:700;margin-top:12px;">Dış Giyim</h4>
+    <a onclick="mmSelect('Ceket')">Ceket</a>
+    <a onclick="mmSelect('Mont')">Mont</a>
+    <a onclick="mmSelect('Yağmurluk')">Yağmurluk</a>
+  </div>
+</div>
+
 <!-- Nav -->
 <nav id="mainNav">
+  <div class="hamburger-btn" onclick="toggleMobileMenu()"><i class="ti ti-menu-2"></i></div>
   <div class="nav-links">
     <a onclick="toggleDropdown(event)" style="cursor:pointer; display:flex; align-items:center; gap:6px; font-weight:600; font-size:14px; text-transform:uppercase; letter-spacing:0.05em;">
       <i class="ti ti-layout-grid" style="font-size:18px"></i> Kategoriler
@@ -1148,8 +1196,12 @@ footer{background:#040404;padding:52px 28px 22px}
 <!-- Profile Panel -->
 <div class="cart-overlay" id="profileOverlay" onclick="closeProfile()"></div>
 <div class="profile-panel" id="profilePanel">
-  <div class="pp-head">
-    <span class="pp-head-label" id="ppHeadLabel">Hesabım</span>
+  <div class="pp-head" style="justify-content:flex-start; gap:16px;">
+    <span class="pp-head-label" id="ppHeadLabel" style="flex:1;">Hesabım</span>
+    <button class="mobile-notif-btn" onclick="toggleNotif()" style="background:none;border:none;font-size:20px;cursor:pointer;position:relative;">
+      <i class="ti ti-bell"></i>
+      <div class="notif-dot show" style="top:0;right:0;"></div>
+    </button>
     <button class="pp-head-close" onclick="closeProfile()">×</button>
   </div>
   
@@ -1362,8 +1414,44 @@ window.addEventListener('scroll',()=>{
 setTimeout(()=>document.getElementById('hero').classList.add('in-view'),100);
 
 /* ── DROPDOWN ── */
-function toggleDropdown(e){e&&e.stopPropagation();ddOpen=!ddOpen;document.getElementById('dropdown').classList.toggle('open',ddOpen);document.getElementById('catTrigger').classList.toggle('open',ddOpen);}
-function closeDD(){ddOpen=false;document.getElementById('dropdown').classList.remove('open');document.getElementById('catTrigger').classList.remove('open');}
+function toggleDropdown(e){e&&e.stopPropagation();ddOpen=!ddOpen;document.getElementById('dropdown').classList.toggle('open',ddOpen);}
+function toggleMobileMenu(){
+  const overlay = document.getElementById('mobileMenuOverlay');
+  const menu = document.getElementById('mobileMenu');
+  overlay.classList.toggle('open');
+  menu.classList.toggle('open');
+}
+function mmSelect(cat) {
+  toggleMobileMenu();
+  const title = document.getElementById('gridTitle');
+  if(title) title.scrollIntoView({behavior:'smooth', block:'start'});
+  filterCat(cat);
+}
+function doMobileSearch() {
+  const q = document.getElementById('mmSearchInput').value.trim();
+  if(!q) return;
+  toggleMobileMenu();
+  // Simple search redirect or filter
+  if(document.getElementById('gridTitle')) {
+    document.getElementById('gridTitle').scrollIntoView({behavior:'smooth'});
+    document.getElementById('cat-all').click(); // reset cat
+    setTimeout(() => {
+      const grid = document.getElementById('productGrid');
+      const cards = grid.querySelectorAll('.pcard');
+      let found = 0;
+      cards.forEach(c => {
+        if(c.textContent.toLowerCase().includes(q.toLowerCase())) {
+          c.style.display = 'flex';
+          found++;
+        } else {
+          c.style.display = 'none';
+        }
+      });
+      document.getElementById('gridTitle').innerHTML = `Arama: ${q} (${found})`;
+    }, 100);
+  }
+}
+function closeDD(){ddOpen=false;document.getElementById('dropdown').classList.remove('open');if(document.getElementById('catTrigger')) document.getElementById('catTrigger').classList.remove('open');}
 function ddSelect(cat){setCatByName(cat);closeDD();document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'});}
 document.addEventListener('click',e=>{if(!document.getElementById('catBar').contains(e.target))closeDD();});
 

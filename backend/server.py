@@ -14,6 +14,13 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 CORS(app) # Allow all origins for now
 
+try:
+    from backend.db import init_db
+    init_db()
+    print("Database initialized successfully on startup.")
+except Exception as e:
+    print(f"Error initializing DB: {e}")
+
 SECRET_KEY = "vanta_super_secret_key"
 UPLOAD_FOLDER = os.path.join(os.path.dirname(__file__), 'uploads')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)

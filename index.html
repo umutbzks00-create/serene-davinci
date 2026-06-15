@@ -27,8 +27,8 @@ nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturat
 .mobile-notif-btn{display:none;}
 .mobile-menu-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.5);backdrop-filter:blur(5px);z-index:1100;opacity:0;pointer-events:none;transition:opacity 0.3s}
 .mobile-menu-overlay.open{opacity:1;pointer-events:all}
-.mobile-menu{position:fixed;top:0;left:0;bottom:0;width:300px;background:var(--white);z-index:1101;transform:translateX(-100%);transition:transform 0.4s cubic-bezier(0.16,1,0.3,1), visibility 0s 0.4s;display:flex;flex-direction:column;box-shadow:20px 0 40px rgba(0,0,0,0.1);visibility:hidden}
-.mobile-menu.open{transform:translateX(0);visibility:visible;transition:transform 0.4s cubic-bezier(0.16,1,0.3,1)}
+.mobile-menu{position:fixed;top:0;left:-320px;bottom:0;width:300px;background:var(--white);z-index:999999;transition:left 0.4s cubic-bezier(0.16,1,0.3,1);display:flex;flex-direction:column;box-shadow:20px 0 40px rgba(0,0,0,0.1);visibility:visible !important;transform:none !important;}
+.mobile-menu.open{left:0 !important;}
 .mm-head{padding:20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.05)}
 .mm-logo{font-size:20px;font-weight:900;letter-spacing:.08em}
 .mm-close{background:none;border:none;font-size:24px;cursor:pointer}
@@ -279,7 +279,7 @@ nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturat
 
 /* ── PARALLAX BAND ── */
 .parallax-band{background:var(--mid);padding:52px 28px;text-align:center;position:relative;overflow:hidden}
-.pb-text{font-size:52px;font-weight:900;color:#111;letter-spacing:-.03em;white-space:nowrap;will-change:transform}
+.pb-text{font-size:14px; white-space:normal; line-height:1.4; padding:0 10px;}
 .pb-sub{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#1e1e1e;margin-top:10px}
 
 /* ── EDITORIAL ── */
@@ -594,7 +594,7 @@ footer{background:#040404;padding:52px 28px 22px}
   .pcard-price{font-size:13px}
   .pcard-quick{transform:translateY(0); padding: 8px; font-size: 9px; letter-spacing:.08em;}
   .pcard-img:hover .pcard-quick{transform:translateY(0)}
-  .pb-text{font-size:26px; white-space:normal; line-height:1.2;}
+  .pb-text{font-size:14px; white-space:normal; line-height:1.4; padding:0 10px;}
   .parallax-band{padding:40px 16px;}
 }
 
@@ -1379,15 +1379,11 @@ function toggleMobileMenu(){
     if (menu.classList.contains('open')) {
       menu.classList.remove('open');
       overlay.classList.remove('open');
-      menu.style.transform = 'translateX(-100%)';
-      menu.style.visibility = 'hidden';
+      menu.style.left = '-320px';
     } else {
       menu.classList.add('open');
       overlay.classList.add('open');
-      menu.style.transform = 'translateX(0)';
-      menu.style.visibility = 'visible';
-      menu.style.zIndex = '999999';
-      overlay.style.zIndex = '999998';
+      menu.style.left = '0';
     }
   } catch (e) {
     alert("MENU HATA: " + e.message);

@@ -642,6 +642,40 @@ def user_orders():
         orders.append(o)
     return jsonify({'success': True, 'orders': orders})
 
+@app.route('/api/debug_products')
+def debug_products():
+    try:
+        conn = get_db()
+        c = conn.cursor(cursor_factory=DictCursor)
+        c.execute("SELECT * FROM products ORDER BY created_at DESC NULLS LAST, id DESC")
+        rows = c.fetchall()
+        conn.close()
+        
+        products = []
+        for r in rows:
+            p = dict(r)
+            p['desc'] = p.pop('desc_text', None)
+            p['similar'] = p.pop('similar_products', None)
+            p['imageUrl'] = p.pop('imageurl', None)
+            p['ratingCount'] = p.pop('ratingcount', None)
+            p['combineWith'] = p.pop('combinewith', None)
+            
+            p['sizes'] = json.loads(p['sizes']) if p['sizes'] else []
+            p['stock'] = json.loads(p['stock']) if p['stock'] else {}
+            p['combineWith'] = json.loads(p['combineWith']) if p['combineWith'] else []
+            p['similar'] = json.loads(p['similar']) if p['similar'] else []
+            
+            p['imageUrlHover'] = p.pop('imageurl_hover', None)
+            p['colors'] = json.loads(p.get('colors', '[]')) if p.get('colors') else []
+            p['barcode'] = p.get('barcode', None)
+            p['has_print'] = p.get('has_print', False)
+            
+            products.append(p)
+        return jsonify({'success': True, 'products': products})
+    except Exception as e:
+        import traceback
+        return traceback.format_exc()
+
 @app.route('/api/debug_db')
 def debug_db():
     try:

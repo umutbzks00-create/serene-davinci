@@ -228,10 +228,13 @@ def handle_chat():
     conn.close()
     
     def make_link(p):
-        return f'<a href="javascript:void(0)" onclick="openProductPage({p['id']})" style="color:var(--black);font-weight:800;text-decoration:underline">{p['name']}</a>'
+        p_id = p['id']
+        p_name = p['name']
+        return f'<a href="javascript:void(0)" onclick="openProductPage({p_id})" style="color:var(--black);font-weight:800;text-decoration:underline">{p_name}</a>'
 
     def make_cart_btn(p):
-        return f'<br><br><button onclick="addBag({p['id']}); openCart()" style="background:#111;color:#fff;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:11px;letter-spacing:0.5px">🛒 Hemen Sepete Ekle</button>'
+        p_id = p['id']
+        return f'<br><br><button onclick="addBag({p_id}); openCart()" style="background:#111;color:#fff;border:none;padding:6px 12px;border-radius:4px;cursor:pointer;font-weight:600;font-size:11px;letter-spacing:0.5px">🛒 Hemen Sepete Ekle</button>'
 
     def find_p(kws):
         for p in products:

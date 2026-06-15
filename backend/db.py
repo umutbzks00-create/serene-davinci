@@ -141,7 +141,7 @@ def init_db():
             c.execute('''
                 INSERT INTO products (id, name, cat, tag, price, old, imageUrl, emoji, sizes, stock, desc_text, material, rating, ratingCount, combineWith, similar_products, order_num)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            ''', (p['id'], p['name'], p['cat'], p['tag'], p['price'], p['old'], p['imageUrl'], p['emoji'], p['sizes'], p['stock'], p['desc'], p['material'], p['rating'], p['ratingCount'], p['combineWith'], p['similar'], p['order_num']))
+            ''', (p['id'], p['name'], p['cat'], p['tag'], p['price'], p['old'], p['imageUrl'], p['emoji'], json.dumps(p['sizes']), json.dumps(p['stock']), p['desc'], p['material'], p['rating'], p['ratingCount'], json.dumps(p['combineWith']), json.dumps(p['similar']), p['order_num']))
             
     conn.commit()
     cursor = conn.cursor()

@@ -9,8 +9,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--black:#000000;--white:#ffffff;--gray:#545454;--lightgray:#f5f5f5;--mid:#161616;--red:#e11d48;--green:#1d8661;--orange:#ef672c}
-html{scroll-behavior:smooth}
-body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;padding-top:96px}
+html{scroll-behavior:smooth;max-width:100vw;overflow-x:hidden}
+body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;max-width:100vw;padding-top:96px}
 
 .topbar{background:var(--black);color:var(--white);text-align:center;padding:10px 0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;overflow:hidden;height:40px;position:fixed;top:0;left:0;right:0;z-index:1001;display:flex;align-items:center}
 .topbar-slides{display:flex;flex-direction:row;animation:topSlideRight 30s linear infinite;width:max-content}
@@ -85,7 +85,7 @@ nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturat
 @keyframes slideIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
 .ci-img{width:64px;height:72px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
 .ci-info{flex:1;min-width:0}
-.ci-name{font-size:12px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-name{font-size:12px;font-weight:700;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .ci-cat{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
 .ci-size-label{font-size:9px;color:var(--gray);letter-spacing:.06em;margin-bottom:8px}
 .ci-row{display:flex;align-items:center;justify-content:space-between}
@@ -252,7 +252,7 @@ nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturat
 .recent-card:hover{opacity:.85}
 .rc-img{aspect-ratio:1;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:40px}
 .rc-body{padding:8px 10px 10px}
-.rc-name{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.rc-name{font-size:11px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
 .rc-price{font-size:10px;color:var(--gray)}
 .rc-remove{position:absolute;top:6px;right:6px;background:rgba(250,250,250,.9);border:none;width:20px;height:20px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;color:var(--gray);opacity:0;transition:opacity .2s}
 .recent-card:hover .rc-remove{opacity:1}
@@ -442,7 +442,7 @@ footer{background:#040404;padding:52px 28px 22px}
 .pp-outfit-card:hover{opacity:.88}
 .pp-outfit-img{aspect-ratio:1;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:48px}
 .pp-outfit-body{padding:10px 12px 14px}
-.pp-outfit-name{font-size:12px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-outfit-name{font-size:12px;font-weight:700;margin-bottom:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .pp-outfit-price{font-size:11px;color:var(--gray)}
 .pp-outfit-add{position:absolute;bottom:0;left:0;right:0;background:rgba(10,10,10,.85);color:var(--white);text-align:center;padding:9px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;transform:translateY(100%);transition:transform .24s;border:none;cursor:pointer;font-weight:700}
 .pp-outfit-card:hover .pp-outfit-add{transform:translateY(0)}
@@ -516,7 +516,7 @@ footer{background:#040404;padding:52px 28px 22px}
 .pp-oc-icon{font-size:22px;width:40px;flex-shrink:0;text-align:center}
 .pp-oc-body{flex:1;min-width:0}
 .pp-oc-id{font-size:9px;color:#ccc;letter-spacing:.08em;margin-bottom:2px}
-.pp-oc-items{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.pp-oc-items{font-size:11px;font-weight:700;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:2px}
 .pp-oc-meta{display:flex;align-items:center;gap:8px}
 .pp-oc-total{font-size:11px;font-weight:700}
 .pp-oc-status{font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:2px 7px;background:#f5f5f5;color:#aaa}

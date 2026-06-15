@@ -1,0 +1,2731 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>VANTA WEAR</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css"/>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#000000;--white:#ffffff;--gray:#545454;--lightgray:#f5f5f5;--mid:#161616;--red:#e11d48;--green:#1d8661;--orange:#ef672c}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',sans-serif;background:var(--white);color:var(--black);overflow-x:hidden;padding-top:96px}
+
+.topbar{background:var(--black);color:var(--white);text-align:center;padding:10px 0;font-size:12px;letter-spacing:.1em;text-transform:uppercase;overflow:hidden;height:40px;position:fixed;top:0;left:0;right:0;z-index:1001;display:flex;align-items:center}
+.topbar-slides{display:flex;flex-direction:row;animation:topSlideRight 30s linear infinite;width:max-content}
+.topbar-slides:hover{animation-play-state:paused}
+.topbar-slide{padding:0 40px;height:20px;display:flex;align-items:center;justify-content:center;gap:20px;flex-shrink:0;white-space:nowrap;font-weight:500}
+@keyframes topSlideRight{0%{transform:translateX(-50%)}100%{transform:translateX(0)}}
+.topbar-code{background:var(--orange);border:none;padding:3px 10px;cursor:pointer;transition:all .2s;color:var(--white);letter-spacing:.05em;font-weight:700}
+.topbar-code:hover{background:#d55823;color:#fff}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 32px;height:64px;border-bottom:1px solid rgba(0,0,0,.04);position:fixed;top:36px;left:0;right:0;z-index:1000;background:rgba(255,255,255,0.95);transition:background .4s ease,backdrop-filter .4s ease,box-shadow .4s ease,border-color .4s ease}
+nav.scrolled{background:rgba(255,255,255,.80);backdrop-filter:blur(24px) saturate(1.8);-webkit-backdrop-filter:blur(24px) saturate(1.8);box-shadow:0 4px 30px rgba(0,0,0,.04);border-bottom-color:transparent}
+.logo{font-size:24px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--black);cursor:pointer;transition:letter-spacing .35s ease;user-select:none}
+.logo:hover{letter-spacing:.12em}
+.nav-links{display:flex;gap:32px;align-items:center}
+.nav-links a{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--black);text-decoration:none;cursor:pointer;position:relative;padding-bottom:4px;opacity:.7;transition:opacity .2s}
+.nav-links a:hover{opacity:1}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--black);transition:width .3s cubic-bezier(0.16, 1, 0.3, 1)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:6px}
+
+.nav-search-wrap{display:flex;align-items:center;position:relative;margin-right:6px}
+.nav-search-input{width:0;padding:0;background:transparent;border:none;outline:none;font-size:11px;letter-spacing:.04em;color:var(--black);transition:width .35s ease,padding .35s ease,border-color .35s ease;border-bottom:.5px solid transparent;overflow:hidden}
+.nav-search-input::placeholder{color:#bbb}
+.nav-search-wrap.active .nav-search-input{width:180px;padding:4px 0;border-bottom-color:rgba(0,0,0,.25)}
+.nav-search-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;cursor:pointer;color:var(--black);font-size:18px;opacity:.7;transition:opacity .2s}
+.nav-search-btn:hover{opacity:1}
+.nav-search-results{position:absolute;top:calc(100% + 8px);right:0;width:320px;background:var(--white);border:.5px solid var(--lightgray);box-shadow:0 12px 40px rgba(0,0,0,.1);display:none;z-index:300;max-height:360px;overflow-y:auto}
+.nav-search-wrap.active .nav-search-results{display:block}
+.nsr-item{display:flex;align-items:center;gap:12px;padding:12px 16px;cursor:pointer;border-bottom:.5px solid var(--lightgray);transition:background .15s}
+.nsr-item:hover{background:#f5f5f5}
+.nsr-item:last-child{border-bottom:none}
+.nsr-emoji{font-size:22px;width:36px;height:40px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nsr-name{font-size:11px;font-weight:700;margin-bottom:2px}
+.nsr-meta{font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--gray)}
+.nsr-price{font-size:11px;font-weight:700;margin-left:auto;flex-shrink:0}
+.nsr-empty{padding:20px 16px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#bbb;text-align:center}
+
+.nav-icon{font-size:18px;cursor:pointer;color:var(--black);transition:opacity .2s;display:flex;align-items:center;justify-content:center;width:36px;height:36px;position:relative;opacity:.7}
+.nav-icon:hover{opacity:1}
+.cbadge{position:absolute;top:3px;right:2px;background:var(--black);color:var(--white);font-size:8px;width:14px;height:14px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;transition:transform .3s}
+.cbadge.bump{animation:bump .35s ease}
+@keyframes bump{0%{transform:scale(1)}50%{transform:scale(1.7)}100%{transform:scale(1)}}
+.notif-dot{position:absolute;top:5px;right:5px;width:7px;height:7px;background:#e05;border-radius:50%;border:1.5px solid var(--white);display:none}
+.notif-dot.show{display:block}
+.notif-panel{position:absolute;top:calc(100% + 8px);right:0;width:300px;background:var(--white);border:.5px solid var(--lightgray);box-shadow:0 12px 40px rgba(0,0,0,.1);z-index:400;display:none}
+.notif-panel.open{display:block}
+.notif-header{padding:14px 16px 10px;border-bottom:.5px solid var(--lightgray);display:flex;justify-content:space-between;align-items:center}
+.notif-header span{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700}
+.notif-clear{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);cursor:pointer;transition:color .2s}
+.notif-clear:hover{color:var(--black)}
+.notif-item{padding:12px 16px;border-bottom:.5px solid var(--lightgray);cursor:pointer;transition:background .15s}
+.notif-item:hover{background:#f5f5f5}
+.notif-item:last-child{border-bottom:none}
+.ni-title{font-size:11px;font-weight:700;margin-bottom:3px}
+.ni-sub{font-size:10px;color:var(--gray);letter-spacing:.02em}
+.ni-time{font-size:9px;color:#bbb;margin-top:4px;letter-spacing:.06em}
+
+/* ── CART DRAWER ── */
+.cart-drawer{position:fixed;top:0;right:0;bottom:0;width:400px;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px) saturate(160%);z-index:1100;transform:translateX(100%);transition:transform .4s cubic-bezier(0.16, 1, 0.3, 1);border-left:1px solid rgba(0,0,0,0.05);display:flex;flex-direction:column;box-shadow:-10px 0 30px rgba(0,0,0,0.05)}
+.cart-drawer.open{transform:translateX(0)}
+.cart-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);backdrop-filter:blur(3px);z-index:1099;opacity:0;pointer-events:none;transition:opacity .4s cubic-bezier(0.16, 1, 0.3, 1)}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-header{display:flex;align-items:center;justify-content:space-between;padding:24px 28px 20px;border-bottom:1px solid rgba(0,0,0,0.04)}
+.cart-header h3{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:800;color:var(--black)}
+.cart-close{background:none;border:none;cursor:pointer;font-size:20px;color:var(--black);display:flex;align-items:center;transition:transform .3s cubic-bezier(0.16, 1, 0.3, 1);opacity:.7}
+.cart-close:hover{transform:rotate(90deg);opacity:1}
+.cart-items{flex:1;overflow-y:auto;padding:0 24px}
+.cart-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:#ccc}
+.cart-empty i{font-size:44px}
+.cart-empty p{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#ccc}
+.cart-item{display:flex;gap:14px;padding:18px 0;border-bottom:.5px solid var(--lightgray);animation:slideIn .3s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+.ci-img{width:64px;height:72px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.ci-info{flex:1;min-width:0}
+.ci-name{font-size:12px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ci-cat{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:8px}
+.ci-size-label{font-size:9px;color:var(--gray);letter-spacing:.06em;margin-bottom:8px}
+.ci-row{display:flex;align-items:center;justify-content:space-between}
+.ci-qty{display:flex;align-items:center;gap:8px}
+.ci-qty button{background:none;border:.5px solid var(--lightgray);width:24px;height:24px;cursor:pointer;font-size:14px;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.ci-qty button:hover{background:var(--black);color:var(--white);border-color:var(--black)}
+.ci-qty span{font-size:12px;font-weight:700;width:20px;text-align:center}
+.ci-price{font-size:13px;font-weight:800}
+.ci-remove{background:none;border:none;cursor:pointer;font-size:15px;color:#ccc;transition:color .2s}
+.ci-remove:hover{color:var(--red)}
+.cart-footer{padding:18px 24px;border-top:.5px solid var(--lightgray)}
+.cart-free-ship{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;text-align:center}
+.free-ship-bar{height:2px;background:var(--lightgray);margin-bottom:14px;overflow:hidden}
+.free-ship-fill{height:100%;background:var(--black);transition:width .5s ease}
+.cart-subtotal{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+.cart-subtotal span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray)}
+.cart-subtotal strong{font-size:20px;font-weight:900}
+.cart-checkout{width:100%;background:var(--black);color:var(--white);border:none;padding:15px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:background .2s,transform .1s}
+.cart-checkout:hover{background:#1a1a1a}
+.cart-checkout:active{transform:scale(.98)}
+
+/* ── CAT BAR ── */
+.cat-bar{border-bottom:.5px solid var(--lightgray);background:var(--white);display:flex;align-items:stretch;padding:0 28px;position:relative;z-index:100}
+.cat-trigger{font-size:10px;letter-spacing:.14em;text-transform:uppercase;padding:12px 0;cursor:pointer;color:var(--black);border:none;border-bottom:1.5px solid transparent;background:none;font-weight:700;display:flex;align-items:center;gap:6px;transition:border-color .15s;flex-shrink:0}
+.cat-trigger.open{border-bottom-color:var(--black)}
+.cat-trigger .ti-chevron-down{font-size:12px;transition:transform .25s}
+.cat-trigger.open .ti-chevron-down{transform:rotate(180deg)}
+.cat-divider{width:.5px;background:var(--lightgray);margin:10px 20px;flex-shrink:0}
+.cat-sub-links{display:flex;align-items:center;overflow-x:auto;scrollbar-width:none;flex:1}
+.cat-sub-links::-webkit-scrollbar{display:none}
+.clink{font-size:10px;letter-spacing:.12em;text-transform:uppercase;padding:12px 14px;cursor:pointer;color:var(--gray);border:none;border-bottom:1.5px solid transparent;white-space:nowrap;background:none;transition:color .15s,border-color .15s}
+.clink:hover{color:var(--black)}
+.clink.active{color:var(--black);border-bottom-color:var(--black)}
+.price-chips{display:flex;align-items:center;gap:6px;padding:0 0 0 16px;border-left:.5px solid var(--lightgray);margin-left:8px}
+.price-chip{font-size:9px;letter-spacing:.08em;border:.5px solid var(--lightgray);padding:4px 10px;cursor:pointer;color:var(--gray);white-space:nowrap;transition:all .15s;background:none}
+.price-chip:hover{border-color:#999;color:var(--black)}
+.price-chip.active{background:var(--black);color:var(--white);border-color:var(--black)}
+.dropdown{position:absolute;top:100%;left:0;right:0;background:var(--white);border:.5px solid var(--lightgray);border-top:none;z-index:150;padding:32px 28px 28px;opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity .22s ease,transform .22s ease}
+.dropdown.open{opacity:1;transform:translateY(0);pointer-events:all}
+.dropdown-inner{display:grid;grid-template-columns:repeat(5,1fr);gap:28px}
+.dd-col h4{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gray);margin-bottom:12px;font-weight:700}
+.dd-col a{display:block;font-size:11px;color:var(--black);margin-bottom:9px;cursor:pointer;letter-spacing:.04em;text-decoration:none;transition:color .15s,padding-left .15s}
+.dd-col a:hover{color:var(--gray);padding-left:5px}
+.dd-col a.featured{font-weight:700}
+.dd-banner{background:var(--mid);padding:20px 18px;display:flex;flex-direction:column;justify-content:flex-end;min-height:128px;position:relative;overflow:hidden;cursor:pointer;transition:transform .2s}
+.dd-banner:hover{transform:scale(.98)}
+.dd-banner+.dd-banner{margin-top:8px}
+.dd-banner-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:52px;opacity:.12;pointer-events:none;transition:transform .3s}
+.dd-banner:hover .dd-banner-bg{transform:scale(1.15)}
+.dd-banner h3{font-size:14px;font-weight:800;color:var(--white);position:relative;z-index:1}
+.dd-banner p{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#444;position:relative;z-index:1;margin-top:3px}
+
+/* ── TICKER ── */
+.ticker-wrap{background:var(--mid);overflow:hidden;padding:9px 0}
+.ticker{display:flex;animation:tick 28s linear infinite;width:max-content}
+.ticker-wrap:hover .ticker{animation-play-state:paused}
+.ticker-item{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#aaa;padding:0 24px;white-space:nowrap}
+.ticker-item b{color:#fff}
+@keyframes tick{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── HERO ── */
+.hero{display:flex;flex-direction:column;min-height:600px;overflow:hidden}
+.hero-left{background:var(--black);display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:52px 44px;position:relative;overflow:hidden;cursor:pointer;flex:1}
+.hero-left::before{content:'VANTA';position:absolute;top:-20px;left:-12px;font-size:220px;font-weight:900;color:rgba(255,255,255,.025);letter-spacing:-.03em;line-height:1;pointer-events:none;user-select:none;transition:transform 8s ease}
+.hero-left:hover::before{transform:scale(1.04) rotate(-2deg)}
+.hero-eyebrow,.hero-title,.hero-sub,.hero-btn{opacity:0;transform:translateY(18px)}
+.hero-eyebrow{font-size:12px;letter-spacing:.25em;text-transform:uppercase;color:#fff;margin-bottom:16px;transition:opacity .7s .1s,transform .7s .1s;font-weight:600}
+.hero-title{font-size:82px;font-weight:900;color:var(--white);line-height:.92;letter-spacing:-.03em;margin-bottom:20px;transition:opacity .7s .25s,transform .7s .25s;text-transform:uppercase}
+.hero-title em{font-style:normal;color:#aaa}
+.hero-sub{font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:#ccc;margin-bottom:40px;transition:opacity .7s .4s,transform .7s .4s}
+.hero-btn{display:inline-block;background:var(--white);color:var(--black);font-size:11px;letter-spacing:.2em;text-transform:uppercase;padding:16px 36px;cursor:pointer;border:none;font-weight:700;transition:opacity .7s .55s,transform .7s .55s,background .15s,letter-spacing .2s}
+.hero-btn:hover{background:#e8e8e8;letter-spacing:.3em}
+.hero.in-view .hero-eyebrow,.hero.in-view .hero-title,.hero.in-view .hero-sub,.hero.in-view .hero-btn{opacity:1;transform:none}
+.hero-right{display:grid;grid-template-rows:1fr 1fr}
+.hero-panel{display:flex;flex-direction:column;justify-content:flex-end;padding:28px;cursor:pointer;position:relative;overflow:hidden;border-left:.5px solid #111}
+.hero-panel:first-child{border-bottom:.5px solid #111;background:#0d0d0d}
+.hero-panel:last-child{background:#f4f1ea}
+.hp-inner{position:relative;z-index:1;transition:transform .3s}
+.hero-panel:hover .hp-inner{transform:translateY(-4px)}
+.hp-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.4;transition:all .6s;pointer-events:none}
+.hero-panel:hover .hp-bg{opacity:0.6;transform:scale(1.05)}
+.hp-tag{font-size:9px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:5px}
+.hp-t1{color:#2a2a2a}.hp-t2{color:#999}
+.hp-title{font-size:22px;font-weight:900;letter-spacing:-.02em}
+.hp-c1{color:var(--white)}.hp-c2{color:var(--black)}
+.hp-arrow{font-size:9px;letter-spacing:.16em;text-transform:uppercase;margin-top:6px;transition:letter-spacing .2s}
+.hp-c1-arrow{color:#2a2a2a}.hp-c2-arrow{color:#bbb}
+.hero-panel:hover .hp-arrow{letter-spacing:.26em}
+
+/* ── PRODUCTS ── */
+.products-section{padding:0 28px 60px}
+.products-header{display:flex;justify-content:space-between;align-items:center;padding:36px 0 20px}
+.ph-left h2{font-size:24px;font-weight:900;letter-spacing:-.02em}
+.ph-left p{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-top:3px}
+.ph-right{display:flex;align-items:center;gap:10px}
+.count-badge{font-size:9px;letter-spacing:.1em;background:var(--lightgray);color:var(--gray);padding:4px 10px}
+.sort-select{font-size:10px;letter-spacing:.06em;border:.5px solid var(--lightgray);padding:8px 14px;background:var(--white);color:var(--black);cursor:pointer;outline:none;transition:border-color .2s}
+.sort-select:hover{border-color:#999}
+.view-toggle{display:flex;border:.5px solid var(--lightgray);overflow:hidden}
+.vt-btn{width:34px;height:34px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;color:var(--gray);background:none;border:none;transition:all .15s}
+.vt-btn.active{background:var(--black);color:var(--white)}
+
+/* ── PRODUCT GRID ── */
+.product-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--lightgray);transition:all .3s}
+.product-grid.two-col{grid-template-columns:repeat(2,1fr)}
+.product-grid.list-view{grid-template-columns:1fr;background:none;gap:0}
+.product-grid.list-view .pcard{display:flex;flex-direction:row;border-bottom:.5px solid var(--lightgray)}
+.product-grid.list-view .pcard-img{width:120px;aspect-ratio:auto;height:120px;flex-shrink:0}
+.product-grid.list-view .pcard-emoji{font-size:52px}
+.product-grid.list-view .pcard-body{flex:1;display:flex;flex-direction:row;align-items:center;gap:20px;padding:16px 20px}
+.product-grid.list-view .pcard-top{flex:1}
+.product-grid.list-view .pcard-sizes{display:none}
+.product-grid.list-view .pcard-price-row{margin-top:6px}
+.product-grid.list-view .pcard-badge{top:8px;left:8px}
+.pagination-container{display:flex;justify-content:center;align-items:center;gap:8px;margin-top:40px;margin-bottom:24px;width:100%}
+.pg-btn{background:var(--lightgray);border:none;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:2px;font-family:'Poppins',sans-serif;font-weight:700;font-size:14px;cursor:pointer;color:var(--text);transition:all .2s}
+.pg-btn:hover{background:#eee}
+.pg-btn.active{background:var(--text);color:#fff}
+.pg-btn:disabled{opacity:0.3;cursor:not-allowed}
+
+.pcard{background:var(--white);cursor:pointer;position:relative;opacity:0;transform:translateY(20px); transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1); border-radius: 6px;}
+.pcard:hover { transform: translateY(0); box-shadow: 0 12px 30px rgba(0,0,0,0.06); }
+.pcard.visible{animation:cardIn .5s cubic-bezier(0.16, 1, 0.3, 1) forwards}
+@keyframes cardIn{to{opacity:1;transform:none}}
+.pcard-img{aspect-ratio:.82;background:#f8f8f8;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;border-radius:6px; transition: border-radius 0.3s ease;}
+.pcard:hover .pcard-img { border-radius: 6px 6px 0 0; }
+.pcard-emoji{font-size:88px;transition:transform .5s ease;display:block}
+.pcard-img:hover .pcard-emoji{transform:scale(1.1) translateY(-4px)}
+.pcard-quick{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.85);backdrop-filter:blur(12px) saturate(160%);color:var(--white);text-align:center;padding:14px;font-size:11px;letter-spacing:.05em;text-transform:uppercase;font-weight:700;transform:translateY(100%);transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);border:none;border-top:1px solid rgba(255,255,255,0.05);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;z-index:10}
+.pcard-img:hover .pcard-quick{transform:translateY(0);z-index:10}
+.pcard-quick:hover{background:rgba(0,0,0,1); color: var(--white);}
+.pcard-quick-size{display:flex;gap:4px;margin-left:10px}
+.pcard-quick-sz{font-size:10px;border:1px solid rgba(255,255,255,.3);padding:2px 6px;color:rgba(255,255,255,.8);cursor:pointer;transition:all .2s;background:transparent;border-radius:2px}
+.pcard-quick-sz:hover,.pcard-quick-sz.qs-sel{border-color:var(--white);color:var(--black);background:var(--white)}
+.pcard-body{padding:14px 0}
+.pcard-top{display:flex;justify-content:space-between;align-items:flex-start}
+.pcard-info{flex:1}
+.pcard-cat{font-size:11px;letter-spacing:.05em;color:var(--gray);margin-bottom:6px;font-weight:500}
+.pcard-name{font-size:14px;font-weight:600;letter-spacing:0;line-height:1.3;color:var(--black)}
+.pcard-fav{background:none;border:none;cursor:pointer;font-size:20px;padding:0;margin-left:8px;flex-shrink:0;color:#ccc;transition:color .2s,transform .2s}
+.pcard-fav:hover{transform:scale(1.1);color:var(--black)}
+.pcard-fav.on{color:var(--red)}
+.pcard-price-row{display:flex;align-items:center;gap:10px;margin-top:10px}
+.pcard-price{font-size:15px;font-weight:700;color:var(--black)}
+.pcard-old{font-size:13px;color:var(--gray);text-decoration:line-through;font-weight:400}
+.pcard-disc{font-size:10px;letter-spacing:.02em;background:var(--orange);color:var(--white);padding:3px 6px;font-weight:600;border-radius:2px}
+.pcard-badge{position:absolute;top:10px;left:10px;font-size:10px;letter-spacing:.05em;text-transform:uppercase;padding:5px 10px;font-weight:700;z-index:1;border-radius:4px;box-shadow:0 2px 10px rgba(0,0,0,0.06)}
+.badge-new{background:var(--white);color:var(--black);box-shadow:0 2px 5px rgba(0,0,0,0.1)}
+.badge-hot{background:var(--black);color:var(--white)}
+.badge-limited{background:var(--orange);color:var(--white)}
+.pcard-sizes{display:none} /* Clean layout without full size buttons */
+.sz{font-size:10px;border:1px solid var(--lightgray);padding:5px 10px;color:var(--gray);cursor:pointer;transition:all .2s;border-radius:2px}
+.sz:hover,.sz.selected{border-color:var(--black);background:var(--black);color:var(--white)}
+
+/* ── RECENTLY VIEWED ── */
+.recent-bar{padding:32px 28px 0;display:none}
+.recent-bar.show{display:block}
+.recent-header{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px}
+.recent-header h3{font-size:14px;font-weight:900;letter-spacing:-.01em}
+.recent-clear{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--gray);cursor:pointer;transition:color .2s}
+.recent-clear:hover{color:var(--black)}
+.recent-track{display:flex;gap:1px;background:var(--lightgray);overflow:hidden}
+.recent-card{flex:1;min-width:0;background:var(--white);cursor:pointer;position:relative;transition:opacity .2s}
+.recent-card:hover{opacity:.85}
+.rc-img{aspect-ratio:1;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:40px}
+.rc-body{padding:8px 10px 10px}
+.rc-name{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.rc-price{font-size:10px;color:var(--gray)}
+.rc-remove{position:absolute;top:6px;right:6px;background:rgba(250,250,250,.9);border:none;width:20px;height:20px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;color:var(--gray);opacity:0;transition:opacity .2s}
+.recent-card:hover .rc-remove{opacity:1}
+
+/* ── PARALLAX BAND ── */
+.parallax-band{background:var(--mid);padding:52px 28px;text-align:center;position:relative;overflow:hidden}
+.pb-text{font-size:52px;font-weight:900;color:#111;letter-spacing:-.03em;white-space:nowrap;will-change:transform}
+.pb-sub{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:#1e1e1e;margin-top:10px}
+
+/* ── EDITORIAL ── */
+.editorial{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--lightgray);margin-top:1px}
+.ed-block{padding:56px 44px;display:flex;flex-direction:column;justify-content:flex-end;min-height:280px;cursor:pointer;position:relative;overflow:hidden}
+.ed-dark{background:var(--black)}.ed-light{background:#eeeae3}
+.ed-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:120px;opacity:.08;pointer-events:none;transition:transform .5s ease,opacity .4s}
+.ed-bg-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.5;transition:all .6s ease;pointer-events:none;z-index:0}
+.ed-block:hover .ed-bg-img{opacity:0.8;transform:scale(1.05)}
+.ed-tag,.ed-heading,.ed-arrow{position:relative;z-index:1}
+.ed-block:hover .ed-bg{transform:scale(1.15);opacity:.14}
+.ed-tag{font-size:9px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px}
+.ed-dark .ed-tag{color:#2a2a2a}.ed-light .ed-tag{color:#aaa}
+.ed-heading{font-size:36px;font-weight:900;letter-spacing:-.02em;line-height:.96;margin-bottom:18px;transition:transform .3s}
+.ed-block:hover .ed-heading{transform:translateY(-3px)}
+.ed-dark .ed-heading{color:var(--white)}.ed-light .ed-heading{color:var(--black)}
+.ed-arrow{font-size:10px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;transition:letter-spacing .25s}
+.ed-block:hover .ed-arrow{letter-spacing:.3em}
+.ed-dark .ed-arrow{color:#2a2a2a}.ed-light .ed-arrow{color:#bbb}
+
+/* ── LOOKBOOK ── */
+.lookbook{padding:60px 0 0;overflow:hidden}
+.lookbook-header{padding:0 28px;margin-bottom:28px;display:flex;align-items:baseline;justify-content:space-between}
+.lookbook-header h2{font-size:22px;font-weight:900;letter-spacing:-.02em}
+.lookbook-header a{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gray);text-decoration:none;transition:color .2s;cursor:pointer}
+.lookbook-header a:hover{color:var(--black)}
+.lookbook-track{display:flex;gap:1px;overflow-x:auto;scrollbar-width:none;padding:0 28px;scroll-snap-type:x mandatory;cursor:grab}
+.lookbook-track::-webkit-scrollbar{display:none}
+.lookbook-track:active{cursor:grabbing}
+.lk-card{flex-shrink:0;width:260px;scroll-snap-align:start;cursor:pointer}
+.lk-img{aspect-ratio:.75;background:#f0ede8;display:flex;align-items:center;justify-content:center;font-size:72px;overflow:hidden}
+.lk-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;transition:transform .4s ease}
+.lk-card:hover .lk-inner{transform:scale(1.06)}
+.lk-body{padding:12px 0 24px}
+.lk-num{font-size:9px;letter-spacing:.14em;color:var(--gray);margin-bottom:4px}
+.lk-name{font-size:13px;font-weight:700}
+.lk-price{font-size:12px;color:var(--gray);margin-top:3px}
+
+/* ── NEWSLETTER ── */
+.newsletter{background:var(--black);padding:72px 40px;text-align:center;position:relative;overflow:hidden}
+.newsletter::before{content:'JOIN';position:absolute;font-size:180px;font-weight:900;color:rgba(255,255,255,.018);letter-spacing:-.02em;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;white-space:nowrap}
+.nl-eyebrow{font-size:9px;letter-spacing:.25em;text-transform:uppercase;color:#2a2a2a;margin-bottom:12px}
+.nl-title{font-size:38px;font-weight:900;letter-spacing:-.02em;color:var(--white);margin-bottom:8px}
+.nl-sub{font-size:11px;color:#333;letter-spacing:.06em;margin-bottom:36px}
+.nl-form{display:flex;justify-content:center;max-width:440px;margin:0 auto}
+.nl-form input{flex:1;background:#0d0d0d;border:.5px solid #1a1a1a;border-right:none;padding:14px 18px;font-size:11px;color:var(--white);outline:none;letter-spacing:.05em;transition:border-color .2s}
+.nl-form input:focus{border-color:#2a2a2a}
+.nl-form input::placeholder{color:#252525}
+.nl-form button{background:var(--white);color:var(--black);border:none;padding:14px 24px;font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:background .2s,letter-spacing .2s}
+.nl-form button:hover{background:#e8e8e8;letter-spacing:.28em}
+
+/* ── FOOTER ── */
+footer{background:#040404;padding:52px 28px 22px}
+.footer-grid{display:grid;grid-template-columns:1.5fr repeat(5, 1fr);gap:24px;margin-bottom:44px}
+.footer-logo{font-size:18px;font-weight:900;letter-spacing:.35em;color:#1a1a1a;margin-bottom:12px}
+.footer-desc{font-size:11px;color:#161616;line-height:1.9;letter-spacing:.03em}
+.footer-col h4{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:#1e1e1e;margin-bottom:16px;font-weight:700}
+.footer-col a{display:block;font-size:11px;color:#161616;margin-bottom:9px;cursor:pointer;letter-spacing:.04em;text-decoration:none;transition:color .15s}
+.footer-col a:hover{color:#333}
+.footer-bottom{border-top:.5px solid #0f0f0f;padding-top:20px;display:flex;justify-content:space-between;align-items:center}
+.footer-copy{font-size:10px;color:#161616;letter-spacing:.1em}
+.socials{display:flex;gap:18px}
+.social-btn{font-size:18px;color:#161616;cursor:pointer;transition:color .2s,transform .2s;display:flex;align-items:center}
+.social-btn:hover{color:#333;transform:translateY(-2px)}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:28px;right:28px;background:var(--black);color:var(--white);padding:13px 20px 13px 16px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;z-index:999;border-left:2px solid var(--white);display:flex;align-items:center;gap:10px;transform:translateY(10px)}
+.toast.show{opacity:1;transform:none}
+.back-top{position:fixed;bottom:28px;left:28px;width:40px;height:40px;background:var(--black);color:var(--white);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;opacity:0;pointer-events:none;transition:opacity .3s,transform .2s;z-index:100}
+.back-top.visible{opacity:1;pointer-events:all}
+.back-top:hover{transform:translateY(-3px)}
+
+/* ── WISHLIST PANEL ── */
+.wish-panel{position:fixed;top:0;right:0;bottom:0;width:360px;background:var(--white);z-index:1100;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);border-left:.5px solid var(--lightgray);display:flex;flex-direction:column}
+.wish-panel.open{transform:translateX(0)}
+.wish-header{display:flex;align-items:center;justify-content:space-between;padding:22px 24px 16px;border-bottom:.5px solid var(--lightgray)}
+.wish-header h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;font-weight:700}
+.wish-close{background:none;border:none;cursor:pointer;font-size:20px;color:var(--black);display:flex;align-items:center;opacity:.7;transition:transform .2s,opacity .2s}
+.wish-close:hover{transform:rotate(90deg);opacity:1}
+.wish-items{flex:1;overflow-y:auto;padding:0 24px}
+.wish-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:12px;color:#ccc}
+.wish-empty i{font-size:44px}
+.wish-empty p{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#ccc}
+.wish-item{display:flex;gap:14px;padding:16px 0;border-bottom:.5px solid var(--lightgray);animation:slideIn .3s ease}
+.wi-img{width:60px;height:68px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.wi-name{font-size:12px;font-weight:700;margin-bottom:3px}
+.wi-price{font-size:11px;color:var(--gray)}
+.wi-actions{display:flex;gap:8px;margin-top:10px}
+.wi-add{flex:1;background:var(--black);color:var(--white);border:none;padding:7px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:background .15s}
+.wi-add:hover{background:#1a1a1a}
+.wi-remove{background:none;border:.5px solid var(--lightgray);width:30px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--gray);transition:all .15s}
+.wi-remove:hover{border-color:var(--red);color:var(--red)}
+
+/* ════════════════════════════════════════════
+   PRODUCT PAGE (full screen overlay)
+   ════════════════════════════════════════════ */
+.pp-overlay{display:none; width:100%; min-height:80vh; padding-top:24px; padding-bottom:60px; background:var(--white)}
+.pp-overlay.open{display:flex;flex-direction:column}
+
+/* pp-nav kaldırıldı — ana navbar görünür durumda */
+
+/* main 2-col layout */
+.pp-body{display:grid;grid-template-columns:1fr 1fr;flex:1;max-width:1200px;width:100%;margin:0 auto;padding:0 28px 60px;gap:60px;align-items:start}
+/* mobile rules moved to bottom media query to fix specificity */
+
+/* left — image gallery */
+.pp-gallery{position:sticky;top:72px}
+.pp-main-img{background:#f5f5f5;aspect-ratio:.88;display:flex;align-items:center;justify-content:center;font-size:160px;position:relative;overflow:hidden;margin-bottom:8px;cursor:zoom-in}
+.pp-main-img .pp-main-emoji{transition:transform .5s ease}
+.pp-main-img:hover .pp-main-emoji{transform:scale(1.08) translateY(-6px)}
+.pp-main-img img { transition: transform 0.5s ease; transform-origin: center center; cursor: zoom-in; }
+.pp-main-img:hover img { transform: scale(1.5); }
+.pp-badge-flag{position:absolute;top:16px;left:16px;font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;font-weight:700}
+.pp-thumb-row{display:flex;gap:6px}
+.pp-thumb{width:72px;height:82px;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;border:.5px solid transparent;transition:border-color .2s;flex-shrink:0}
+.pp-thumb.active-t{border-color:var(--black)}
+.pp-thumb:hover{border-color:#bbb}
+
+/* right — product info */
+.pp-info{padding-top:36px}
+.pp-tag-row{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.pp-cat-tag{font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray)}
+.pp-status{font-size:9px;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;font-weight:700}
+.pp-name{font-size:34px;font-weight:900;letter-spacing:-.025em;line-height:1.0;margin-bottom:18px}
+.pp-price-row{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.pp-price{font-size:28px;font-weight:900}
+.pp-old{font-size:16px;color:var(--gray);text-decoration:line-through}
+.pp-disc{font-size:9px;letter-spacing:.06em;background:var(--black);color:var(--white);padding:4px 10px;font-weight:700}
+.pp-section-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray);margin-bottom:10px;font-weight:700}
+.pp-sizes{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.pp-sz{border:1px solid var(--lightgray);padding:10px 0;text-align:center;font-size:12px;cursor:pointer;transition:all .2s;color:var(--black);background:var(--white);border-radius:4px;flex:1}
+.pp-sz:hover{border-color:var(--black)}
+.pp-sz.pp-sz-sel{background:var(--black);color:var(--white);border-color:var(--black);font-weight:600}
+.pp-sz.sold-out{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.pp-size-guide{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);text-decoration:underline;cursor:pointer;margin-bottom:26px;display:inline-block;transition:color .15s}
+.pp-size-guide:hover{color:var(--black)}
+.pp-qty-row{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.pp-qty-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gray)}
+.pp-qty-ctrl{display:flex;align-items:center;border:.5px solid var(--lightgray)}
+.pp-qty-ctrl button{width:36px;height:36px;background:none;border:none;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.pp-qty-ctrl button:hover{background:#f5f5f5}
+.pp-qty-ctrl span{width:36px;text-align:center;font-size:13px;font-weight:700}
+.pp-add-btn{width:100%;background:var(--black);color:var(--white);border:none;padding:18px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;font-weight:700;transition:all .3s cubic-bezier(0.16, 1, 0.3, 1);position:relative;overflow:hidden;margin-bottom:10px;border-radius:6px;box-shadow:0 4px 14px rgba(0,0,0,0.15)}
+.pp-add-btn:hover{background:#1a1a1a;transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,0.22)}
+.pp-add-btn:active{transform:scale(.98)}
+.pp-add-btn::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.08);transform:translateX(-100%);transition:transform .5s}
+.pp-add-btn:hover::after{transform:translateX(100%)}
+.pp-add-btn.no-size{background:#aaa;cursor:not-allowed;box-shadow:none;transform:none}
+.pp-wish-btn{width:100%;background:none;border:.5px solid var(--lightgray);padding:13px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;color:var(--gray);transition:all .2s;margin-bottom:28px}
+.pp-wish-btn:hover,.pp-wish-btn.on{border-color:var(--red);color:var(--red)}
+.pp-wish-btn.on i{font-size:17px}
+.pp-divider{height:.5px;background:var(--lightgray);margin:24px 0}
+.pp-desc{font-size:12px;line-height:1.85;color:#555;margin-bottom:24px}
+/* accordions */
+.pp-accord{border-top:.5px solid var(--lightgray)}
+.pp-accord-item{border-bottom:.5px solid var(--lightgray)}
+.pp-accord-head{display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:pointer;font-size:10px;letter-spacing:.15em;text-transform:uppercase;font-weight:700}
+.pp-accord-head i{font-size:16px;color:var(--gray);transition:transform .25s}
+.pp-accord-item.open .pp-accord-head i{transform:rotate(180deg)}
+.pp-accord-body{font-size:11px;line-height:1.8;color:#666;padding:0 0 16px;max-height:0;overflow:hidden;transition:max-height .35s ease}
+.pp-accord-item.open .pp-accord-body{max-height:300px}
+/* rating */
+.pp-rating-row{display:flex;align-items:center;gap:8px;margin-bottom:20px}
+.pp-stars{color:#e8b800;font-size:14px;letter-spacing:1px}
+.pp-rating-num{font-size:12px;font-weight:700}
+.pp-rating-ct{font-size:11px;color:var(--gray)}
+/* shipping badges */
+.pp-ship-badges{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.pp-ship-badge{font-size:9px;letter-spacing:.1em;text-transform:uppercase;border:.5px solid var(--lightgray);padding:6px 12px;color:#555;display:flex;align-items:center;gap:6px}
+.pp-ship-badge i{font-size:14px;color:var(--gray)}
+
+/* ── RECOMMENDATIONS ── */
+.pp-recs{max-width:1200px;width:100%;margin:0 auto;padding:0 28px 80px}
+.pp-recs-title{font-size:9px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;color:var(--gray);margin-bottom:20px;padding-top:8px;border-top:.5px solid var(--lightgray)}
+.pp-recs-section-head{font-size:18px;font-weight:900;letter-spacing:-.01em;margin-bottom:4px}
+.pp-recs-section-sub{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:20px}
+/* kombine (outfit) strip */
+.pp-outfit{display:flex;gap:1px;background:var(--lightgray);margin-bottom:40px}
+.pp-outfit-card{flex:1;background:var(--white);cursor:pointer;position:relative;transition:opacity .2s}
+.pp-outfit-card:hover{opacity:.88}
+.pp-outfit-img{aspect-ratio:1;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:48px}
+.pp-outfit-body{padding:10px 12px 14px}
+.pp-outfit-name{font-size:12px;font-weight:700;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pp-outfit-price{font-size:11px;color:var(--gray)}
+.pp-outfit-add{position:absolute;bottom:0;left:0;right:0;background:rgba(10,10,10,.85);color:var(--white);text-align:center;padding:9px;font-size:9px;letter-spacing:.14em;text-transform:uppercase;transform:translateY(100%);transition:transform .24s;border:none;cursor:pointer;font-weight:700}
+.pp-outfit-card:hover .pp-outfit-add{transform:translateY(0)}
+/* similar grid */
+.pp-similar{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--lightgray)}
+.pp-sim-card{background:var(--white);cursor:pointer;position:relative;transition:opacity .2s}
+.pp-sim-card:hover{opacity:.88}
+.pp-sim-img{aspect-ratio:.85;background:#f5f5f5;display:flex;align-items:center;justify-content:center;font-size:60px}
+.pp-sim-body{padding:10px 12px 14px}
+.pp-sim-cat{font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);margin-bottom:3px}
+.pp-sim-name{font-size:12px;font-weight:700;margin-bottom:6px}
+.pp-sim-price{font-size:13px;font-weight:900}
+.pp-sim-old{font-size:10px;color:var(--gray);text-decoration:line-through;margin-left:5px}
+
+/* ── SKELETON LOADER ── */
+.pcard-skeleton{background:var(--white)}
+.skeleton{background:linear-gradient(90deg,#f0f0f0 25%,#e8e8e8 50%,#f0f0f0 75%);background-size:200% 100%;animation:skeleton-load 1.4s infinite}
+@keyframes skeleton-load{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.skel-img{aspect-ratio:.82;width:100%;margin-bottom:0}
+.skel-line{border-radius:2px}
+
+/* ── AUTH MODAL ── */
+.auth-overlay{position:fixed;inset:0;background:rgba(0,0,0,.72);z-index:1200;display:none;align-items:center;justify-content:center;backdrop-filter:blur(6px)}
+.auth-overlay.open{display:flex}
+.auth-box{background:#fff;width:420px;max-width:calc(100vw - 32px);padding:52px 44px 40px;position:relative;animation:cardIn .28s ease}
+.auth-x{position:absolute;top:16px;right:18px;background:none;border:none;font-size:20px;cursor:pointer;color:#aaa;line-height:1;transition:color .15s}
+.auth-x:hover{color:#000}
+.auth-logo{font-size:22px;font-weight:900;letter-spacing:.5em;color:#0a0a0a;text-align:center;margin-bottom:6px}
+.auth-tagline{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#bbb;text-align:center;margin-bottom:28px}
+.auth-tabs{display:flex;border-bottom:.5px solid #e8e8e8;margin-bottom:28px}
+.auth-tab{flex:1;font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;padding:10px 0;border:none;background:none;color:#bbb;cursor:pointer;border-bottom:2px solid transparent;transition:all .18s}
+.auth-tab.active{color:#0a0a0a;border-bottom-color:#0a0a0a}
+.auth-field{width:100%;border:none;border-bottom:.5px solid #e0e0e0;padding:12px 0;font-size:13px;outline:none;margin-bottom:14px;background:transparent;transition:border-color .18s;letter-spacing:.02em}
+.auth-field:focus{border-bottom-color:#0a0a0a}
+.auth-field::placeholder{color:#bbb}
+.auth-submit{width:100%;background:#0a0a0a;color:#fff;border:none;padding:15px;font-size:10px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:opacity .2s;margin-top:8px}
+.auth-submit:hover{opacity:.82}
+.auth-submit:disabled{opacity:.4;cursor:not-allowed}
+.auth-err{font-size:11px;color:var(--red);min-height:16px;margin-bottom:10px;letter-spacing:.02em}
+.auth-hint{text-align:center;font-size:11px;color:#aaa;margin-top:18px;letter-spacing:.02em}
+.auth-hint b{color:#0a0a0a;cursor:pointer;font-weight:700}
+
+/* ── PROFILE PANEL ── */
+.profile-panel{position:fixed;top:0;right:-440px;width:400px;height:100vh;background:#fff;z-index:1100;transition:right .38s cubic-bezier(.4,0,.2,1);overflow-y:auto;box-shadow:-12px 0 60px rgba(0,0,0,.09)}
+.profile-panel.open{right:0}
+.pp-head{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:.5px solid #f0f0f0;position:sticky;top:0;background:#fff;z-index:2}
+.pp-head-label{font-size:10px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#0a0a0a}
+.pp-head-close{background:none;border:none;font-size:22px;cursor:pointer;color:#bbb;line-height:1;transition:color .15s}
+.pp-head-close:hover{color:#000}
+/* ── PRODUCT PAGE OVERLAY ── */
+.pp-overlay{display:none; width:100%; min-height:80vh; padding-top:24px; padding-bottom:60px; background:var(--white)}
+.pp-overlay.open{display:flex;flex-direction:column}
+.pp-close{position:absolute;top:20px;right:24px;font-size:24px;background:rgba(255,255,255,0.8);backdrop-filter:blur(10px);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:none;cursor:pointer;z-index:2010;transition:transform .3s cubic-bezier(0.16, 1, 0.3, 1);box-shadow:0 4px 12px rgba(0,0,0,0.1)}
+.pp-close:hover{transform:rotate(90deg) scale(1.1)}
+.pp-hero{padding:36px 24px 24px;text-align:center;border-bottom:.5px solid #f5f5f5;background:linear-gradient(180deg,#f5f5f5 0%,#fff 100%)}
+.pp-av{width:68px;height:68px;border-radius:50%;background:#0a0a0a;color:#fff;font-size:24px;font-weight:900;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;letter-spacing:.01em;flex-shrink:0}
+.pp-av.vanta-red{background:var(--red)}
+.pp-av.vanta-accent{background:#1a1a4a}
+.pp-dname{font-size:17px;font-weight:900;letter-spacing:-.01em;margin-bottom:3px}
+.pp-email{font-size:11px;color:#aaa;letter-spacing:.02em}
+.pp-member{display:inline-block;font-size:8px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;background:#f5f5f5;color:#aaa;padding:3px 10px;margin-top:10px}
+.pp-kpis{display:flex;border-bottom:.5px solid #f0f0f0}
+.pp-kpi{flex:1;padding:18px 0;text-align:center}
+.pp-kpi+.pp-kpi{border-left:.5px solid #f0f0f0}
+.pp-kpi-num{font-size:20px;font-weight:900;margin-bottom:2px}
+.pp-kpi-lbl{font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#aaa}
+.pp-block{padding:22px 24px;border-bottom:.5px solid #f5f5f5}
+.pp-block-title{font-size:9px;letter-spacing:.2em;text-transform:uppercase;font-weight:700;color:#bbb;margin-bottom:14px}
+.pp-order-card{padding:12px 0;border-bottom:.5px solid #f8f8f8;display:flex;align-items:center;gap:12px}
+.pp-order-card:last-child{border-bottom:none}
+.pp-oc-icon{font-size:22px;width:40px;flex-shrink:0;text-align:center}
+.pp-oc-body{flex:1;min-width:0}
+.pp-oc-id{font-size:9px;color:#ccc;letter-spacing:.08em;margin-bottom:2px}
+.pp-oc-items{font-size:11px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+.pp-oc-meta{display:flex;align-items:center;gap:8px}
+.pp-oc-total{font-size:11px;font-weight:700}
+.pp-oc-status{font-size:8px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;padding:2px 7px;background:#f5f5f5;color:#aaa}
+.pp-edit-f{width:100%;border:none;border-bottom:.5px solid #e0e0e0;padding:11px 0;font-size:12px;outline:none;margin-bottom:12px;background:transparent;transition:border-color .18s;letter-spacing:.02em}
+.pp-edit-f:focus{border-bottom-color:#0a0a0a}
+.pp-edit-f:disabled{opacity:.4}
+.pp-save{width:100%;background:#0a0a0a;color:#fff;border:none;padding:13px;font-size:9px;letter-spacing:.22em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:opacity .2s}
+.pp-save:hover{opacity:.82}
+.btn{padding:9px 18px;font-size:9px;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;font-weight:700;border:none;transition:all .15s}
+.btn-sm{padding:6px 12px;font-size:8px;border-radius:2px}
+.btn-ghost{background:none;border:.5px solid var(--lightgray);color:var(--gray)}
+.btn-ghost:hover{border-color:var(--black);color:var(--black)}
+.btn-primary{background:var(--black);color:var(--white)}
+.btn-primary:hover{opacity:.85}
+.pp-logout{width:100%;background:none;color:var(--red);border:.5px solid var(--red);padding:13px;font-size:9px;letter-spacing:.15em;text-transform:uppercase;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
+.pp-logout:hover{background:var(--red);color:var(--white)}
+.pp-empty{padding:24px;text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--gray);border:.5px dashed var(--lightgray);border-radius:4px}
+
+
+/* ── NAV USER ── */
+.nav-uav{width:28px;height:28px;border-radius:50%;background:#0a0a0a;color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:opacity .18s;flex-shrink:0}
+.nav-uav:hover{opacity:.78}
+
+/* ── MOBIL (RESPONSIVE) ── */
+@media(max-width:768px){
+  body{padding-top:80px}
+  nav{padding:0 16px; height: 54px;}
+  .topbar{font-size:8px;padding:6px 14px}
+  .navbar{padding:14px;flex-wrap:wrap;gap:12px}
+  .nav-links{display:flex; overflow-x:auto;width:100%;padding-top:8px;justify-content:flex-start;gap:16px;border-top:.5px solid var(--lightgray)}
+  .nav-links::-webkit-scrollbar{display:none}
+  .logo{font-size:20px}
+  .hero-panel{height:45vh; padding: 20px;}
+  .hp-title{font-size:28px}
+  .lookbook-track{gap:10px}
+  .lk-card{width:180px}
+  .footer-grid{grid-template-columns:1fr; gap: 30px; text-align: center;}
+  .footer-col.brand{align-items:center}
+  .cart-drawer, .wish-panel, .pp-panel, .auth-modal, .auth-box{width:100% !important;max-width:none !important;}
+  .auth-modal, .auth-box{max-height:100vh;height:100vh;border-radius:0;overflow-y:auto;padding:24px 16px !important;}
+  .pp-body{padding:0 14px 60px; grid-template-columns:1fr; gap:20px}
+  .pp-gallery{position:relative;top:0}
+  .pp-info{padding-top:0}
+  .pp-name{font-size:20px}
+  .pp-price{font-size:18px}
+  .pp-main-img{font-size:100px; aspect-ratio:3/4}
+  .pcard{min-width:0}
+  .product-grid{grid-template-columns:1fr 1fr; gap:10px}
+  .pcard-body{padding: 10px 0;}
+  .pcard-name{font-size:12px}
+  .pcard-price{font-size:13px}
+  .pcard-quick{transform:translateY(0); padding: 10px; font-size: 10px;}
+  .pcard-img:hover .pcard-quick{transform:translateY(0)}
+}
+
+/* ── PRODUCT CARD COLORS ── */
+.pcard-colors { display: flex; gap: 8px; margin-bottom: 10px; }
+.color-swatch { width: 14px; height: 14px; border-radius: 50%; border: 2px solid rgba(0,0,0,0.08); cursor: pointer; transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s; }
+.color-swatch:hover { transform: scale(1.3); border-color: #000; }
+.color-swatch.active { border-color: transparent; box-shadow: 0 0 0 1px #fff, 0 0 0 2px #222; transform: scale(1.1); cursor: default; }
+
+/* ── PRODUCT PAGE COLOR SWATCHES ── */
+.pp-color-swatch { width: 26px; height: 26px; border-radius: 50%; cursor: pointer; transition: transform 0.2s, box-shadow 0.15s; border: 2px solid rgba(0,0,0,0.1) !important; }
+.pp-color-swatch:hover { transform: scale(1.12); }
+.pp-color-swatch.selected { box-shadow: 0 0 0 1.5px #fff, 0 0 0 2.5px #222; transform: scale(1.05); border-color: transparent !important; }
+
+/* ── CARD IMAGES ── */
+.pcard-img > img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform 0.5s cubic-bezier(0.16, 1, 0.3, 1); }
+.pcard:hover .pcard-img > img { transform: scale(1.03); }
+.pcard-quick { z-index: 5; }
+
+/* ── CAROUSEL ── */
+.carousel-wrapper { position: relative; margin: 0 0 40px; padding: 0 28px; display: none; }
+.carousel-header { margin-bottom: 20px; text-align: center;}
+.carousel-title { font-size: 18px; font-weight: 700; color: #333; letter-spacing: 0.05em;}
+.carousel-container { display: flex; gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: 10px; scrollbar-width: none; }
+.carousel-container::-webkit-scrollbar { display: none; }
+.carousel-item { scroll-snap-align: start; flex: 0 0 calc(25% - 10px); }
+.carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 36px; height: 36px; background: #fff; border: 1px solid #eee; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 20px; color: #000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: background 0.2s, color 0.2s;}
+.carousel-arrow.left { left: 10px; }
+.carousel-arrow.right { right: 10px; }
+.carousel-arrow:hover { background: #000; color: #fff; }
+@media(max-width: 900px) { .carousel-item { flex: 0 0 calc(50% - 10px); } }
+@media(max-width: 768px) { .carousel-item { flex: 0 0 calc(75% - 10px); } .carousel-arrow{display:none;} }
+
+
+/* ── CHATBOT ── */
+.vbot-fab { position: fixed; bottom: 24px; right: 24px; width: 56px; height: 56px; border-radius: 50%; background: linear-gradient(135deg, #0a0a0a, #2a2a2a); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; box-shadow: 0 12px 24px rgba(0,0,0,0.25); z-index: 999; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s; border: 1px solid rgba(255,255,255,0.1); }
+.vbot-fab:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 16px 32px rgba(0,0,0,0.3); }
+.vbot-fab.open { transform: scale(0); pointer-events: none; }
+
+.vbot-window { position: fixed; bottom: 90px; right: 24px; width: 380px; max-width: calc(100vw - 48px); height: 600px; max-height: calc(100vh - 120px); background: rgba(255,255,255,0.95); backdrop-filter: blur(20px) saturate(180%); border-radius: 20px; box-shadow: 0 24px 60px rgba(0,0,0,0.2); z-index: 1000; display: flex; flex-direction: column; overflow: hidden; transform: translateY(20px) scale(0.95); opacity: 0; pointer-events: none; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); border: 1px solid rgba(0,0,0,0.05); }
+.vbot-window.open { transform: translateY(0) scale(1); opacity: 1; pointer-events: all; }
+
+.vbot-header { background: linear-gradient(135deg, #fff, #111); padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; color: #fff; flex-shrink: 0; }
+.vbot-header-left { display: flex; align-items: center; gap: 10px; }
+.vbot-header-icon { width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; font-size: 16px; color: #d8b4fe; }
+.vbot-title { font-size: 14px; font-weight: 800; letter-spacing: -0.2px; }
+.vbot-status { font-size: 10px; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 4px; }
+.vbot-status::before { content: ''; width: 6px; height: 6px; background: #22c55e; border-radius: 50%; display: block; }
+.vbot-close { background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 20px; transition: color 0.2s; }
+.vbot-close:hover { color: #fff; }
+
+.vbot-body { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 16px; scroll-behavior: smooth; }
+.vbot-body::-webkit-scrollbar { width: 6px; }
+.vbot-body::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.1); border-radius: 3px; }
+
+.vbot-msg { display: flex; flex-direction: column; max-width: 85%; }
+.vbot-msg.bot { align-self: flex-start; }
+.vbot-msg.user { align-self: flex-end; }
+.vbot-bubble { padding: 12px 16px; border-radius: 16px; font-size: 13px; line-height: 1.5; position: relative; }
+.vbot-msg.bot .vbot-bubble { background: #f0f0f0; color: #111; border-bottom-left-radius: 4px; }
+.vbot-msg.user .vbot-bubble { background: #fff; color: #fff; border-bottom-right-radius: 4px; }
+.vbot-time { font-size: 9px; color: #999; margin-top: 4px; align-self: flex-start; }
+.vbot-msg.user .vbot-time { align-self: flex-end; }
+
+.vbot-input-area { padding: 16px; background: #fff; border-top: 1px solid rgba(0,0,0,0.05); display: flex; gap: 10px; align-items: flex-end; }
+.vbot-input { flex: 1; border: 1px solid #eee; background: #f9f9f9; padding: 12px 16px; border-radius: 24px; font-size: 13px; outline: none; transition: border-color 0.2s; resize: none; max-height: 100px; font-family: inherit; }
+.vbot-input:focus { border-color: #fff; background: #fff; }
+.vbot-send { width: 44px; height: 44px; border-radius: 50%; background: #fff; color: #fff; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; flex-shrink: 0; transition: transform 0.2s, background 0.2s; }
+.vbot-send:hover { background: #eee; transform: translateY(-2px); }
+.vbot-send:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.vbot-typing { display: flex; gap: 4px; padding: 16px; background: #f0f0f0; border-radius: 16px; border-bottom-left-radius: 4px; align-self: flex-start; margin-bottom: 16px; display: none; }
+.vbot-typing.visible { display: flex; }
+.vbot-dot { width: 6px; height: 6px; background: #999; border-radius: 50%; animation: typing 1.4s infinite ease-in-out both; }
+.vbot-dot:nth-child(1) { animation-delay: -0.32s; }
+.vbot-dot:nth-child(2) { animation-delay: -0.16s; }
+@keyframes typing { 0%, 80%, 100% { transform: scale(0); } 40% { transform: scale(1); } }
+
+</style>
+</head>
+<body>
+
+<!-- Wishlist panel -->
+<div class="cart-overlay" id="wishOverlay" onclick="closeWish()"></div>
+<div class="wish-panel" id="wishPanel">
+  <div class="wish-header">
+    <h3>Favoriler (<span id="wishCount">0</span>)</h3>
+    <button class="wish-close" onclick="closeWish()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="wish-items" id="wishItems">
+    <div class="wish-empty" id="wishEmpty">
+      <i class="ti ti-heart" aria-hidden="true"></i>
+      <p>Henüz favori yok</p>
+    </div>
+  </div>
+</div>
+
+<!-- Cart overlay + drawer -->
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <h3>Sepet (<span id="cartCountLabel">0</span>)</h3>
+    <button class="cart-close" onclick="closeCart()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty" id="cartEmpty">
+      <i class="ti ti-shopping-bag" aria-hidden="true"></i>
+      <p>Sepet boş</p>
+    </div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-free-ship" id="freeShipMsg">Ücretsiz kargo için <b id="freeShipAmt">800</b> TL daha ekle</div>
+    <div class="free-ship-bar"><div class="free-ship-fill" id="freeShipFill" style="width:0%"></div></div>
+    <div class="cart-subtotal">
+      <span>Toplam</span>
+      <strong><span id="cartTotal">0</span> TL</strong>
+    </div>
+    <button class="cart-checkout" onclick="checkout()">Ödemeye Geç →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     PRODUCT PAGE OVERLAY
+     ═══════════════════════════════════════ -->
+<div class="pp-overlay" id="ppOverlay">
+  <!-- breadcrumb bar -->
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 28px;border-bottom:.5px solid var(--lightgray);flex-shrink:0;background:var(--white);position:sticky;top:0;z-index:10">
+    <div style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gray);display:flex;align-items:center;gap:6px">
+      <span style="cursor:pointer;transition:color .15s" onmouseover="this.style.color='#000'" onmouseout="this.style.color=''" onclick="closeProductPage()">Ana Sayfa</span>
+      <span style="color:#eee">/</span>
+      <span id="ppBreadCat" style="cursor:pointer;transition:color .15s" onmouseover="this.style.color='#000'" onmouseout="this.style.color=''" onclick="closeProductPage()">Koleksiyonlar</span>
+      <span style="color:#eee">/</span>
+      <span id="ppBreadName" style="color:var(--black)">Ürün</span>
+    </div>
+    <button style="background:none;border:.5px solid var(--lightgray);width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;color:var(--black);transition:transform .2s,border-color .2s" onmouseover="this.style.transform='rotate(90deg)'" onmouseout="this.style.transform=''" onclick="closeProductPage()" aria-label="Kapat"><i class="ti ti-x"></i></button>
+  </div>
+
+  <!-- main content -->
+  <div class="pp-body">
+    <!-- gallery -->
+    <div class="pp-gallery">
+      <div class="pp-main-img" id="ppMainImg">
+        <div class="pp-main-emoji" id="ppMainEmoji"></div>
+        <div class="pp-badge-flag" id="ppBadgeFlag"></div>
+      </div>
+      <div class="pp-thumb-row" id="ppThumbRow"></div>
+    </div>
+
+    <!-- info -->
+    <div class="pp-info">
+      <div class="pp-tag-row">
+        <span class="pp-cat-tag" id="ppCat"></span>
+        <span class="pp-status" id="ppStatus"></span>
+        <span id="ppSku" style="font-size:9px;color:var(--gray);letter-spacing:.1em;margin-left:auto"></span>
+        <span id="ppBarcode" style="font-size:9px;color:var(--gray);letter-spacing:.1em;margin-left:8px;padding-left:8px;border-left:1px solid #eee"></span>
+      </div>
+      <div class="pp-name" id="ppName"></div>
+
+
+      <div class="pp-price-row">
+        <span class="pp-price" id="ppPrice"></span>
+        <span class="pp-old" id="ppOld"></span>
+        <span class="pp-disc" id="ppDisc"></span>
+      </div>
+
+      <!-- social proof -->
+      <div id="ppSocialProof" style="display:flex;align-items:center;gap:8px;font-size:11px;color:#d97706;margin-bottom:16px;background:#fffbeb;padding:8px 12px;border-radius:4px;width:fit-content;border:1px solid #fde68a">
+        <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#d97706;box-shadow:0 0 6px rgba(217,119,6,0.6)"></span>
+        <strong id="ppSocialProofText" style="font-weight:600">Şu an bu ürünü 14 kişi inceliyor</strong>
+      </div>
+
+      <!-- shipping badges -->
+      <div class="pp-ship-badges">
+        <div class="pp-ship-badge"><i class="ti ti-truck" aria-hidden="true"></i> Ücretsiz kargo 800+ TL</div>
+        <div class="pp-ship-badge"><i class="ti ti-refresh" aria-hidden="true"></i> 30 gün iade</div>
+        <div class="pp-ship-badge"><i class="ti ti-shield-check" aria-hidden="true"></i> Güvenli ödeme</div>
+      </div>
+
+      
+      <!-- colors -->
+      <div class="pp-section-label">Renk Seçimi</div>
+      <div id="ppColors" style="display:flex; gap:12px; margin-bottom: 24px; flex-wrap: wrap;"></div>
+
+      <!-- sizes -->
+      <div class="pp-section-label">Beden Seç</div>
+
+      <div class="pp-sizes" id="ppSizes"></div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px">
+        <span class="pp-size-guide" onclick="openSizeFinder()" style="color:var(--black);font-weight:700;display:flex;align-items:center;gap:4px">📏 Bedenimi Bul</span>
+        <button onclick="openAIAssistant()" style="background:linear-gradient(135deg, #111, #333); color:#fff; border:none; border-radius:4px; padding:6px 12px; font-size:11px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:6px; letter-spacing:0.5px; transition:transform 0.2s"><i class="ti ti-sparkles" style="color:#d8b4fe"></i> AI Kombin & Analiz</button>
+      </div>
+
+      <!-- qty -->
+      <div class="pp-qty-row">
+        <span class="pp-qty-label">Adet</span>
+        <div class="pp-qty-ctrl">
+          <button onclick="ppQtyChange(-1)" aria-label="Azalt">−</button>
+          <span id="ppQty">1</span>
+          <button onclick="ppQtyChange(1)" aria-label="Artır">+</button>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <button class="pp-add-btn" id="ppAddBtn" onclick="ppAddToCart()">Sepete Ekle</button>
+      <button class="pp-wish-btn" id="ppWishBtn" onclick="ppToggleFav()">
+        <i class="ti ti-heart" aria-hidden="true"></i> Favorilere Ekle
+      </button>
+
+      <!-- description + accordions -->
+      <div class="pp-section-label">Ürün Hakkında</div>
+      <div class="pp-desc" id="ppDesc"></div>
+
+      <div class="pp-accord" id="ppAccord">
+        <div class="pp-accord-item" id="accord-material">
+          <div class="pp-accord-head" onclick="toggleAccord('material')">
+            Malzeme & Bakım <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </div>
+          <div class="pp-accord-body" id="accord-material-body"></div>
+        </div>
+        <div class="pp-accord-item" id="accord-ship">
+          <div class="pp-accord-head" onclick="toggleAccord('ship')">
+            Kargo & Teslimat <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </div>
+          <div class="pp-accord-body">
+            Siparişler 1–3 iş günü içinde kargoya verilir. 800 TL ve üzeri alışverişlerde kargo ücretsizdir. İstanbul içi ekspres teslimat seçeneği mevcuttur.
+          </div>
+        </div>
+        <div class="pp-accord-item" id="accord-return">
+          <div class="pp-accord-head" onclick="toggleAccord('return')">
+            İade & Değişim <i class="ti ti-chevron-down" aria-hidden="true"></i>
+          </div>
+          <div class="pp-accord-body">
+            Teslim tarihinden itibaren 30 gün içinde iade veya değişim yapabilirsiniz. Ürünün etiketleri sökülmemiş ve kullanılmamış olması gerekmektedir.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- recommendations -->
+  <div class="pp-recs" id="ppRecs"></div>
+</div>
+
+<!-- Notification panel -->
+<div id="notifPanel" class="notif-panel" style="position:fixed;top:60px;right:28px;">
+  <div class="notif-header">
+    <span>Bildirimler</span>
+    <span class="notif-clear" onclick="clearNotifs()">Tümünü sil</span>
+  </div>
+  <div id="notifList"></div>
+</div>
+
+<!-- Topbar -->
+<div class="topbar">
+  <div class="topbar-slides">
+    <div class="topbar-slide">Yeni sezon drop — ücretsiz kargo 800 TL üzeri &nbsp;·&nbsp; Kod: <span class="topbar-code" onclick="copyCode('VANTA10')">VANTA10</span></div>
+    <div class="topbar-slide">Vanta Atelier: özel üretim parçalar &nbsp;·&nbsp; <span style="color:#aaa">Her parça bir hikaye</span></div>
+    <div class="topbar-slide">SS25 Koleksiyonu şimdi canlı &nbsp;·&nbsp; Sınırlı stok, kaçırma</div>
+    <div class="topbar-slide">Yeni sezon drop — ücretsiz kargo 800 TL üzeri &nbsp;·&nbsp; Kod: <span class="topbar-code" onclick="copyCode('VANTA10')">VANTA10</span></div>
+    <div class="topbar-slide">Vanta Atelier: özel üretim parçalar &nbsp;·&nbsp; <span style="color:#aaa">Her parça bir hikaye</span></div>
+    <div class="topbar-slide">SS25 Koleksiyonu şimdi canlı &nbsp;·&nbsp; Sınırlı stok, kaçırma</div>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav id="mainNav">
+  <div class="nav-links">
+    <a onclick="toggleDropdown(event)" style="cursor:pointer; display:flex; align-items:center; gap:6px; font-weight:600; font-size:14px; text-transform:uppercase; letter-spacing:0.05em;">
+      <i class="ti ti-layout-grid" style="font-size:18px"></i> Kategoriler
+    </a>
+  </div>
+  <div class="logo" onclick="goHome()">VANTA</div>
+  <div class="nav-right">
+    <div class="nav-search-wrap" id="navSearchWrap">
+      <input class="nav-search-input" id="navSearchInput" placeholder="Ara…" autocomplete="off" aria-label="Ürün ara"/>
+      <div class="nav-search-btn" onclick="toggleNavSearch()" aria-label="Ara"><i class="ti ti-search"></i></div>
+      <div class="nav-search-results" id="navSearchResults"></div>
+    </div>
+    <div class="nav-icon" id="notifBtn" onclick="toggleNotif()" aria-label="Bildirimler" style="position:relative">
+      <i class="ti ti-bell"></i>
+      <div class="notif-dot show" id="notifDot"></div>
+    </div>
+    <div class="nav-icon" id="favIcon" onclick="openWish()" aria-label="Favoriler"><i class="ti ti-heart"></i></div>
+    <div class="nav-icon" onclick="openCart()" aria-label="Sepet">
+      <i class="ti ti-shopping-bag"></i>
+      <div class="cbadge" id="cartBadge">0</div>
+    </div>
+    <div class="nav-icon" id="authNavBtn" onclick="openAuthOrProfile()" aria-label="Hesabım" style="padding:0"><i class="ti ti-user" id="authNavIcon"></i></div>
+  </div>
+  <div class="dropdown" id="dropdown">
+    <div class="dropdown-inner">
+      <div class="dd-col">
+        <h4>Üst Giyim</h4>
+        <a class="featured" onclick="ddSelect('Tişört')">Tişört</a>
+        <a onclick="ddSelect('Gömlek')">Gömlek</a>
+        <a onclick="ddSelect('Hoodie')">Hoodie</a>
+        <a onclick="ddSelect('Atlet')">Atlet</a>
+        <a>Polo</a><a>Sweatshirt</a><a>Triko</a>
+      </div>
+      <div class="dd-col">
+        <h4>Alt Giyim</h4>
+        <a class="featured" onclick="ddSelect('Jean')">Jean</a>
+        <a onclick="ddSelect('Şort')">Şort / Jorts</a>
+        <a onclick="ddSelect('Eşofman')">Eşofman Alt</a>
+        <a>Pantolon</a><a>Pijama</a>
+      </div>
+      <div class="dd-col">
+        <h4>Takımlar</h4>
+        <a onclick="ddSelect('Eşofman')">Eşofman Takım</a>
+        <a>Atelier Set</a><a>Linen Takım</a>
+        <h4 style="margin-top:16px">Dış Giyim</h4>
+        <a onclick="ddSelect('Ceket')">Ceket</a>
+        <a onclick="ddSelect('Mont')">Mont</a>
+        <a onclick="ddSelect('Yağmurluk')">Yağmurluk</a>
+      </div>
+      <div class="dd-col">
+        <h4>Aksesuar</h4>
+        <a>Şapka</a><a>Gözlük</a><a>Çorap</a><a>Kemer</a><a>Bandana</a><a>Kolye</a><a>Çanta</a>
+      </div>
+      <div class="dd-col">
+        <div class="dd-banner" onclick="ddSelect('Tümü');closeDD()">
+          <div class="dd-banner-bg">🏆</div>
+          <h3>Unity Stands</h3><p>Limited Drop</p>
+        </div>
+        <div class="dd-banner" style="background:#1a1a1a" onclick="ddSelect('Tümü');closeDD()">
+          <div class="dd-banner-bg">🌿</div>
+          <h3>Linen Calm</h3><p>Yaz 2025</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div id="homeView">
+<!-- Cat bar -->
+<!-- Ticker -->
+<div class="ticker-wrap" id="tickerWrap"><div class="ticker" id="ticker"></div></div>
+
+<!-- Hero -->
+<div class="hero" id="hero">
+  <div class="hero-left" onclick="filterAndScroll('Tümü')" style="position:relative">
+    <img id="heroImg" src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=1200" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.15;z-index:0;pointer-events:none">
+    <div style="position:relative;z-index:1;display:flex;flex-direction:column;justify-content:center;height:100%">
+      <div id="heroEyebrow" class="hero-eyebrow">SS25 Collection</div>
+      <div id="heroTitle" class="hero-title">NEW<br><em>SEASON</em><br>DROP</div>
+      <div id="heroSub" class="hero-sub">Streetwear · Baggy · Oversize</div>
+      <button class="hero-btn" onclick="event.stopPropagation();filterAndScroll('Tümü')">Koleksiyonu Keşfet</button>
+    </div>
+  </div>
+
+</div>
+
+<!-- Trend Bar -->
+<div class="recent-bar" id="trendBar" style="display:block">
+  <div class="recent-header">
+    <h3 style="color:var(--red)"><i class="ti ti-flame" style="vertical-align:middle;margin-right:4px"></i> Vanta AI: Şu An Trend Olanlar</h3>
+  </div>
+  <div class="recent-track" id="trendTrack"></div>
+</div>
+
+
+<!-- Carousel -->
+<div class="carousel-wrapper" id="carouselWrap">
+  <div class="carousel-header">
+    <h2 class="carousel-title">Son Eklenenler</h2>
+  </div>
+  <button class="carousel-arrow left" onclick="scrollCarousel(-1)">&#8249;</button>
+  <button class="carousel-arrow right" onclick="scrollCarousel(1)">&#8250;</button>
+  <div class="carousel-container" id="carouselContainer"></div>
+</div>
+
+<!-- Products -->
+<div class="products-section">
+  <div class="products-header">
+    <div class="ph-left">
+      <h2 id="sectionTitle">Tüm Ürünler</h2>
+      <p id="sectionSub">Yeni sezon koleksiyonu</p>
+    </div>
+    <div class="ph-right">
+      <span class="count-badge" id="countBadge">12 ürün</span>
+      <select class="sort-select" onchange="sortProducts(this.value)">
+        <option value="default">Sıralama</option>
+        <option value="low">Fiyat: Düşük → Yüksek</option>
+        <option value="high">Fiyat: Yüksek → Düşük</option>
+        <option value="new">Yeni Gelenler</option>
+        <option value="disc">En Çok İndirim</option>
+      </select>
+      <div class="view-toggle">
+        <button class="vt-btn active" id="vt4" onclick="setView(4)" title="4 Sütun"><i class="ti ti-layout-grid" aria-hidden="true"></i></button>
+        <button class="vt-btn" id="vt2" onclick="setView(2)" title="2 Sütun"><i class="ti ti-layout-2" aria-hidden="true"></i></button>
+        <button class="vt-btn" id="vtL" onclick="setView('list')" title="Liste"><i class="ti ti-list" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </div>
+  <div class="product-grid" id="productGrid"></div>
+  <div class="pagination-container" id="pagination"></div>
+</div>
+
+<!-- Parallax band -->
+<div class="parallax-band" id="parallaxBand">
+  <div class="pb-text" id="pbText">STREETWEAR · CULTURE · VANTA · OVERSIZE · DROP</div>
+  <div class="pb-sub">SS25 · İstanbul'dan dünyaya</div>
+</div>
+
+<!-- Editorial -->
+<div class="editorial" id="editorialWrap">
+  <div class="ed-block ed-dark" onclick="sendPrompt('Unity Stands koleksiyonunu anlat')">
+    <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=800" class="ed-bg-img">
+    <div class="ed-tag" style="color:#ccc">Limited Drop</div>
+    <div class="ed-heading" style="color:#fff">Unity<br>Stands</div>
+    <div class="ed-arrow" style="color:#eee">Koleksiyonu Gör →</div>
+  </div>
+  <div class="ed-block ed-light" onclick="sendPrompt('Linen Calm koleksiyonunu anlat')">
+    <img src="https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800" class="ed-bg-img">
+    <div class="ed-tag" style="color:#fff">Yaz 2025</div>
+    <div class="ed-heading" style="color:#fff">Linen<br>Calm</div>
+    <div class="ed-arrow" style="color:#eee">Koleksiyonu Gör →</div>
+  </div>
+</div>
+
+<!-- Lookbook -->
+<div class="lookbook">
+  <div class="lookbook-header">
+    <h2>Bu Hafta Çok Satanlar</h2>
+    <a onclick="filterAndScroll('Tümü')">Tümünü gör →</a>
+  </div>
+  <div class="lookbook-track" id="lookbookTrack"></div>
+</div>
+
+<!-- Newsletter -->
+<div class="newsletter">
+  <div class="nl-eyebrow">Vanta Culture</div>
+  <div class="nl-title">Drop Bildirimlerine<br>Kaydol</div>
+  <div class="nl-sub">Sınırlı üretimlerden önce haberdar ol. Hiç spam yok.</div>
+  <div class="nl-form">
+    <input type="email" placeholder="e-posta adresin" id="emailInput"/>
+    <button onclick="nlSubmit()">Kaydol</button>
+  </div>
+</div>
+</div> <!-- END homeView -->
+
+<!-- Footer -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-logo">VANTA</div>
+      <div class="footer-desc">Streetwear'ı yeniden tanımlıyoruz.<br>Her parça bir hikaye taşır.<br>İstanbul, 2025.</div>
+    </div>
+    <div class="footer-col">
+      <h4>Kurumsal</h4>
+      <a onclick="openTextModal('Hakkımızda', 'Vanta Wear, sokak kültürünü premium materyallerle buluşturan, İstanbul merkezli bir giyim markasıdır.')" style="cursor:pointer">Hakkımızda</a>
+      <a onclick="openTextModal('Franchise', 'Franchise başvuruları yakında web sitemiz üzerinden alınmaya başlanacaktır.')" style="cursor:pointer">Franchise Başvuru Formu</a>
+      <a onclick="openTextModal('Mağazalarımız', 'Şu an sadece online mağazamız üzerinden tüm dünyaya hizmet vermekteyiz.')" style="cursor:pointer">Mağazalarımız</a>
+      <a onclick="openTextModal('KVKK', 'Kişisel Verilerin Korunması Kanunu aydınlatma metnimize KVKK sayfamızdan ulaşabilirsiniz.')" style="cursor:pointer">KVKK</a>
+      <a onclick="openTextModal('ETK', 'Elektronik Ticaretin Düzenlenmesi Hakkında Kanun kapsamında aydınlatma metnimiz yakında eklenecektir.')" style="cursor:pointer">ETK Aydınlatma Metni</a>
+      <a onclick="openTextModal('Bize Ulaşın', '<p><b>E-posta:</b> info@vantawear.com</p><p><b>Çalışma Saatleri:</b> Hafta içi 09:00 - 18:00</p>')" style="cursor:pointer">Bize Ulaşın</a>
+      <a onclick="openTextModal('Kariyer', 'Güncel açık pozisyonlarımız için LinkedIn sayfamızı takip edebilirsiniz.')" style="cursor:pointer">Kariyer</a>
+      <a onclick="openTextModal('Modelimiz Ol', 'Model başvurularınız için portfolyonuzu model@vantawear.com adresine iletebilirsiniz.')" style="cursor:pointer">Modelimiz Ol</a>
+      <a onclick="openTextModal('Vanta Affiliate', 'Vanta Affiliate programı başvuruları çok yakında başlayacaktır.')" style="cursor:pointer">Vanta Affiliate</a>
+    </div>
+    <div class="footer-col">
+      <h4>Yardım</h4>
+      <a onclick="openAuthOrProfile()" style="cursor:pointer">Hesabım</a>
+      <a onclick="openAuthOrProfile()" style="cursor:pointer">Sipariş Durumu</a>
+      <a onclick="openTextModal('Teslimat ve İade', '<p>Tüm siparişleriniz en geç 2 iş günü içerisinde kargoya teslim edilmektedir.</p>')" style="cursor:pointer">Teslimat ve İade</a>
+      <a onclick="openTextModal('Kolay İade', '<p>Ürünleri, teslimat tarihinden itibaren 14 gün içerisinde kullanılmamış şekilde ücretsiz iade edebilirsiniz.</p>')" style="cursor:pointer">Kolay İade</a>
+      <a onclick="openTextModal('Sıkça Sorulan Sorular', '<p><b>1. Kargo ücreti ne kadar?</b><br>800 TL ve üzeri ücretsiz, diğerlerinde 39.90 TL.</p>')" style="cursor:pointer">SSS</a>
+    </div>
+    <div class="footer-col">
+      <h4>Kategoriler</h4>
+      <a onclick="document.getElementById('navSearchInput').value='Yeni'; document.getElementById('navSearchInput').dispatchEvent(new Event('input')); document.getElementById('navSearchWrap').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer">New Drop</a>
+      <a onclick="document.getElementById('navSearchInput').value='Atelier'; document.getElementById('navSearchInput').dispatchEvent(new Event('input')); document.getElementById('navSearchWrap').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer">Vanta Atelier</a>
+      <a onclick="setCatByName('Tişört')" style="cursor:pointer">Oversize Tişört</a>
+      <a onclick="setCatByName('Jean')" style="cursor:pointer">Pantolon</a>
+      <a onclick="document.getElementById('navSearchInput').value='Kadın'; document.getElementById('navSearchInput').dispatchEvent(new Event('input')); document.getElementById('navSearchWrap').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer">Kadın</a>
+      <a onclick="document.getElementById('navSearchInput').value='Erkek'; document.getElementById('navSearchInput').dispatchEvent(new Event('input')); document.getElementById('navSearchWrap').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer">Erkek</a>
+    </div>
+    <div class="footer-col">
+      <h4>Koleksiyon</h4>
+      <a onclick="document.getElementById('navSearchInput').value='Atelier'; document.getElementById('navSearchInput').dispatchEvent(new Event('input')); document.getElementById('navSearchWrap').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer">Vanta Atelier</a>
+      <a onclick="document.getElementById('navSearchInput').value='Gentleman'; document.getElementById('navSearchInput').dispatchEvent(new Event('input')); document.getElementById('navSearchWrap').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer">Gentleman Boy</a>
+      <a onclick="document.getElementById('navSearchInput').value='Daily'; document.getElementById('navSearchInput').dispatchEvent(new Event('input')); document.getElementById('navSearchWrap').classList.add('active'); window.scrollTo({top:0,behavior:'smooth'});" style="cursor:pointer">Daily Basics</a>
+    </div>
+    <div class="footer-col">
+      <h4>Sosyal Medya</h4>
+      <a href="#" style="cursor:pointer">Instagram</a>
+      <a href="#" style="cursor:pointer">TikTok</a>
+      <a href="#" style="cursor:pointer">Facebook</a>
+      <a href="#" style="cursor:pointer">Blog</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2025 VANTA WEAR. TÜM HAKLAR SAKLIDIR.</div>
+    <div class="socials">
+      <span class="social-btn"><i class="ti ti-brand-instagram" aria-hidden="true"></i></span>
+      <span class="social-btn"><i class="ti ti-brand-tiktok" aria-hidden="true"></i></span>
+      <span class="social-btn"><i class="ti ti-brand-twitter" aria-hidden="true"></i></span>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast"><i class="ti ti-check" aria-hidden="true"></i><span id="toastMsg"></span></div>
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Yukarı"><i class="ti ti-arrow-up" aria-hidden="true"></i></button>
+
+<!-- Text Modal -->
+<div class="auth-overlay" id="textOverlay" onclick="if(event.target===this)closeTextModal()">
+  <div class="auth-box" id="textModal" style="max-width:600px; padding:32px;">
+    <button class="auth-x" onclick="closeTextModal()">×</button>
+    <div style="font-size:16px;letter-spacing:0.1em;font-weight:900;margin-bottom:24px;text-transform:uppercase;text-align:left" id="textModalTitle"></div>
+    <div id="textModalBody" style="font-size:13px;line-height:1.8;color:#555;text-align:left"></div>
+  </div>
+</div>
+
+
+<!-- Checkout Modal -->
+<div class="auth-overlay" id="checkoutOverlay">
+  <div class="auth-box" id="checkoutModal" style="width:500px; max-width:90%; padding:40px;">
+    <button class="auth-x" onclick="closeCheckout()" style="top:20px; right:20px;">×</button>
+    <div style="font-size:14px;letter-spacing:0.2em;font-weight:900;margin-bottom:24px;text-align:center;text-transform:uppercase">Güvenli Ödeme</div>
+    
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:32px">
+      <div id="co-dot-1" style="width:24px;height:4px;background:var(--black)"></div>
+      <div id="co-dot-2" style="width:24px;height:4px;background:var(--lightgray)"></div>
+      <div id="co-dot-3" style="width:24px;height:4px;background:var(--lightgray)"></div>
+    </div>
+
+    <div id="co-step-1" class="co-step">
+      <div style="font-size:10px;text-transform:uppercase;font-weight:700;margin-bottom:16px;color:var(--gray)">1. Teslimat Adresi</div>
+      <input class="auth-field" id="coName" placeholder="Ad Soyad"/>
+      <input class="auth-field" id="coPhone" placeholder="Telefon (05...)"/>
+      <textarea class="auth-field" id="coAddress" placeholder="Açık Adresiniz" style="resize:vertical;min-height:80px;font-family:inherit"></textarea>
+      <button class="auth-submit" onclick="nextCheckoutStep(2)">Devam Et <i class="ti ti-arrow-right"></i></button>
+    </div>
+
+    <div id="co-step-2" class="co-step" style="display:none">
+      <div style="font-size:10px;text-transform:uppercase;font-weight:700;margin-bottom:16px;color:var(--gray)">2. Kargo Seçimi</div>
+      <label style="display:flex;align-items:center;padding:16px;border:.5px solid var(--black);margin-bottom:12px;cursor:pointer">
+        <input type="radio" name="coShipping" value="standart" checked style="margin-right:12px">
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:700">Standart Kargo</div>
+          <div style="font-size:10px;color:var(--gray);margin-top:4px">3-5 İş Günü İçinde Teslimat</div>
+        </div>
+        <div style="font-size:11px;font-weight:700">Ücretsiz</div>
+      </label>
+      <label style="display:flex;align-items:center;padding:16px;border:.5px solid var(--lightgray);margin-bottom:24px;cursor:pointer">
+        <input type="radio" name="coShipping" value="hizli" style="margin-right:12px">
+        <div style="flex:1">
+          <div style="font-size:12px;font-weight:700">Hızlı Kargo</div>
+          <div style="font-size:10px;color:var(--gray);margin-top:4px">Ertesi Gün Teslimat</div>
+        </div>
+        <div style="font-size:11px;font-weight:700">39,90 TL</div>
+      </label>
+      <div style="display:flex;gap:12px">
+        <button class="auth-submit" style="background:var(--white);color:var(--black);border:.5px solid var(--black)" onclick="nextCheckoutStep(1)">Geri</button>
+        <button class="auth-submit" onclick="nextCheckoutStep(3)">Devam Et <i class="ti ti-arrow-right"></i></button>
+      </div>
+    </div>
+
+    <div id="co-step-3" class="co-step" style="display:none">
+      <div style="font-size:10px;text-transform:uppercase;font-weight:700;margin-bottom:16px;color:var(--gray)">3. Kart Bilgileri</div>
+      <input class="auth-field" id="coCardNum" placeholder="Kart Numarası" maxlength="19"/>
+      <div style="display:flex;gap:12px">
+        <input class="auth-field" id="coCardExp" placeholder="AA/YY" maxlength="5"/>
+        <input class="auth-field" id="coCardCvc" placeholder="CVC" maxlength="3"/>
+      </div>
+      <div style="font-size:10px;color:var(--gray);margin-bottom:24px;text-align:center"><i class="ti ti-shield-check"></i> 256-bit SSL ile güvenli ödeme</div>
+      <div style="display:flex;gap:12px">
+        <button class="auth-submit" style="background:var(--white);color:var(--black);border:.5px solid var(--black)" onclick="nextCheckoutStep(2)">Geri</button>
+        <button class="auth-submit" onclick="placeOrder()" id="coSubmitBtn">Siparişi Tamamla</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Profile Panel -->
+<div class="cart-overlay" id="profileOverlay" onclick="closeProfile()"></div>
+<div class="profile-panel" id="profilePanel">
+  <div class="pp-head">
+    <span class="pp-head-label" id="ppHeadLabel">Hesabım</span>
+    <button class="pp-head-close" onclick="closeProfile()">×</button>
+  </div>
+  
+  <!-- UNAUTHENTICATED STATE -->
+  <div id="authForms" style="padding: 24px;">
+    <div id="loginForm">
+      <h3 style="margin:0 0 16px; font-weight:800">Giriş Yap</h3>
+      <input class="pp-edit-f" id="loginEmail" placeholder="E-posta" type="email" />
+      <input class="pp-edit-f" id="loginPass" placeholder="Şifre" type="password" />
+      <button class="pp-save" onclick="doCustomerLogin()">Giriş Yap</button>
+      <p style="text-align:center; margin-top:16px; font-size:12px; color:var(--muted); cursor:pointer" onclick="toggleAuthForm('register')">Hesabın yok mu? <b>Kayıt Ol</b></p>
+    </div>
+    <div id="registerForm" style="display:none">
+      <h3 style="margin:0 0 16px; font-weight:800">Kayıt Ol</h3>
+      <input class="pp-edit-f" id="regName" placeholder="Ad Soyad" type="text" />
+      <input class="pp-edit-f" id="regEmail" placeholder="E-posta" type="email" />
+      <input class="pp-edit-f" id="regPass" placeholder="Şifre" type="password" />
+      <button class="pp-save" onclick="doCustomerRegister()">Kayıt Ol</button>
+      <p style="text-align:center; margin-top:16px; font-size:12px; color:var(--muted); cursor:pointer" onclick="toggleAuthForm('login')">Zaten hesabın var mı? <b>Giriş Yap</b></p>
+    </div>
+  </div>
+
+  <!-- AUTHENTICATED STATE -->
+  <div id="profileContent" style="display:none; padding:24px;">
+    <div style="display:flex; gap:8px; margin-bottom:24px; border-bottom:1px solid #eee; padding-bottom:16px; overflow-x:auto;">
+      <button class="btn btn-sm btn-ghost" style="flex-shrink:0" onclick="switchProfileTab('info')">Profilim</button>
+      <button class="btn btn-sm btn-ghost" style="flex-shrink:0" onclick="switchProfileTab('orders')">Siparişlerim</button>
+      <button class="btn btn-sm btn-ghost" style="flex-shrink:0" onclick="switchProfileTab('wishlist')">Favoriler</button>
+      <button class="btn btn-sm btn-ghost" style="flex-shrink:0" onclick="switchProfileTab('support')">Destek</button>
+    </div>
+
+    <!-- Info Tab -->
+    <div id="pTab-info">
+      <h4 style="margin:0 0 16px; font-weight:700">Profil Bilgileri</h4>
+      <input class="pp-edit-f" id="ppNewName" placeholder="Ad Soyad"/>
+      <input class="pp-edit-f" id="ppNewEmail" placeholder="E-posta" disabled style="opacity:0.6"/>
+      <input class="pp-edit-f" id="ppNewPhone" placeholder="Telefon (05...)"/>
+      <textarea class="pp-edit-f" id="ppNewAddress" placeholder="Teslimat Adresi" rows="3" style="resize:vertical"></textarea>
+      <button class="pp-save" onclick="saveProfileChanges()">Bilgileri Kaydet</button>
+      
+      <button class="pp-logout" style="margin-top:24px" onclick="doCustomerLogout()"><i class="ti ti-logout"></i> Çıkış Yap</button>
+    </div>
+
+    <!-- Orders Tab -->
+    <div id="pTab-orders" style="display:none">
+      <h4 style="margin:0 0 16px; font-weight:700">Geçmiş Siparişlerim</h4>
+      <div id="ppOrdersContainer"><div class="pp-empty">Henüz sipariş yok</div></div>
+    </div>
+
+    <!-- Wishlist Tab -->
+    <div id="pTab-wishlist" style="display:none">
+      <h4 style="margin:0 0 16px; font-weight:700">Favorilerim</h4>
+      <div id="ppWishlistContainer"><div class="pp-empty">Favori ürünün yok</div></div>
+    </div>
+
+    <!-- Support Tab -->
+    <div id="pTab-support" style="display:none">
+      <h4 style="margin:0 0 16px; font-weight:700">Destek Taleplerim</h4>
+      <input class="pp-edit-f" id="supSubject" placeholder="Konu (Örn: İade, Kargo)"/>
+      <textarea class="pp-edit-f" id="supMessage" placeholder="Mesajınız..." rows="3"></textarea>
+      <button class="pp-save" style="margin-bottom:24px" onclick="submitSupportTicket()">Talep Oluştur</button>
+      <div id="ppSupportContainer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Modal -->
+<div class="auth-overlay" id="aiOverlay" onclick="if(event.target===this)closeAIAssistant()" style="backdrop-filter: blur(12px); background: rgba(0,0,0,0.65);">
+  <div class="auth-box" id="aiBox" style="max-width:420px; padding: 40px; border-radius: 16px; box-shadow: 0 24px 60px rgba(0,0,0,0.3); text-align: left; background: #f5f5f5">
+    <button class="auth-close" onclick="closeAIAssistant()" style="top:20px; right:20px; background:#e5e5e5; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; transition:background 0.2s; border:none; cursor:pointer"><i class="ti ti-x"></i></button>
+    
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px; padding-bottom:16px; border-bottom:1px solid rgba(0,0,0,0.05)">
+      <div style="width:40px;height:40px;border-radius:10px;background:linear-gradient(135deg, #fff, #eee);color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 16px rgba(0,0,0,0.15);flex-shrink:0"><i class="ti ti-sparkles" style="color:#d8b4fe;font-size:20px"></i></div>
+      <div>
+        <h2 style="font-size:18px;margin:0;font-weight:900;letter-spacing:-0.5px;color:#111">VantaAi Kombin Analizi</h2>
+        <span style="font-size:11px;color:#888;font-weight:600;letter-spacing:0.5px;text-transform:uppercase">Yapay Zeka Destekli</span>
+      </div>
+    </div>
+    
+    <div id="aiContent" style="font-size:14px;line-height:1.7;color:#333;background:#fff;padding:24px;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.02)"></div>
+  </div>
+</div>
+
+
+<!-- CHATBOT -->
+<div class="vbot-fab" id="vbotFab" onclick="toggleVbot()" aria-label="Sohbet Asistanı">
+  <i class="ti ti-sparkles"></i>
+</div>
+
+<div class="vbot-window" id="vbotWindow">
+  <div class="vbot-header">
+    <div class="vbot-header-left">
+      <div class="vbot-header-icon"><i class="ti ti-sparkles"></i></div>
+      <div>
+        <div class="vbot-title">VantaAi Stil Danışmanı</div>
+        <div class="vbot-status">Çevrimiçi</div>
+      </div>
+    </div>
+    <button class="vbot-close" onclick="toggleVbot()"><i class="ti ti-minus"></i></button>
+  </div>
+  
+  <div class="vbot-body" id="vbotBody">
+    <div class="vbot-msg bot">
+      <div class="vbot-bubble">Merhaba! Ben VantaAi, kişisel stil danışmanın. Sana en uygun kombinleri önermem için tarzından, aradığın üründen veya bütçenden bahsedebilirsin. ✨</div>
+      <div class="vbot-time">Şimdi</div>
+    </div>
+    <div class="vbot-typing" id="vbotTyping">
+      <div class="vbot-dot"></div><div class="vbot-dot"></div><div class="vbot-dot"></div>
+    </div>
+  </div>
+  
+  <div class="vbot-input-area">
+    <input type="text" id="vbotInput" class="vbot-input" placeholder="Bir şeyler sor..." onkeypress="if(event.key==='Enter') sendVbotMsg()">
+    <button class="vbot-send" id="vbotSend" onclick="sendVbotMsg()"><i class="ti ti-send"></i></button>
+  </div>
+</div>
+
+<script type="module">
+const API_BASE = 'http://localhost:5000/api';
+let currentUser = null;
+
+/* ── SESSION ID (anonim kullanıcı takibi) ── */
+const SESSION_ID = (() => {
+  let sid = localStorage.getItem('flw_session');
+  if (!sid) {
+    sid = 'flw_' + Date.now() + '_' + Math.random().toString(36).slice(2,9);
+    localStorage.setItem('flw_session', sid);
+  }
+  return sid;
+})();
+
+/* ── STATE ── */
+let products=[], cart=[], favs=new Set(), recent=[];
+let activeCat='Tümü', sortVal='default', priceMin=0, priceMax=99999;
+let ddOpen=false, currentView=3;
+let ppCurrentId=null, ppSelectedSize=null, ppSelectedColor=null, ppQtyVal=1;
+let notifications=[], qsSelected={}, navSearchOpen=false;
+
+/* ════════════════════════════════════════════
+   BACKEND — FETCH INITIAL DATA
+════════════════════════════════════════════ */
+
+// 1. Ürünler
+fetch(`${API_BASE}/products`)
+  .then(res => res.json())
+  .then(data => {
+    if(!data || data.length === 0){
+      document.getElementById('productGrid').innerHTML=
+        Array(6).fill(0).map(()=>`
+          <div class="pcard-skeleton">
+            <div class="skel-img skeleton"></div>
+            <div class="pcard-body">
+              <div class="skel-line skeleton" style="width:38%;height:10px;margin-bottom:8px"></div>
+              <div class="skel-line skeleton" style="width:72%;height:14px;margin-bottom:12px"></div>
+              <div class="skel-line skeleton" style="width:28%;height:18px"></div>
+            </div>
+          </div>`).join('')+
+        `<div style="grid-column:1/-1;padding:40px 24px;text-align:center;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#bbb">
+           Ürün bulunamadı — Sunucu bağlantısını kontrol edin.
+         </div>`;
+      return;
+    }
+    products = data;
+    renderGrid();
+    renderLookbook();
+    renderTrends();
+    checkInitialRoute();
+  })
+  .catch(console.error);
+
+// 3. Sepet (localStorage'dan yükle)
+try {
+  const savedCart = localStorage.getItem(`cart_${SESSION_ID}`);
+  if(savedCart) { cart = JSON.parse(savedCart); updateCartBadge(); }
+} catch(e) {}
+
+// 4. Favoriler (localStorage'dan yükle)
+try {
+  const savedFavs = localStorage.getItem(`favs_${SESSION_ID}`);
+  if(savedFavs) {
+    favs = new Set(JSON.parse(savedFavs));
+    document.getElementById('favIcon').style.color=favs.size>0?'#b00':'';
+    document.getElementById('wishCount').textContent=favs.size;
+  }
+} catch(e) {}
+
+/* ════════════════════════════════════════════
+   LOCAL WRITE HELPERS
+════════════════════════════════════════════ */
+function saveCart(){
+  localStorage.setItem(`cart_${SESSION_ID}`, JSON.stringify(cart));
+}
+function saveFavs(){
+  localStorage.setItem(`favs_${SESSION_ID}`, JSON.stringify([...favs]));
+}
+
+
+/* ── TICKER ── */
+const tickerWords=["NEW SEASON DROP","SS25 COLLECTION","FREE SHIPPING 800 TL+","VANTA ATELIER","STREETWEAR CULTURE","UNITY STANDS","DARK SUMMER","LINEN CALM","OVERSIZE FIT","BAGGY JEAN","LIMITED DROP","#VANTACULTURE"];
+const tickerEl=document.getElementById('ticker');
+[...tickerWords,...tickerWords].forEach(s=>{const d=document.createElement('div');d.className='ticker-item';d.innerHTML=`<b>${s}</b>&nbsp;&nbsp;/&nbsp;&nbsp;`;tickerEl.appendChild(d);});
+
+/* ── SCROLL ── */
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>20);
+  document.getElementById('backTop').classList.toggle('visible',window.scrollY>400);
+  const pb=document.getElementById('pbText');
+  if(pb)pb.style.transform=`translateX(${window.scrollY*-0.045}px)`;
+});
+setTimeout(()=>document.getElementById('hero').classList.add('in-view'),100);
+
+/* ── DROPDOWN ── */
+function toggleDropdown(e){e&&e.stopPropagation();ddOpen=!ddOpen;document.getElementById('dropdown').classList.toggle('open',ddOpen);document.getElementById('catTrigger').classList.toggle('open',ddOpen);}
+function closeDD(){ddOpen=false;document.getElementById('dropdown').classList.remove('open');document.getElementById('catTrigger').classList.remove('open');}
+function ddSelect(cat){setCatByName(cat);closeDD();document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'});}
+document.addEventListener('click',e=>{if(!document.getElementById('catBar').contains(e.target))closeDD();});
+
+/* ── CATEGORY & PRICE ── */
+let currentPage = 1; const ITEMS_PER_PAGE = 24;
+function setCat(el,cat){document.querySelectorAll('.clink').forEach(b=>b.classList.remove('active'));el.classList.add('active');activeCat=cat;if(cat!=='Tümü')localStorage.setItem('vanta_fav_cat',cat);updateSectionMeta(cat);currentPage=1;renderGrid();}
+function setCatByName(cat){activeCat=cat;document.querySelectorAll('.clink').forEach(b=>b.classList.toggle('active',b.textContent.trim()===cat||(cat==='Tümü'&&b.textContent.trim()==='Tümü')));if(cat!=='Tümü')localStorage.setItem('vanta_fav_cat',cat);updateSectionMeta(cat);currentPage=1;renderGrid();}
+function setPriceFilter(el,min,max){document.querySelectorAll('.price-chip').forEach(b=>b.classList.remove('active'));el.classList.add('active');priceMin=min;priceMax=max;currentPage=1;renderGrid();}
+function updatePageLayout() {
+  const isHome = (activeCat === 'Tümü' && !activeSearch);
+  const hero = document.getElementById('hero'); if(hero) hero.style.display = isHome ? 'flex' : 'none';
+  const tw = document.getElementById('tickerWrap'); if(tw) tw.style.display = isHome ? 'block' : 'none';
+  const pb = document.getElementById('parallaxBand'); if(pb) pb.style.display = isHome ? 'block' : 'none';
+  const ew = document.getElementById('editorialWrap'); if(ew) ew.style.display = isHome ? 'grid' : 'none';
+  const tb = document.getElementById('trendBar'); if(tb) tb.style.display = isHome ? 'block' : 'none';
+  if(!isHome) window.scrollTo({top:0, behavior:'smooth'});
+}
+function updateSectionMeta(cat){document.getElementById('sectionTitle').textContent=cat==='Tümü'?'Tüm Ürünler':cat;document.getElementById('sectionSub').textContent=cat==='Tümü'?'Sizin için kişiselleştirildi':cat+' koleksiyonu'; updatePageLayout();}
+function filterAndScroll(cat){setCatByName(cat);routeTo('home'); if(activeCat==='Tümü'){setTimeout(()=>document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}),50);}}
+function sortProducts(v){sortVal=v;currentPage=1;renderGrid();}
+function setView(v){
+  currentView=v;
+  const g=document.getElementById('productGrid');
+  g.classList.remove('two-col','list-view');
+  document.querySelectorAll('.vt-btn').forEach(b=>b.classList.remove('active'));
+  if(v===2){g.classList.add('two-col');document.getElementById('vt2').classList.add('active');}
+  else if(v==='list'){g.classList.add('list-view');document.getElementById('vtL').classList.add('active');}
+  else document.getElementById('vt4').classList.add('active');
+}
+let activeSearch = '';
+function getList(){
+  let list = activeCat==='Tümü' ? [...products] : products.filter(p=>p.cat===activeCat);
+  const favCat = localStorage.getItem('vanta_fav_cat');
+  list=list.filter(p=>p.price>=priceMin&&p.price<=priceMax);
+  if(activeSearch) {
+    const q = activeSearch.toLowerCase();
+    list = list.filter(p => (p.name + ' ' + p.cat + ' ' + (p.tag||'') + ' ' + (p.sku||'')).toLowerCase().includes(q));
+  }
+  if(sortVal==='low')list.sort((a,b)=>a.price-b.price);
+  else if(sortVal==='high')list.sort((a,b)=>b.price-a.price);
+  else if(sortVal==='new')list.sort((a,b)=>a.tag==='Yeni'?-1:1);
+  else if(sortVal==='disc')list.sort((a,b)=>{const da=a.old?(1-a.price/a.old):0,db=b.old?(1-b.price/b.old):0;return db-da;});
+  else if(activeCat==='Tümü' && favCat && !activeSearch) {
+    list.sort((a,b) => (b.cat===favCat ? 1 : 0) - (a.cat===favCat ? 1 : 0));
+  }
+  return list;
+}
+
+function filterByKeyword(kw) {
+  activeSearch = kw;
+  activeCat = 'Tümü';
+  currentPage = 1;
+  document.querySelectorAll('.clink').forEach(c=>c.classList.remove('active'));
+  const allBtn = [...document.querySelectorAll('.clink')].find(c=>c.textContent.trim()==='Tümü');
+  if(allBtn) allBtn.classList.add('active');
+  updateSectionMeta(kw ? kw + ' Ürünleri' : 'Tümü');
+  renderGrid();
+  routeTo('home');
+  setTimeout(()=>document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}), 50);
+}
+
+/* ── RENDER GRID ── */
+function setPage(p){currentPage=p;renderGrid();setTimeout(()=>document.getElementById('productGrid').scrollIntoView({behavior:'smooth',block:'start'}),50);}
+function generateProductCardHTML(p, extraClass = '') {
+  const optUrl = p.imageUrl ? (p.imageUrl.includes('?') ? p.imageUrl+'&fm=webp&auto=format' : p.imageUrl+'?fm=webp&auto=format') : null;
+  const optUrlHover = p.imageUrlHover ? (p.imageUrlHover.includes('?') ? p.imageUrlHover+'&fm=webp&auto=format' : p.imageUrlHover+'?fm=webp&auto=format') : null;
+  const isFav = typeof favs !== 'undefined' ? favs.has(p.id) : false;
+  const disc = p.old ? Math.round((1-p.price/p.old)*100) : 0;
+  const bc = p.tag==='Yeni'?'badge-new':p.tag==='Limited'?'badge-limited':'badge-hot';
+  const sizeBtns = p.sizes ? p.sizes.slice(0,4).map(s=>`<span class="pcard-quick-sz" onclick="event.stopPropagation();qsSelSize(this,${p.id},'${s}')">${s}</span>`).join('') : '';
+  
+  const mainImg = optUrl || p.imageUrl || '';
+  const hoverImg = optUrlHover || p.imageUrlHover || mainImg;
+
+  // Store color data for JS use
+  window._pcardColors = window._pcardColors || {};
+  window._pcardColors[p.id] = {
+    orig: mainImg,
+    hover: hoverImg,
+    colors: (p.colors || []).map(c => ({
+      hex: c.hex,
+      name: c.name,
+      main: c.imageUrl || mainImg,
+      hover: c.imageUrlHover || hoverImg
+    }))
+  };
+
+  const colorsHtml = (p.colors && p.colors.length) ? `<div class="pcard-colors" id="pccolors${p.id}">${p.colors.map((c,ci) => {
+    const isActive = c.imageUrl === mainImg || (ci === 0 && !p.colors.some(col => col.imageUrl === mainImg));
+    return `<div class="color-swatch ${isActive ? 'active' : ''}" style="background-color:${c.hex}" title="${c.name||c.hex}" data-pid="${p.id}" data-ci="${ci}"></div>`;
+  }).join('')}</div>` : '';
+
+  return `<div class="pcard ${extraClass}" id="pc${p.id}" onclick="openProductPage(${p.id})">
+    <div class="pcard-img" id="pcwrap${p.id}">
+      <img id="pcimg${p.id}" src="${mainImg}" data-orig="${mainImg}" data-hover="${hoverImg}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 0.3s ease;" loading="lazy" decoding="async">
+      <button class="pcard-quick" onclick="event.stopPropagation();quickAdd(${p.id})">
+        <i class="ti ti-shopping-bag" aria-hidden="true"></i> Sepete Ekle
+        <span class="pcard-quick-size">${sizeBtns}</span>
+      </button>
+    </div>
+    ${p.tag?`<div class="pcard-badge ${bc}">${p.tag}</div>`:''}
+    <div class="pcard-body">
+      <div class="pcard-top">
+        <div class="pcard-info">
+          <div class="pcard-cat">${p.cat}</div>
+          <div class="pcard-name">${p.name}</div>
+        </div>
+        <button class="pcard-fav ${isFav?'on':''}" onclick="event.stopPropagation();toggleFav(${p.id})" aria-label="Favori">
+          <i class="ti ti-heart${isFav?'-filled':''}" aria-hidden="true"></i>
+        </button>
+      </div>
+      ${colorsHtml}
+      <div class="pcard-price-row">
+        <span class="pcard-price">${p.price.toLocaleString('tr-TR')} TL</span>
+        ${p.old?`<span class="pcard-old">${p.old.toLocaleString('tr-TR')} TL</span><span class="pcard-disc">-%${disc}</span>`:''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function scrollCarousel(dir) {
+  const c = document.getElementById('carouselContainer');
+  const scrollAmount = c.clientWidth / 2;
+  c.scrollBy({ left: dir * scrollAmount, behavior: 'smooth' });
+}
+
+function renderCarousel() {
+  const c = document.getElementById('carouselContainer');
+  if (!c || !products.length) return;
+  const recent = [...products].sort((a,b) => b.id - a.id).slice(0, 12);
+  c.innerHTML = recent.map(p => generateProductCardHTML(p, 'carousel-item')).join('');
+}
+
+function changeCardColor(pid, hex) {
+  const overlay = document.getElementById('color-overlay-' + pid);
+  if (overlay) {
+    if (hex.toLowerCase() === '#fff' || hex.toLowerCase() === '#f5f5f5') {
+      overlay.style.opacity = '0';
+    } else {
+      overlay.style.backgroundColor = hex;
+      overlay.style.opacity = '0.5'; 
+    }
+  }
+}
+
+function renderGrid(){
+  const list=getList();
+  const g=document.getElementById('productGrid');
+  document.getElementById('countBadge').textContent=list.length+' ürün';
+  if(!list.length){g.innerHTML='<div style="grid-column:1/-1;padding:64px;text-align:center;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#bbb">Bu kategoride ürün yok</div>';document.getElementById('pagination').innerHTML='';return;}
+  const totalPages=Math.ceil(list.length/ITEMS_PER_PAGE);
+  const startIdx=(currentPage-1)*ITEMS_PER_PAGE;
+  const pageItems=list.slice(startIdx,startIdx+ITEMS_PER_PAGE);
+  let pgHTML='';
+  if(totalPages>1){
+    pgHTML+=`<button class="pg-btn" ${currentPage===1?'disabled':''} onclick="setPage(${currentPage-1})">&laquo;</button>`;
+    for(let i=1;i<=totalPages;i++) pgHTML+=`<button class="pg-btn ${currentPage===i?'active':''}" onclick="setPage(${i})">${i}</button>`;
+    pgHTML+=`<button class="pg-btn" ${currentPage===totalPages?'disabled':''} onclick="setPage(${currentPage+1})">&raquo;</button>`;
+  }
+  document.getElementById('pagination').innerHTML=pgHTML;
+  g.innerHTML=pageItems.map(p=>generateProductCardHTML(p)).join('');
+  setTimeout(attachCardHovers, 10);
+
+  const obs=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        const idx=[...g.querySelectorAll('.pcard')].indexOf(e.target);
+        e.target.style.animationDelay=(idx%3)*0.08+'s';
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:0.05});
+  g.querySelectorAll('.pcard').forEach(c=>obs.observe(c));
+}
+
+/* quick-add */
+let _qsSelected={};
+function qsSelSize(el,pid,size){
+  el.closest('.pcard-quick').querySelectorAll('.pcard-quick-sz').forEach(s=>s.classList.remove('qs-sel'));
+  el.classList.add('qs-sel');
+  _qsSelected[pid]=size;
+}
+function quickAdd(pid){
+  const p=products.find(x=>x.id===pid);
+  const size=_qsSelected[pid]||p.sizes[0];
+  addBag(pid,size);
+}
+function selectSize(el,id){
+  document.getElementById('pc'+id).querySelectorAll('.sz').forEach(s=>s.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+/* ── SPA ROUTING ── */
+function slugify(text) {
+  const trMap = { 'ç':'c', 'ğ':'g', 'ş':'s', 'ü':'u', 'ı':'i', 'ö':'o', 'Ç':'c', 'Ğ':'g', 'Ş':'s', 'Ü':'u', 'İ':'i', 'Ö':'o' };
+  let slug = (text||'').replace(/[çğşüıöÇĞŞÜİÖ]/g, m => trMap[m] || m);
+  return slug.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
+
+let _initialRouteChecked = false;
+function checkInitialRoute() {
+  if(_initialRouteChecked) return;
+  _initialRouteChecked = true;
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get('p') || params.get('product');
+  if(slug) {
+    const p = products.find(x => x.id.toString() === slug || slugify(x.name) === slug);
+    if(p) openProductPage(p.id, false);
+  }
+}
+
+let _homeScrollY = 0;
+
+function goHome() {
+  const pv = document.getElementById('ppOverlay');
+  if(pv && pv.classList.contains('open')) {
+    _homeScrollY = 0; // go to top of home
+    routeTo('home');
+  } else {
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+}
+
+function routeTo(view, id=null, push=true) {
+  const hv = document.getElementById('homeView');
+  const pv = document.getElementById('ppOverlay');
+  if(view === 'product') {
+    if(hv.style.display !== 'none') _homeScrollY = window.scrollY;
+    hv.style.display = 'none';
+    pv.classList.add('open');
+    if(push) {
+      const p = products.find(x=>x.id===id);
+      const slug = p ? slugify(p.name) : id;
+      history.pushState({view:'product', id}, '', '?p='+slug);
+    }
+    window.scrollTo({top:0, behavior:'instant'});
+  } else {
+    hv.style.display = 'block';
+    pv.classList.remove('open');
+    if(push) {
+      let url = window.location.pathname;
+      if (activeCat !== 'Tümü') {
+        url += '?kategori=' + encodeURIComponent(activeCat);
+      }
+      history.pushState({view:'home', cat: activeCat}, '', url);
+    }
+    window.scrollTo({top:_homeScrollY, behavior:'instant'});
+  }
+}
+window.addEventListener('popstate', e => {
+  if(e.state && e.state.view === 'product') {
+    openProductPage(e.state.id, false);
+  } else {
+    routeTo('home', null, false);
+  }
+});
+
+/* ════════════════════════════════════════════
+   PRODUCT PAGE
+════════════════════════════════════════════ */
+
+// ── CARD HOVER SYSTEM ──
+// Called after grid renders to attach hover events cleanly
+function attachCardHovers() {
+  document.querySelectorAll('.pcard').forEach(card => {
+    const pid = parseInt(card.id.replace('pc',''));
+    const data = (window._pcardColors || {})[pid];
+    if(!data) return;
+
+    const img = document.getElementById('pcimg' + pid);
+    if(!img) return;
+
+    // Image hover logic removed as per user request
+    // Color swatch hover: show that color's image
+    const swatches = card.querySelectorAll('.color-swatch[data-pid]');
+    swatches.forEach(sw => {
+      const ci = parseInt(sw.dataset.ci);
+      const colorData = data.colors[ci];
+      if(!colorData) return;
+
+      sw.addEventListener('mouseenter', () => {
+        if (sw.classList.contains('active')) return;
+        img.src = colorData.main;
+      });
+      sw.addEventListener('mouseleave', () => {
+        if (sw.classList.contains('active')) return;
+        img.src = data.orig;
+      });
+    });
+  });
+}
+
+function hoverVariant(pid, mainImg, hoverImg) {}
+function resetVariant(pid) {}
+function pcardColorHover(pid, el) {}
+function pcardColorReset(pid) {}
+
+function openProductPage(id, pushState=true, preselectHex=null){
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const vw = document.getElementById('vbotWindow');
+  if(vw && vw.classList.contains('open')) toggleVbot();
+  ppCurrentId=id; ppSelectedSize=null; ppSelectedColor=null; ppQtyVal=1;
+  renderTrends();
+  document.getElementById('ppBreadCat').textContent=p.cat;
+  document.getElementById('ppBreadName').textContent=p.name;
+  document.getElementById('ppMainEmoji').innerHTML=`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:2px">`;
+  const flagEl=document.getElementById('ppBadgeFlag');
+  if(p.tag){flagEl.textContent=p.tag;flagEl.style.display='block';const bc=p.tag==='Yeni'?'badge-new':p.tag==='Limited'?'badge-limited':'badge-hot';flagEl.className='pp-badge-flag '+bc;}
+  else flagEl.style.display='none';
+  const allImages = [p.imageUrl, ...(p.images || [])].filter(Boolean);
+  document.getElementById('ppThumbRow').innerHTML = allImages.length > 0
+    ? allImages.map((url, i) =>
+        `<div class="pp-thumb ${i===0?'active-t':''}" onclick="ppSetThumb(this,'${url}')">
+          <img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:2px">
+         </div>`).join('')
+    : `<div class="pp-thumb active-t" onclick="ppSetThumb(this,'${p.emoji}')">${p.emoji}</div>`;
+  document.getElementById('ppCat').textContent=p.cat;
+  document.getElementById('ppSku').textContent=p.sku ? 'SKU: ' + p.sku : '';
+  const barcodeEl = document.getElementById('ppBarcode');
+  if(barcodeEl) barcodeEl.textContent = p.barcode ? 'Barkod: ' + p.barcode : '';
+  const statusEl=document.getElementById('ppStatus');
+  if(p.tag==='Limited'){statusEl.textContent='⚡ Sınırlı Stok';statusEl.style.background='#1a1a1a';statusEl.style.color='#888';}
+  else if(p.tag==='İndirim'){statusEl.textContent='🔥 İndirimde';statusEl.style.background='var(--red)';statusEl.style.color='#fff';}
+  else if(p.tag==='Bestseller'){statusEl.textContent='⭐ Çok Satan';statusEl.style.background='var(--black)';statusEl.style.color='#fff';}
+  else statusEl.textContent='';
+  statusEl.style.display=p.tag?'':'none';
+  document.getElementById('ppName').textContent=p.name;
+
+  document.getElementById('ppPrice').textContent=p.price.toLocaleString('tr-TR')+' TL';
+  const oldEl=document.getElementById('ppOld'),discEl=document.getElementById('ppDisc');
+  if(p.old){oldEl.textContent=p.old.toLocaleString('tr-TR')+' TL';oldEl.style.display='';const d=Math.round((1-p.price/p.old)*100);discEl.textContent='-%'+d;discEl.style.display='';}
+  else{oldEl.style.display='none';discEl.style.display='none';}
+  
+  // Real-time Views (Mock for VDS transition)
+  const v = Math.floor(Math.random() * 5) + 1;
+  document.getElementById('ppSocialProofText').textContent='Şu an bu ürünü '+v+' kişi inceliyor';
+
+  // Render Colors
+  const ppColors = document.getElementById('ppColors');
+  if(ppColors) {
+    ppColors.innerHTML = '';
+    if(p.colors && p.colors.length > 0) {
+      p.colors.forEach((c, ci) => {
+        const dot = document.createElement('div');
+        dot.className = 'color-swatch pp-color-swatch';
+        dot.title = c.name || c.hex;
+        dot.dataset.hex = c.hex;
+        dot.dataset.ci = ci;
+        dot.style.cssText = `width:28px;height:28px;background-color:${c.hex};border:2px solid rgba(0,0,0,0.12);cursor:pointer;border-radius:50%;transition:transform 0.2s,outline 0.15s;flex-shrink:0;`;
+        dot.addEventListener('click', () => {
+          ppSelectColor(c.hex, c.name, c.imageUrl, c.imageUrlHover);
+        });
+        ppColors.appendChild(dot);
+      });
+      // Auto-select first (or preselectHex)
+      const toSelect = p.colors.find(c => c.hex === preselectHex) || p.colors[0];
+      if(toSelect) setTimeout(() => ppSelectColor(toSelect.hex, toSelect.name, toSelect.imageUrl, toSelect.imageUrlHover), 30);
+    } else {
+      ppColors.innerHTML = '<span style="color:#999;font-size:12px;">Standart</span>';
+      ppSelectedColor = null;
+    }
+  }
+
+  document.getElementById('ppSizes').innerHTML=p.sizes.map(s=>{
+    let stockLeft = p.stock ? p.stock[s] : 99;
+    if(stockLeft === undefined) stockLeft = 99;
+    const so = stockLeft <= 0;
+    const lowStock = !so && stockLeft <= 5;
+    return `<button class="pp-sz ${so?'sold-out':''}" onclick="${so?'':'ppSelectSize(this,\''+s+'\')'}" ${so?'disabled':''} aria-label="Beden ${s}${so?' - tükendi':''}}">${s}${so?'<span style="font-size:8px;display:block;color:#aaa">tükendi</span>':''}${lowStock?'<span style="font-size:8px;display:block;color:var(--red)">son '+stockLeft+'</span>':''}</button>`;
+  }).join('');
+  document.getElementById('ppQty').textContent=1;
+  document.getElementById('ppAddBtn').textContent='Beden Seç';
+  document.getElementById('ppAddBtn').classList.add('no-size');
+  const wb=document.getElementById('ppWishBtn');
+  if(favs.has(id)){wb.classList.add('on');wb.innerHTML='<i class="ti ti-heart" aria-hidden="true"></i> Favorilerde';}
+  else{wb.classList.remove('on');wb.innerHTML='<i class="ti ti-heart" aria-hidden="true"></i> Favorilere Ekle';}
+  document.getElementById('ppDesc').textContent=p.desc;
+  document.getElementById('accord-material-body').textContent=p.material;
+  renderRecommendations(p);
+  routeTo('product', id, pushState);
+}
+function ppSetThumb(el, val){
+  document.querySelectorAll('.pp-thumb').forEach(t=>t.classList.remove('active-t'));
+  el.classList.add('active-t');
+  if(val){
+    document.getElementById('ppMainEmoji').innerHTML = val.startsWith('http') ? `<img src="${val}" style="width:100%;height:100%;object-fit:cover;border-radius:2px">` : val;
+  }
+}
+function ppSelectColorByIndex(pid, ci) {
+  const c = (window._ppColorMap || {})[pid + '_' + ci];
+  if(!c) return;
+  ppSelectColor(c.hex, c.name, c.imageUrl, c.imageUrlHover);
+}
+
+function ppSelectColor(hex, name, imgUrl, imgUrlHover) {
+  ppSelectedColor = { hex, name, imageUrl: imgUrl, imageUrlHover: imgUrlHover };
+  // Mark selected swatch with class
+  document.querySelectorAll('.pp-color-swatch').forEach(el => {
+    if(el.dataset.hex === hex) {
+      el.classList.add('selected');
+    } else {
+      el.classList.remove('selected');
+      el.style.outline = 'none';
+      el.style.outlineOffset = '';
+      el.style.transform = '';
+    }
+  });
+  // Update main image
+  if(imgUrl) {
+    const wrap = document.getElementById('ppMainEmoji');
+    if(wrap) {
+      wrap.innerHTML = `<img src="${imgUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:2px">`;
+    }
+  }
+  // Update thumbnails for the specific color
+  const allImages = [imgUrl, imgUrlHover].filter(Boolean);
+  if (allImages.length > 0) {
+    document.getElementById('ppThumbRow').innerHTML = allImages.map((url, i) =>
+      `<div class="pp-thumb ${i===0?'active-t':''}" onclick="ppSetThumb(this,'${url}')">
+        <img src="${url}" style="width:100%;height:100%;object-fit:cover;border-radius:2px">
+       </div>`
+    ).join('');
+  }
+  // Update add-to-cart button label
+  const btn = document.getElementById('ppAddBtn');
+  if(btn && ppSelectedSize) {
+    btn.textContent = 'Sepete Ekle — ' + ppSelectedSize + ' / ' + (name || hex);
+  }
+}
+
+function ppSelectSize(el,size){
+  document.querySelectorAll('.pp-sz').forEach(s=>s.classList.remove('pp-sz-sel'));
+  el.classList.add('pp-sz-sel');
+  ppSelectedSize=size;
+  const btn=document.getElementById('ppAddBtn');
+  if(ppSelectedColor) {
+    btn.textContent='Sepete Ekle — '+size+' / '+ppSelectedColor.name;
+  } else {
+    btn.textContent='Sepete Ekle — '+size;
+  }
+  btn.classList.remove('no-size');
+}
+function ppQtyChange(d){ppQtyVal=Math.max(1,Math.min(10,ppQtyVal+d));document.getElementById('ppQty').textContent=ppQtyVal;}
+function ppAddToCart(){
+  if(!ppSelectedSize){showToast('Lütfen bir beden seçin');return;}
+  const p=products.find(x=>x.id===ppCurrentId);
+  let stockLeft = p.stock ? p.stock[ppSelectedSize] : 99;
+  if (stockLeft === undefined) stockLeft = 99;
+  const existingCart = cart.find(c=>c.id===p.id && c.size===ppSelectedSize);
+  const totalWanted = ppQtyVal + (existingCart ? existingCart.qty : 0);
+  if (totalWanted > stockLeft) return showToast(`Stok yetersiz! (Kalan: ${stockLeft} adet)`);
+  addBag(ppCurrentId,ppSelectedSize,ppQtyVal,ppSelectedColor);
+}
+
+function openAIAssistant() {
+  const p = products.find(x=>x.id===ppCurrentId);
+  if(!p) return;
+  document.getElementById('aiOverlay').classList.add('open');
+  
+  let html = `<p><strong>${p.name}</strong> hakkında AI analizi hazırlanıyor...</p>`;
+  document.getElementById('aiContent').innerHTML = html;
+  
+  setTimeout(() => {
+    let stockInfo = [];
+    if(p.stock) {
+      for(let sz in p.stock) {
+         if(p.stock[sz] === 0) stockInfo.push(`${sz}: <span style="color:var(--red)">Tükendi</span>`);
+         else if(p.stock[sz] <= 5) stockInfo.push(`${sz}: <span style="color:#d97706">Kritik (Son ${p.stock[sz]})</span>`);
+         else stockInfo.push(`${sz}: <span style="color:#16a34a">Yeterli</span>`);
+      }
+    }
+    let simNames = p.similar ? p.similar.map(id=>products.find(x=>x.id===id)?.name).filter(Boolean) : [];
+    
+    // Akıllı Kombin Üretici
+    let combNames = [];
+    if (p.combineWith && p.combineWith.length > 0) {
+      combNames = p.combineWith.map(id=>products.find(x=>x.id===id)?.name).filter(Boolean);
+    } else {
+      let tCats = [];
+      const c = p.cat.toLowerCase();
+      if(c.includes('tişört') || c.includes('gömlek') || c.includes('hoodie')) tCats = ['Jean', 'Şort', 'Eşofman'];
+      else if(c.includes('jean') || c.includes('şort') || c.includes('eşofman')) tCats = ['Tişört', 'Gömlek', 'Hoodie'];
+      else tCats = ['Tişört', 'Jean', 'Eşofman'];
+      const cands = products.filter(x => x.id !== p.id && tCats.includes(x.cat) && x.stock && Object.values(x.stock).some(s=>s>0));
+      combNames = cands.sort(()=>0.5 - Math.random()).slice(0, 2).map(x=>x.name);
+    }
+    
+    document.getElementById('aiContent').innerHTML = `
+      <div style="background:#f9fafb;padding:12px;border-radius:2px;margin-bottom:12px;border:1px solid #e5e7eb">
+        <h4 style="margin:0 0 8px 0;font-size:11px;color:#6b7280;text-transform:uppercase;letter-spacing:0.5px">Stok Durumu Analizi</h4>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">${stockInfo.map(s=>`<span style="background:#fff;padding:4px 8px;border-radius:4px;border:1px solid #e5e7eb;font-size:12px;font-weight:500">${s}</span>`).join('')}</div>
+      </div>
+      ${combNames.length ? `
+      <div style="background:#fdf2f8;padding:12px;border-radius:2px;margin-bottom:12px;border-left:3px solid #ec4899">
+        <h4 style="margin:0 0 8px 0;font-size:11px;color:#9d174d;text-transform:uppercase;letter-spacing:0.5px">✨ Akıllı Kombin Önerisi</h4>
+        <p style="margin:0;font-size:13px;color:#831843">Sana önerim, bu parçayı <strong>${combNames.join(', ')}</strong> ile kombinlemen. Üstelik stil ve renk olarak tamamen birbirini tamamlıyorlar!</p>
+      </div>` : ''}
+      <div style="background:#f0f9ff;padding:12px;border-radius:2px;border-left:3px solid #0ea5e9">
+        <h4 style="margin:0 0 8px 0;font-size:11px;color:#0369a1;text-transform:uppercase;letter-spacing:0.5px">AI Beden Tavsiyesi</h4>
+        <p style="margin:0;font-size:13px;color:#0c4a6e">Müşteri geri bildirimlerine göre bu ürün ${p.desc.toLowerCase().includes('oversize') ? 'geniş kesim (oversize) kalıptır. Kendi bedenini alabilirsin, tam oturmasını istersen bir beden küçük seçebilirsin.' : 'tam kalıptır (true-to-size). Kendi bedenini tercih etmelisin.'}</p>
+      </div>
+    `;
+  }, 800);
+}
+function closeAIAssistant() {
+  document.getElementById('aiOverlay').classList.remove('open');
+}
+function ppToggleFav(){
+  toggleFav(ppCurrentId);
+  const wb=document.getElementById('ppWishBtn');
+  if(favs.has(ppCurrentId)){wb.classList.add('on');wb.innerHTML='<i class="ti ti-heart" aria-hidden="true"></i> Favorilerde';}
+  else{wb.classList.remove('on');wb.innerHTML='<i class="ti ti-heart" aria-hidden="true"></i> Favorilere Ekle';}
+}
+function closeProductPage(){
+  ppCurrentId=null;
+  routeTo('home');
+}
+function toggleAccord(key){document.getElementById('accord-'+key).classList.toggle('open');}
+
+/* ── RECOMMENDATIONS ── */
+function renderRecommendations(p){
+  const recs=document.getElementById('ppRecs');
+  let combineProducts=(p.combineWith||[]).map(id=>products.find(x=>x.id===id)).filter(Boolean);
+  if(combineProducts.length===0) combineProducts = products.filter(x => x.id !== p.id && x.cat !== p.cat).sort(()=>0.5-Math.random()).slice(0,2);
+  const outfitHTML=combineProducts.map(cp=> {
+    const optUrl = cp.imageUrl ? (cp.imageUrl.includes('?') ? cp.imageUrl+'&fm=webp&auto=format' : cp.imageUrl+'?fm=webp&auto=format') : null;
+    return `<div class="pp-outfit-card" onclick="openProductPage(${cp.id})">
+      <div class="pp-outfit-img">${`<img src="${optUrl || cp.imageUrl}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:2px">`}</div>
+      <div class="pp-outfit-body"><div class="pp-outfit-name">${cp.name}</div><div class="pp-outfit-price">${cp.price.toLocaleString('tr-TR')} TL</div></div>
+      <button class="pp-outfit-add" onclick="event.stopPropagation();addBag(${cp.id},null,1)">+ Sepete Ekle</button>
+    </div>`}).join('');
+  let similarProducts=(p.similar||[]).map(id=>products.find(x=>x.id===id)).filter(Boolean);
+  if(similarProducts.length < 4) {
+    const extra = products.filter(x => x.id !== p.id && x.cat === p.cat && !similarProducts.some(sp => sp.id === x.id)).sort(()=>0.5-Math.random());
+    similarProducts = [...similarProducts, ...extra].slice(0, 4);
+    if(similarProducts.length < 4) {
+      const more = products.filter(x => x.id !== p.id && !similarProducts.some(sp => sp.id === x.id)).sort(()=>0.5-Math.random());
+      similarProducts = [...similarProducts, ...more].slice(0, 4);
+    }
+  }
+  const simHTML=similarProducts.map(sp=>{
+    const optUrl = sp.imageUrl ? (sp.imageUrl.includes('?') ? sp.imageUrl+'&fm=webp&auto=format' : sp.imageUrl+'?fm=webp&auto=format') : null;
+    const d=sp.old?Math.round((1-sp.price/sp.old)*100):0;
+    return `<div class="pp-sim-card" onclick="openProductPage(${sp.id})">
+      <div class="pp-sim-img">${`<img src="${optUrl || sp.imageUrl}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;border-radius:2px">`}</div>
+      <div class="pp-sim-body">
+        <div class="pp-sim-cat">${sp.cat}</div>
+        <div class="pp-sim-name">${sp.name}</div>
+        <div><span class="pp-sim-price">${sp.price.toLocaleString('tr-TR')} TL</span>${sp.old?`<span class="pp-sim-old">${sp.old.toLocaleString('tr-TR')} TL</span>`:''}</div>
+      </div>
+    </div>`;
+  }).join('');
+  recs.innerHTML=
+    `<div class="pp-recs-title">Bu ürünle birlikte giyin</div>
+    <div class="pp-recs-section-head">Kombini Tamamla</div>
+    <div class="pp-recs-section-sub">Bu ürünle harika görünen parçalar</div>
+    <div class="pp-outfit" style="margin-bottom:52px">${outfitHTML}</div>
+    <div class="pp-recs-title">Benzer ürünler</div>
+    <div class="pp-recs-section-head">Bunlar da İlgini Çekebilir</div>
+    <div class="pp-recs-section-sub">Aynı kategoriden seçmeler</div>
+    <div class="pp-similar">${simHTML}</div>`;
+}
+
+/* ── TRENDS ── */
+function renderTrends(){
+  const track=document.getElementById('trendTrack');
+  if(!track) return;
+  const list=[...products].sort((a,b)=>b.rating - a.rating).slice(0, 5);
+  track.innerHTML=list.map(p=>
+    `<div class="recent-card" onclick="openProductPage(${p.id})">
+      <div class="rc-img">${`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover">`}</div>
+      <div class="rc-body"><div class="rc-name">${p.name}</div><div class="rc-price">${p.price.toLocaleString('tr-TR')} TL</div></div>
+    </div>`).join('');
+}
+
+/* ── LOOKBOOK ── */
+function renderLookbook(){
+  const list=products.filter(p=>p.tag==='Bestseller'||p.tag==='Limited');
+  const track=document.getElementById('lookbookTrack');
+  track.innerHTML=list.map((p,i)=>
+    `<div class="lk-card" onclick="openProductPage(${p.id})">
+      <div class="lk-img"><div class="lk-inner">${`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover">`}</div></div>
+      <div class="lk-body">
+        <div class="lk-num">0${i+1} — ${p.cat.toUpperCase()}</div>
+        <div class="lk-name">${p.name}</div>
+        <div class="lk-price">${p.price.toLocaleString('tr-TR')} TL</div>
+      </div>
+    </div>`).join('');
+  let isDown=false,startX,scrollLeft;
+  track.addEventListener('mousedown',e=>{isDown=true;startX=e.pageX-track.offsetLeft;scrollLeft=track.scrollLeft;});
+  track.addEventListener('mouseleave',()=>isDown=false);
+  track.addEventListener('mouseup',()=>isDown=false);
+  track.addEventListener('mousemove',e=>{if(!isDown)return;e.preventDefault();track.scrollLeft=scrollLeft-(e.pageX-track.offsetLeft-startX)*1.5;});
+}
+
+/* ── CART ── */
+function openCart(){document.getElementById('cartDrawer').classList.add('open');document.getElementById('cartOverlay').classList.add('open');document.body.style.overflow='hidden';renderCart();}
+function closeCart(){document.getElementById('cartDrawer').classList.remove('open');document.getElementById('cartOverlay').classList.remove('open');document.body.style.overflow='';}
+function addBag(id,size,qty,colorObj){
+  qty=qty||1;
+  const p=products.find(x=>x.id===id);
+  if(!p)return;
+  const colorHex = colorObj ? colorObj.hex : '';
+  const key = id+'_'+(size||'')+(colorHex?'_'+colorHex:'');
+  const ex=cart.find(c=>c.key===key);
+  if(ex){ex.qty+=qty;}
+  else {
+    const cartImg = colorObj && colorObj.imageUrl ? colorObj.imageUrl : p.imageUrl;
+    cart.push({id:p.id,name:p.name,cat:p.cat,price:p.price,imageUrl:cartImg,key,size:size||p.sizes[0],qty,colorHex:colorObj?colorObj.hex:null,colorName:colorObj?colorObj.name:null});
+  }
+  updateCartBadge();
+  const colorLabel = colorObj ? ' / '+colorObj.name : '';
+  showToast(p.name+(size?' — '+size:'')+colorLabel+' sepete eklendi');
+  saveCart();
+  renderGrid();
+  if(document.getElementById('cartDrawer').classList.contains('open')) renderCart();
+}
+function removeFromCart(key){cart=cart.filter(c=>c.key!==key);updateCartBadge();renderCart();saveCart();}
+function changeQty(key,delta){
+  const item=cart.find(c=>c.key===key);
+  if(!item)return;
+  item.qty+=delta;
+  if(item.qty<=0)cart=cart.filter(c=>c.key!==key);
+  updateCartBadge();renderCart();saveCart();
+}
+function updateCartBadge(){
+  const total=cart.reduce((a,c)=>a+c.qty,0);
+  const badge=document.getElementById('cartBadge');
+  badge.textContent=total;
+  document.getElementById('cartCountLabel').textContent=total;
+  badge.classList.remove('bump');void badge.offsetWidth;badge.classList.add('bump');
+}
+function renderCart(){
+  const el=document.getElementById('cartItems');
+  const totalVal=cart.reduce((a,c)=>a+c.price*c.qty,0);
+  if(!cart.length){
+    el.innerHTML=`<div class="cart-empty" id="cartEmpty"><i class="ti ti-shopping-bag" aria-hidden="true"></i><p>Sepet boş</p></div>`;
+    document.getElementById('cartTotal').textContent='0';
+    updateFreeShip(0);
+    return;
+  }
+  let upSellHTML = '';
+  if (cart.length > 0) {
+    const firstItem = products.find(p=>p.id===cart[0].id);
+    if(firstItem) {
+      let recs = [...(firstItem.combineWith||[]), ...(firstItem.similar||[])];
+      let recId = recs.find(id => !cart.find(c=>c.id===id));
+      if(!recId) recId = products.find(p=> !cart.find(c=>c.id===p.id) && p.stock && Object.values(p.stock).some(s=>s>0))?.id;
+      if(recId) {
+        const upP = products.find(p=>p.id===recId);
+        if (upP) {
+          upSellHTML = `
+            <div style="margin-top:16px;padding:12px;background:#fdf2f8;border-radius:2px;border-left:3px solid #ec4899;box-shadow:0 4px 12px rgba(236,72,153,0.1)">
+              <div style="font-size:11px;font-weight:800;color:#9d174d;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">✨ Kombini Tamamla</div>
+              <div style="display:flex;align-items:center;gap:12px">
+                <div style="width:48px;height:48px;border-radius:4px;overflow:hidden;flex-shrink:0;background:#fff;display:flex;align-items:center;justify-content:center;font-size:24px;border:1px solid #fbcfe8">
+                   ${`<img src="${upP.imageUrl}" style="width:100%;height:100%;object-fit:cover">`}
+                </div>
+                <div style="flex:1">
+                  <div style="font-size:12px;font-weight:700;color:#831843">${upP.name}</div>
+                  <div style="font-size:12px;color:#9d174d;margin-top:2px;font-weight:600">${upP.price.toLocaleString('tr-TR')} TL</div>
+                </div>
+                <button onclick="quickAdd(${upP.id})" style="background:#ec4899;color:#fff;border:none;padding:6px 12px;border-radius:4px;font-size:11px;cursor:pointer;font-weight:700;transition:transform 0.2s">Ekle</button>
+              </div>
+            </div>`;
+        }
+      }
+    }
+  }
+
+  el.innerHTML=cart.map(c=>
+    `<div class="cart-item">
+      <div class="ci-img">${`<img src="${c.imageUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:4px">`}</div>
+      <div class="ci-info">
+        <div class="ci-name">${c.name}</div>
+        <div class="ci-cat">${c.cat}</div>
+        ${c.size?`<div class="ci-size-label" style="display:flex;align-items:center;gap:6px;">Beden: <b>${c.size}</b> ${c.colorHex ? `<span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${c.colorHex};border:1px solid #444" title="${c.colorName}"></span> <b>${c.colorName}</b>` : ''}</div>`:''}
+        <div class="ci-row">
+          <div class="ci-qty">
+            <button onclick="changeQty('${c.key}',-1)">−</button>
+            <span>${c.qty}</span>
+            <button onclick="changeQty('${c.key}',1)">+</button>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <span class="ci-price">${(c.price*c.qty).toLocaleString('tr-TR')} TL</span>
+            <button class="ci-remove" onclick="removeFromCart('${c.key}')" aria-label="Kaldır"><i class="ti ti-trash" aria-hidden="true"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>`).join('') + upSellHTML;
+  document.getElementById('cartTotal').textContent=totalVal.toLocaleString('tr-TR');
+  updateFreeShip(totalVal);
+}
+function updateFreeShip(total){
+  const threshold=800,rem=Math.max(0,threshold-total),pct=Math.min(100,total/threshold*100);
+  document.getElementById('freeShipFill').style.width=pct+'%';
+  const msg=document.getElementById('freeShipMsg');
+  if(rem<=0)msg.innerHTML='🎉 Ücretsiz kargo kazandın!';
+  else msg.innerHTML=`Ücretsiz kargo için <b>${rem.toLocaleString('tr-TR')}</b> TL daha ekle`;
+}
+function checkout() {
+  if(!cart.length){showToast('Sepet boş');return;}
+  closeCart();
+  document.getElementById('checkoutOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  nextCheckoutStep(1);
+  if (typeof currentUser !== 'undefined' && currentUser) {
+    document.getElementById('coName').value = document.getElementById('ppNewName').value || '';
+    document.getElementById('coPhone').value = document.getElementById('ppNewPhone').value || '';
+    document.getElementById('coAddress').value = document.getElementById('ppNewAddress').value || '';
+  }
+}
+function closeCheckout() {
+  document.getElementById('checkoutOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function nextCheckoutStep(step) {
+  document.getElementById('co-step-1').style.display = step===1 ? 'block' : 'none';
+  document.getElementById('co-step-2').style.display = step===2 ? 'block' : 'none';
+  document.getElementById('co-step-3').style.display = step===3 ? 'block' : 'none';
+  document.getElementById('co-dot-1').style.background = step>=1 ? 'var(--black)' : 'var(--lightgray)';
+  document.getElementById('co-dot-2').style.background = step>=2 ? 'var(--black)' : 'var(--lightgray)';
+  document.getElementById('co-dot-3').style.background = step>=3 ? 'var(--black)' : 'var(--lightgray)';
+}
+async function placeOrder() {
+  const name = document.getElementById('coName').value.trim();
+  const address = document.getElementById('coAddress').value.trim();
+  if(!name || !address) { showToast('Lütfen teslimat bilgilerini doldurun'); return; }
+  
+  const shipVal = document.querySelector('input[name="coShipping"]:checked').value;
+  const coShippingCost = shipVal === 'hizli' ? 39.90 : 0;
+  
+  const subTotal = cart.reduce((a,c)=>a+c.price*c.qty,0);
+  const total = subTotal + coShippingCost;
+
+  document.getElementById('coSubmitBtn').disabled = true;
+  document.getElementById('coSubmitBtn').textContent = 'İşleniyor...';
+
+  try {
+    const token = localStorage.getItem('vanta_token');
+    const headers = { 'Content-Type': 'application/json' };
+    if (token) headers['Authorization'] = `Bearer ${token}`;
+
+    const res = await fetch(`${API_BASE}/orders`, {
+      method: 'POST',
+      headers: headers,
+      body: JSON.stringify({
+        sessionId: SESSION_ID,
+        userId: localStorage.getItem('vanta_user_id') || null,
+        customerName: name,
+        address: address,
+        items: cart.map(c=>({productId:c.id,name:c.name,size:c.size,qty:c.qty,price:c.price})),
+        total: total,
+        shipping: shipVal
+      })
+    });
+    
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message);
+    
+    cart=[];saveCart();updateCartBadge();renderCart();
+    closeCheckout();
+    
+    if(!window.confetti) {
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+      script.onload = () => { window.confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } }); };
+      document.body.appendChild(script);
+    } else {
+      window.confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+    }
+    
+    showToast('Sipariş başarıyla alındı! 🎉');
+  } catch(err) {
+    showToast('Hata: ' + err.message);
+  }
+  document.getElementById('coSubmitBtn').disabled = false;
+  document.getElementById('coSubmitBtn').textContent = 'Siparişi Tamamla';
+}
+
+/* ── WISHLIST ── */
+function openWish(){document.getElementById('wishPanel').classList.add('open');document.getElementById('wishOverlay').classList.add('open');document.body.style.overflow='hidden';renderWish();}
+function closeWish(){document.getElementById('wishPanel').classList.remove('open');document.getElementById('wishOverlay').classList.remove('open');document.body.style.overflow='';}
+async function toggleFav(id){
+  const isAdding = !favs.has(id);
+  isAdding ? favs.add(id) : favs.delete(id);
+  renderGrid();
+  showToast(isAdding ? 'Favorilere eklendi' : 'Favorilerden çıkarıldı');
+  document.getElementById('favIcon').style.color=favs.size>0?'#b00':'';
+  document.getElementById('wishCount').textContent=favs.size;
+  saveFavs();
+  
+  if (localStorage.getItem('vanta_token')) {
+    if (isAdding) {
+      await apiFetch('/user/wishlist', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({product_id: id})});
+    } else {
+      await apiFetch(`/user/wishlist?product_id=${id}`, { method: 'DELETE' });
+    }
+  }
+}
+function renderWish(){
+  const el=document.getElementById('wishItems');
+  document.getElementById('wishCount').textContent=favs.size;
+  if(!favs.size){
+    el.innerHTML=`<div class="wish-empty" id="wishEmpty"><i class="ti ti-heart" aria-hidden="true"></i><p>Henüz favori yok</p></div>`;
+    return;
+  }
+  const list=[...favs].map(id=>products.find(p=>p.id===id)).filter(Boolean);
+  el.innerHTML=list.map(p=>
+    `<div class="wish-item">
+      <div class="wi-img">${`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:4px">`}</div>
+      <div style="flex:1;min-width:0">
+        <div class="wi-name">${p.name}</div>
+        <div class="wi-price">${p.price.toLocaleString('tr-TR')} TL</div>
+        <div class="wi-actions">
+          <button class="wi-add" onclick="addBag(${p.id},null,1);closeWish()">Sepete Ekle</button>
+          <button class="wi-remove" onclick="toggleFav(${p.id});renderWish()" aria-label="Kaldır"><i class="ti ti-trash" aria-hidden="true"></i></button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+/* ── NAV SEARCH ── */
+function toggleNavSearch(){
+  const wrap=document.getElementById('navSearchWrap'),inp=document.getElementById('navSearchInput');
+  navSearchOpen=!navSearchOpen;
+  wrap.classList.toggle('active',navSearchOpen);
+  if(navSearchOpen)setTimeout(()=>inp.focus(),300);
+  else{inp.value='';document.getElementById('navSearchResults').innerHTML='';wrap.classList.remove('active');}
+}
+document.getElementById('navSearchInput').addEventListener('input',e=>{
+  const q=e.target.value.trim().toLowerCase(),res=document.getElementById('navSearchResults');
+  if(!q){res.innerHTML='';return;}
+  const tokens = q.split(/\s+/).filter(Boolean);
+  let scoredMatches = products.map(p => {
+    let score = 0;
+    const searchTxt = (p.name + ' ' + p.cat + ' ' + p.desc + ' ' + (p.sku||'') + ' ' + (p.barcode||'') + ' ' + (p.tag||'')).toLowerCase();
+    tokens.forEach(t => {
+      if(p.sku && p.sku.toLowerCase() === t) score += 10;
+      else if(p.sku && p.sku.toLowerCase().includes(t)) score += 5;
+      else if(p.name.toLowerCase().includes(t)) score += 3;
+      else if(p.cat.toLowerCase().includes(t)) score += 2;
+      else if(searchTxt.includes(t)) score += 1;
+    });
+    return {p, score};
+  }).filter(x => x.score > 0).sort((a,b) => b.score - a.score);
+  
+  const matches = scoredMatches.map(x => x.p);
+  if(!matches.length){res.innerHTML='<div class="nsr-empty">Sonuç bulunamadı</div>';return;}
+  res.innerHTML=matches.slice(0,6).map(p=>
+    `<div class="nsr-item" onclick="closeNavSearch();openProductPage(${p.id})">
+      <div class="nsr-emoji">${`<img src="${p.imageUrl}" style="width:100%;height:100%;object-fit:cover;border-radius:2px">`}</div>
+      <div style="flex:1;min-width:0"><div class="nsr-name">${p.name}</div><div class="nsr-meta">${p.cat}</div></div>
+      <div class="nsr-price">${p.price.toLocaleString('tr-TR')} TL</div>
+    </div>`).join('');
+});
+function closeNavSearch(){navSearchOpen=false;document.getElementById('navSearchWrap').classList.remove('active');document.getElementById('navSearchInput').value='';document.getElementById('navSearchResults').innerHTML='';}
+document.addEventListener('click',e=>{if(!document.getElementById('navSearchWrap').contains(e.target))closeNavSearch();});
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){
+    if(document.getElementById('ppOverlay').classList.contains('open'))closeProductPage();
+    else{closeCart();closeWish();closeNavSearch();closeNotif();}
+  }
+});
+
+/* ── NOTIFICATIONS ── */
+function toggleNotif(){const panel=document.getElementById('notifPanel');panel.classList.toggle('open');if(panel.classList.contains('open')){renderNotifs();document.getElementById('notifDot').classList.remove('show');}}
+function closeNotif(){document.getElementById('notifPanel').classList.remove('open');}
+function renderNotifs(){
+  const list=document.getElementById('notifList');
+  if(!notifications.length){list.innerHTML='<div style="padding:20px 16px;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#bbb;text-align:center">Bildirim yok</div>';return;}
+  list.innerHTML=notifications.map(n=>`
+    <div class="notif-item" onclick="closeNotif()">
+      <div class="ni-title">${n.title}</div>
+      <div class="ni-sub">${n.sub}</div>
+      <div class="ni-time">${n.time||''}</div>
+    </div>`).join('');
+}
+function clearNotifs(){notifications=[];renderNotifs();}
+document.addEventListener('click',e=>{
+  const btn=document.getElementById('notifBtn'),panel=document.getElementById('notifPanel');
+  if(!btn.contains(e.target)&&!panel.contains(e.target))closeNotif();
+});
+
+/* ── UTILS ── */
+function copyCode(code){navigator.clipboard?.writeText(code).catch(()=>{});showToast('Kod kopyalandı: '+code);}
+let toastTimer;
+function showToast(msg){
+  const el=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  el.classList.add('show');clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),2600);
+}
+async function nlSubmit(){
+  const v=document.getElementById('emailInput').value.trim();
+  if(v&&v.includes('@')){
+    try{
+      const res = await fetch(`${API_BASE}/newsletter`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: v })
+      });
+      const data = await res.json();
+      showToast(data.message);
+      if(data.success) document.getElementById('emailInput').value='';
+    }catch{showToast('Bir hata oluştu, tekrar dene');}
+  }else showToast('Geçerli bir e-posta gir');
+}
+function sendPrompt(msg){showToast('💬 '+msg);}
+
+/* ── AUTHENTICATION ── */
+// Firebase auth removed for VDS migration.
+// TODO: Implement JWT auth for frontend user profile.
+
+function openAuthOrProfile() {
+  document.getElementById('profileOverlay').classList.add('open');
+  document.getElementById('profilePanel').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  
+  const token = localStorage.getItem('vanta_token');
+  if (token) {
+    document.getElementById('authForms').style.display = 'none';
+    document.getElementById('profileContent').style.display = 'block';
+    document.getElementById('ppHeadLabel').textContent = 'Hesabım';
+    switchProfileTab('info');
+  } else {
+    document.getElementById('authForms').style.display = 'block';
+    document.getElementById('profileContent').style.display = 'none';
+    document.getElementById('ppHeadLabel').textContent = 'Giriş Yap / Kayıt Ol';
+    toggleAuthForm('login');
+  }
+}
+
+function toggleAuthForm(type) {
+  if (type === 'login') {
+    document.getElementById('loginForm').style.display = 'block';
+    document.getElementById('registerForm').style.display = 'none';
+  } else {
+    document.getElementById('loginForm').style.display = 'none';
+    document.getElementById('registerForm').style.display = 'block';
+  }
+}
+
+async function doCustomerLogin() {
+  const email = document.getElementById('loginEmail').value;
+  const password = document.getElementById('loginPass').value;
+  if (!email || !password) return showToast('Tüm alanları doldurun.');
+  
+  try {
+    const res = await fetch(`${API_BASE}/auth/customer/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem('vanta_token', data.token);
+      localStorage.setItem('vanta_user_id', data.user.id);
+      showToast('Giriş başarılı!');
+      openAuthOrProfile();
+    } else {
+      showToast(data.message || 'Giriş başarısız.');
+    }
+  } catch(e) {
+    showToast('Bir hata oluştu.');
+  }
+}
+
+async function doCustomerRegister() {
+  const full_name = document.getElementById('regName').value;
+  const email = document.getElementById('regEmail').value;
+  const password = document.getElementById('regPass').value;
+  if (!full_name || !email || !password) return showToast('Tüm alanları doldurun.');
+  
+  try {
+    const res = await fetch(`${API_BASE}/auth/customer/register`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, full_name })
+    });
+    const data = await res.json();
+    if (data.success) {
+      localStorage.setItem('vanta_token', data.token);
+      localStorage.setItem('vanta_user_id', data.user.id);
+      showToast('Kayıt başarılı!');
+      openAuthOrProfile();
+    } else {
+      showToast(data.message || 'Kayıt başarısız.');
+    }
+  } catch(e) {
+    showToast('Bir hata oluştu.');
+  }
+}
+
+function doCustomerLogout() {
+  localStorage.removeItem('vanta_token');
+  localStorage.removeItem('vanta_user_id');
+  showToast('Çıkış yapıldı.');
+  openAuthOrProfile();
+}
+
+function closeAuth() {
+  document.getElementById('authOverlay').classList.remove('open');
+}
+
+function closeProfile() {
+  document.getElementById('profilePanel').classList.remove('open');
+  document.getElementById('profileOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+async function apiFetch(endpoint, options = {}) {
+  const token = localStorage.getItem('vanta_token');
+  options.headers = options.headers || {};
+  if (token) options.headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(`${API_BASE}${endpoint}`, options);
+  return res.json();
+}
+
+async function switchProfileTab(tab) {
+  ['info', 'orders', 'wishlist', 'support'].forEach(t => document.getElementById(`pTab-${t}`).style.display = 'none');
+  document.getElementById(`pTab-${tab}`).style.display = 'block';
+  
+  if (tab === 'info') loadProfileData();
+  if (tab === 'orders') loadUserOrders();
+  if (tab === 'wishlist') loadWishlist();
+  if (tab === 'support') loadSupportTickets();
+}
+
+async function loadProfileData() {
+  try {
+    const data = await apiFetch('/user/profile');
+    if (data.success) {
+      document.getElementById('ppNewName').value = data.profile.full_name || '';
+      document.getElementById('ppNewEmail').value = data.profile.email || '';
+      document.getElementById('ppNewPhone').value = data.profile.phone || '';
+      document.getElementById('ppNewAddress').value = data.profile.address || '';
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function saveProfileChanges() {
+  const full_name = document.getElementById('ppNewName').value;
+  const phone = document.getElementById('ppNewPhone').value;
+  const address = document.getElementById('ppNewAddress').value;
+  
+  try {
+    const data = await apiFetch('/user/profile', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ full_name, phone, address })
+    });
+    if (data.success) showToast('Bilgiler güncellendi ✓');
+    else showToast('Hata oluştu');
+  } catch (e) {
+    showToast('Hata oluştu');
+  }
+}
+
+async function loadUserOrders() {
+  try {
+    const data = await apiFetch('/user/orders');
+    const container = document.getElementById('ppOrdersContainer');
+    if (data.success && data.orders.length > 0) {
+      container.innerHTML = data.orders.map(o => `
+        <div style="border:1px solid #eee; padding:12px; margin-bottom:12px; border-radius:4px">
+          <div style="font-size:12px; color:var(--muted); margin-bottom:8px; display:flex; justify-content:space-between">
+            <span>Sipariş #${o.id}</span>
+            <span>${new Date(o.createdAt).toLocaleDateString('tr-TR')}</span>
+          </div>
+          <div style="font-weight:600; margin-bottom:8px">${o.items.map(i => `${i.name} (x${i.qty})`).join(', ')}</div>
+          <div style="display:flex; justify-content:space-between; font-weight:700">
+            <span>${o.total.toLocaleString('tr-TR')} TL</span>
+            <span style="color: ${o.status === 'pending' ? 'orange' : 'green'}">${o.status}</span>
+          </div>
+        </div>
+      `).join('');
+    } else {
+      container.innerHTML = '<div class="pp-empty">Henüz sipariş yok</div>';
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function loadWishlist() {
+  try {
+    const data = await apiFetch('/user/wishlist');
+    const container = document.getElementById('ppWishlistContainer');
+    if (data.success && data.wishlist.length > 0) {
+      container.innerHTML = data.wishlist.map(p => `
+        <div style="display:flex; gap:12px; border-bottom:1px solid #eee; padding-bottom:12px; margin-bottom:12px; align-items:center">
+          <img src="${p.imageUrl || ''}" style="width:50px; height:60px; object-fit:cover; border-radius:4px" />
+          <div style="flex:1">
+            <div style="font-weight:600">${p.name}</div>
+            <div style="font-weight:700">${p.price} TL</div>
+          </div>
+          <button class="btn btn-ghost" style="padding:4px 8px; color:red" onclick="removeFromWishlist(${p.id})"><i class="ti ti-trash"></i></button>
+          <button class="btn btn-primary" style="padding:4px 8px" onclick="openProductPage(${p.id})">İncele</button>
+        </div>
+      `).join('');
+    } else {
+      container.innerHTML = '<div class="pp-empty">Favori ürünün yok</div>';
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function removeFromWishlist(product_id) {
+  await apiFetch(`/user/wishlist?product_id=${product_id}`, { method: 'DELETE' });
+  loadWishlist();
+  showToast('Favorilerden çıkarıldı.');
+}
+
+async function addToWishlist(product_id) {
+  if (!localStorage.getItem('vanta_token')) {
+    showToast('Lütfen önce giriş yapın.');
+    openAuthOrProfile();
+    return;
+  }
+  const data = await apiFetch('/user/wishlist', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ product_id })
+  });
+  if (data.success) {
+    showToast('Favorilere eklendi!');
+  }
+}
+
+async function loadSupportTickets() {
+  try {
+    const data = await apiFetch('/user/support');
+    const container = document.getElementById('ppSupportContainer');
+    if (data.success && data.tickets.length > 0) {
+      container.innerHTML = data.tickets.map(t => `
+        <div style="border:1px solid #eee; padding:12px; margin-bottom:12px; border-radius:4px">
+          <div style="font-size:12px; color:var(--muted); margin-bottom:4px">Tarih: ${new Date(t.createdat).toLocaleDateString('tr-TR')}</div>
+          <div style="font-weight:700; margin-bottom:4px">${t.subject}</div>
+          <div style="font-size:13px; margin-bottom:8px">${t.message}</div>
+          <div style="font-size:11px; display:inline-block; padding:2px 6px; background:#f0f0f0; border-radius:4px">Durum: ${t.status}</div>
+        </div>
+      `).join('');
+    } else {
+      container.innerHTML = '<div class="pp-empty" style="margin-top:16px">Önceki talebiniz bulunmuyor.</div>';
+    }
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+async function submitSupportTicket() {
+  const subject = document.getElementById('supSubject').value;
+  const message = document.getElementById('supMessage').value;
+  if (!subject || !message) return showToast('Tüm alanları doldurun.');
+  
+  const data = await apiFetch('/user/support', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ subject, message })
+  });
+  if (data.success) {
+    showToast('Talebiniz alındı!');
+    document.getElementById('supSubject').value = '';
+    document.getElementById('supMessage').value = '';
+    loadSupportTickets();
+  }
+}
+
+async function cancelOrder(docId) {
+  if(!confirm('Siparişi iptal etmek istediğinize emin misiniz?')) return;
+  try {
+    const res = await fetch(`${API_BASE}/orders/${docId}/cancel`, { method: 'POST' });
+    const data = await res.json();
+    if (!data.success) throw new Error(data.message);
+    
+    auditLog('order_canceled', { orderId: docId });
+    showToast(data.message);
+    if(currentUser) loadUserOrders(currentUser.uid);
+  } catch(e) { showToast('Hata: ' + e.message); }
+}
+
+/* ── AUDIT LOGGING ── */
+function auditLog(action, data={}) {
+  try {
+    fetch(`${API_BASE}/audit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action,
+        data,
+        userId: currentUser ? currentUser.uid : null,
+        sessionId: typeof SESSION_ID !== 'undefined' ? SESSION_ID : null,
+        userAgent: navigator.userAgent
+      })
+    }).catch(()=>{});
+  } catch(e) {}
+}
+
+/* ── GLOBAL ERROR HANDLER ── */
+window.onerror = function(msg, url, line, col, error) {
+  auditLog('js_error', { message: msg, url, line, col, stack: error?.stack?.substring(0, 500) });
+  return false;
+};
+window.addEventListener('unhandledrejection', function(e) {
+  auditLog('promise_error', { message: e.reason?.message || String(e.reason), stack: e.reason?.stack?.substring(0, 500) });
+});
+
+/* ── EXPOSE TO WINDOW (module scope fix) ── */
+Object.assign(window,{
+  toggleDropdown,ddSelect,closeDD,setCat,setPriceFilter,filterAndScroll,sortProducts,setView,goHome,routeTo,filterByKeyword,setCatByName,
+  openProductPage,closeProductPage,ppSetThumb,ppSelectSize,ppQtyChange,ppAddToCart,ppToggleFav,
+  toggleAccord,openCart,closeCart,addBag,removeFromCart,changeQty,checkout,
+  openWish,closeWish,toggleFav,renderWish,quickAdd,qsSelSize,selectSize,
+  toggleNavSearch,closeNavSearch,toggleNotif,closeNotif,clearNotifs,
+  copyCode,showToast,nlSubmit,sendPrompt,cancelOrder,closeCheckout,nextCheckoutStep,placeOrder,
+  openAuthOrProfile,closeAuth,closeProfile,saveProfileChanges,
+  openAIAssistant,closeAIAssistant,openTextModal,closeTextModal,
+  toggleAuthForm,doCustomerLogin,doCustomerRegister,doCustomerLogout,switchProfileTab,submitSupportTicket,removeFromWishlist,addToWishlist,setPage
+});
+
+function openTextModal(title, body) {
+  document.getElementById('textModalTitle').textContent = title;
+  document.getElementById('textModalBody').innerHTML = body;
+  document.getElementById('textOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeTextModal() {
+  document.getElementById('textOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+renderGrid();
+/* ── SIZE FINDER ── */
+window.openSizeFinder = function() {
+  if (document.getElementById('sizeFinderOverlay')) {
+    document.getElementById('sizeFinderOverlay').classList.add('open');
+    return;
+  }
+  const overlay = document.createElement('div');
+  overlay.id = 'sizeFinderOverlay';
+  overlay.className = 'auth-overlay open';
+  overlay.style.cssText = 'backdrop-filter: blur(10px); background: rgba(0,0,0,0.6)';
+  overlay.innerHTML = `
+    <div class="auth-box" style="text-align:center; padding: 48px 40px; border-radius: 16px; box-shadow: 0 24px 60px rgba(0,0,0,0.2); width:400px; max-width:90%">
+      <div class="auth-close" onclick="document.getElementById('sizeFinderOverlay').classList.remove('open')" style="top:20px; right:20px; background:#f5f5f5; border-radius:50%; width:36px; height:36px; display:flex; align-items:center; justify-content:center; transition:background 0.2s"><i class="ti ti-x"></i></div>
+      <h2 style="font-weight:800; font-size:24px; margin-bottom:12px; letter-spacing:-0.5px">📏 Bedenimi Bul</h2>
+      <p style="font-size:13px; color:#666; margin-bottom:28px">Sana en uygun bedeni bulmamız için birkaç soruya yanıt ver.</p>
+      <div style="text-align:left; margin-bottom:16px">
+        <label style="font-size:12px; font-weight:700; color:#111; display:block; margin-bottom:6px">Boy (cm)</label>
+        <input type="number" id="sfHeight" class="auth-input" placeholder="Örn: 180" style="height:48px; border-radius:8px; border:1px solid #eee; padding:0 16px; font-size:14px; width:100%; transition:all 0.2s" onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 3px rgba(0,0,0,0.05)'" onblur="this.style.borderColor='#eee'; this.style.boxShadow='none'">
+      </div>
+      <div style="text-align:left; margin-bottom:16px">
+        <label style="font-size:12px; font-weight:700; color:#111; display:block; margin-bottom:6px">Kilo (kg)</label>
+        <input type="number" id="sfWeight" class="auth-input" placeholder="Örn: 75" style="height:48px; border-radius:8px; border:1px solid #eee; padding:0 16px; font-size:14px; width:100%; transition:all 0.2s" onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 3px rgba(0,0,0,0.05)'" onblur="this.style.borderColor='#eee'; this.style.boxShadow='none'">
+      </div>
+      <div style="text-align:left; margin-bottom:32px">
+        <label style="font-size:12px; font-weight:700; color:#111; display:block; margin-bottom:6px">Tercih Ettiğin Kalıp</label>
+        <select id="sfFit" class="auth-input" style="height:48px; border-radius:8px; border:1px solid #eee; padding:0 16px; font-size:14px; width:100%; transition:all 0.2s; background:#fff; cursor:pointer" onfocus="this.style.borderColor='#111'; this.style.boxShadow='0 0 0 3px rgba(0,0,0,0.05)'" onblur="this.style.borderColor='#eee'; this.style.boxShadow='none'">
+          <option value="tam">Tam Üzerime Otursun</option>
+          <option value="bol">Biraz Bol Dursun (Oversize)</option>
+        </select>
+      </div>
+      <button class="auth-btn" onclick="calcSize()" style="height:52px; border-radius:8px; font-size:14px; font-weight:700; letter-spacing:0.5px; box-shadow: 0 4px 14px rgba(0,0,0,0.15); transition:transform 0.2s, box-shadow 0.2s" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.2)'" onmouseout="this.style.transform='none'; this.style.boxShadow='0 4px 14px rgba(0,0,0,0.15)'">Bedenimi Hesapla</button>
+      <div id="sfResult" style="margin-top:24px; font-size:14px; font-weight:700; color:var(--black); display:none; background:#f5f5f5; padding:20px; border-radius:12px; border:1px solid rgba(0,0,0,0.05)"></div>
+    </div>
+  `;
+  document.body.appendChild(overlay);
+}
+window.calcSize = function() {
+  const h = parseInt(document.getElementById('sfHeight').value);
+  const w = parseInt(document.getElementById('sfWeight').value);
+  const f = document.getElementById('sfFit').value;
+  if(!h || !w) { showToast('Lütfen boy ve kilonuzu girin'); return; }
+  let score = h + w;
+  let size = 'M';
+  if(score < 240) size = 'S';
+  else if(score < 255) size = 'M';
+  else if(score < 275) size = 'L';
+  else size = 'XL';
+  if(f === 'bol' && size !== 'XL') {
+    const sMap = {'S':'M', 'M':'L', 'L':'XL'};
+    size = sMap[size];
+  }
+  const r = document.getElementById('sfResult');
+  r.innerHTML = `Sana Önerdiğimiz Beden:<br><span style="color:var(--red);font-size:24px;display:block;margin-top:8px">${size}</span>`;
+  r.style.display = 'block';
+}
+
+
+/* ── CHATBOT LOGIC ── */
+window.toggleVbot = function() {
+  const w = document.getElementById('vbotWindow');
+  const f = document.getElementById('vbotFab');
+  if (w.classList.contains('open')) {
+    w.classList.remove('open');
+    f.classList.remove('open');
+  } else {
+    w.classList.add('open');
+    f.classList.add('open');
+    document.getElementById('vbotInput').focus();
+  }
+};
+
+window.sendVbotMsg = async function() {
+  const inp = document.getElementById('vbotInput');
+  const text = inp.value.trim();
+  if(!text) return;
+  
+  inp.value = '';
+  appendVbotMsg(text, 'user');
+  
+  const typing = document.getElementById('vbotTyping');
+  const body = document.getElementById('vbotBody');
+  typing.classList.add('visible');
+  body.appendChild(typing); // move to bottom
+  body.scrollTop = body.scrollHeight;
+  document.getElementById('vbotSend').disabled = true;
+  
+  try {
+    const res = await fetch(API_BASE + '/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: text, sessionId: SESSION_ID })
+    });
+    const data = await res.json();
+    typing.classList.remove('visible');
+    if(data.success) {
+      appendVbotMsg(data.reply, 'bot');
+    } else {
+      appendVbotMsg('Üzgünüm, şu an bağlantı kuramıyorum.', 'bot');
+    }
+  } catch(e) {
+    typing.classList.remove('visible');
+    appendVbotMsg('Sistemsel bir hata oluştu.', 'bot');
+  }
+  document.getElementById('vbotSend').disabled = false;
+};
+
+function appendVbotMsg(text, sender) {
+  const body = document.getElementById('vbotBody');
+  const typing = document.getElementById('vbotTyping');
+  const div = document.createElement('div');
+  div.className = 'vbot-msg ' + sender;
+  
+  // Basic markdown to html (bold and line breaks)
+  let formatted = text.replace(/\*\*(.*?)\*\*/g, '<b>$1</b>').replace(/\n/g, '<br>');
+  
+  const time = new Date().toLocaleTimeString('tr-TR', {hour: '2-digit', minute:'2-digit'});
+  div.innerHTML = `
+    <div class="vbot-bubble">${formatted}</div>
+    <div class="vbot-time">${time}</div>
+  `;
+  body.insertBefore(div, typing);
+  body.scrollTop = body.scrollHeight;
+}
+
+</script>
+</body>
+</html>

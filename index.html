@@ -712,14 +712,25 @@ html, body {
   }
   
   .pb-top {
-    font-size: 16px !important;
-    letter-spacing: 0.08em !important;
+    font-size: 13px !important;
+    letter-spacing: 0.05em !important;
     text-align: center;
+    line-height: 1.6 !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 6px;
+    row-gap: 2px;
   }
   .pb-sub {
-    font-size: 10px !important;
+    font-size: 9px !important;
     letter-spacing: 0.1em !important;
     text-align: center;
+    margin-top: 4px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 6px;
   }
 }
 </style>
@@ -1050,8 +1061,17 @@ html, body {
 <!-- Parallax band -->
 <div class="parallax-band" id="parallaxBand">
   <div class="pb-text" id="pbText">
-    <div class="pb-top">STREETWEAR <span class="dot">·</span> CULTURE <span class="dot">·</span> VANTA <span class="dot">·</span> OVERSIZE <span class="dot">·</span> DROP</div>
-    <div class="pb-sub">SS25 <span class="dot">·</span> İstanbul'dan dünyaya</div>
+    <div class="pb-top">
+      <span style="white-space:nowrap">STREETWEAR <span class="dot">·</span></span>
+      <span style="white-space:nowrap">CULTURE <span class="dot">·</span></span>
+      <span style="white-space:nowrap">VANTA <span class="dot">·</span></span>
+      <span style="white-space:nowrap">OVERSIZE <span class="dot">·</span></span>
+      <span style="white-space:nowrap">DROP</span>
+    </div>
+    <div class="pb-sub">
+      <span style="white-space:nowrap">SS25 <span class="dot">·</span></span>
+      <span style="white-space:nowrap">İstanbul'dan dünyaya</span>
+    </div>
   </div>
 </div>
 
